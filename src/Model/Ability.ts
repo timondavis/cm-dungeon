@@ -1,1 +1,4 @@
-export class Ability { }
+export class Ability {
+
+    protected name;
+}
