@@ -8,6 +8,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "9.3.0",
+    "cm-check": "^1.0.1",
+    "cm-entity": "0.0.1",
+    "cm-maze": "^0.2.2",
     "dice-bag": "0.1.2"
   },
   "nodemonConfig": {
@@ -24,6 +27,7 @@
   "scripts": {
     "start": "concurrently \"npm run build:live\" \"npm run build:disk\"",
     "build:live": "nodemon --exec ./node_modules/.bin/ts-node ./src/index.ts",
-    "build:disk": "exec tsc -w"
+    "build:disk": "exec tsc -w",
+    "test": "mocha -r ts-node/register ./src/Test/**/*.ts"
   }
 }
