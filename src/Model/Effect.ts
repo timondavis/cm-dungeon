@@ -1,5 +1,7 @@
+import {NameMap} from "./NameMap";
+
 export class Effect {
 
-    public attributeFilters : { [key:string] : (value:number) => number }
-    public labelFilters : { [key:string] : (label:string) => string }
+    public attributeFilters : NameMap<(input:number) => number>
+    public labelFilters : NameMap<(input:string) => string>
 }

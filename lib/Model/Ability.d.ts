@@ -1,4 +1,4 @@
-export declare class Ability {
-    name: string;
-    execute(): string;
+import { Interaction } from "../Control/Interaction";
+export declare abstract class Ability {
+    abstract execute(): Interaction;
 }
