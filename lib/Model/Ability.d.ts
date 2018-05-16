@@ -1,3 +1,4 @@
 export declare class Ability {
-    protected name: any;
+    name: string;
+    execute(): string;
 }

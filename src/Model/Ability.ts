@@ -1,4 +1,8 @@
 export class Ability {
 
-    protected name;
+    public name : string;
+
+    public execute() : string {
+        return this.name;
+    }
 }
