@@ -27,17 +27,6 @@ describe( 'NameMap', () => {
     let s2 = new Sample( 's2' );
     let s3 = new Sample( 's3' );
 
-    it( 'allows generic items to be added to a collection', () => {
-
-        map = new NameMap();
-
-        map.add( s1.name, s1 );
-        map.add( s2.name, s2 );
-        map.add( s3.name, s3 );
-
-        expect( Object.keys(map.getAll())).to.have.lengthOf(3);
-    });
-
     it( 'facilitates strict addition of new items, throwing exceptions on override attempts', () => {
 
         map = new NameMap();

@@ -20,8 +20,6 @@ export class Actor {
     protected _statusEffects : NameMap<Effect>;
     public get statusEffects() : NameMap<Effect> { return this._statusEffects; }
 
-    protected effectRendering : EffectRenderer;
-
     constructor() {
 
         this._attributes = new NameMap();
@@ -29,16 +27,5 @@ export class Actor {
         this._labels = new NameMap();
         this._flags = new NameMap();
         this._statusEffects = new NameMap();
-        this.effectRendering = new EffectRenderer();
-
-        this.attributes.add( 'Strength', 2 );
-        this.attributes.add( 'Dexterity', 0 );
-        this.attributes.add( 'Constitution', 0 );
-        this.attributes.add( 'Wisdom', 0 );
-        this.attributes.add( 'Intelligence', 0);
-        this.attributes.add( 'Charisma', 0 );
-        this.attributes.add( 'HP', 10 );
-        this.attributes.add( 'MaxHP', 10 );
-        this.attributes.add( 'AC', 10 );
     }
 }

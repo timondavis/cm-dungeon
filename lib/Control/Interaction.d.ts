@@ -2,14 +2,23 @@ import { Actor } from "../Model/Actor";
 import { Check } from "cm-check/lib/Check/Check";
 import { Effect } from "../Model/Effect";
 export declare class Interaction {
-    source: Actor;
-    target: Actor;
-    resistanceCheck: Check;
-    effects: {
-        [key: string]: Effect;
-    };
-    type: string;
+    private _source;
+    readonly source: Actor;
+    private _target;
+    readonly target: Actor;
+    private _resistanceCheck;
+    readonly resistanceCheck: Check;
+    private _effects;
+    readonly effects: Effect[];
+    _type: string;
+    readonly type: string;
     constructor(source: Actor, target: Actor, check: Check);
-    doResistanceCheck(): Interaction;
-    isResistanceCheckPassed(): boolean;
+    /**
+     * Returns TRUE if interaction is successful.  Failure is not an indication of error - randomization is
+     * a typical factor of determining success.
+     *
+     * @returns {boolean}
+     */
+    execute(): boolean;
+    protected doResistanceCheck(): boolean;
 }

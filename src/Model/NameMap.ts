@@ -107,4 +107,12 @@ export class NameMap<T> {
 
         return this;
     }
+
+    public getKeys() : string[] {
+        return Object.keys( this.collection );
+    }
+
+    public forEachKey( callback : ( key : string, index? : number, array? : string[] ) => void ) : void {
+        this.getKeys().forEach( callback );
+    }
 }

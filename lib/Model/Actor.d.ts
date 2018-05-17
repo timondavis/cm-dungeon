@@ -1,5 +1,4 @@
 import { Ability } from "./Ability/Ability";
-import { EffectRenderer } from "../Control/EffectRenderer";
 import { Effect } from "./Effect";
 import { NameMap } from "./NameMap";
 export declare class Actor {
@@ -13,6 +12,5 @@ export declare class Actor {
     readonly flags: NameMap<boolean>;
     protected _statusEffects: NameMap<Effect>;
     readonly statusEffects: NameMap<Effect>;
-    protected effectRendering: EffectRenderer;
     constructor();
 }

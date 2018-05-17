@@ -5,9 +5,4 @@ import {Character} from "../../Model/Character";
 
 describe( 'Actor', function() {
 
-    it( 'should allow attachment of new Ability to the Actor', function() {
-
-
-    });
-
 });
