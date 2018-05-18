@@ -58,4 +58,5 @@ export declare class NameMap<T> {
     remove(key: string): NameMap<T>;
     getKeys(): string[];
     forEachKey(callback: (key: string, index?: number, array?: string[]) => void): void;
+    readonly length: number;
 }

@@ -1,9 +1,6 @@
 import { NameMap } from "./NameMap";
 import { Status } from "./Status";
-import { Actor } from "./Actor";
 export declare class Effect {
-    private _target;
-    readonly target: Actor;
     private _modifyAttributes;
     readonly modifyAttributes: NameMap<number>;
     private _setAttributes;
@@ -22,5 +19,5 @@ export declare class Effect {
     readonly setStatus: NameMap<Status>;
     private _removeStatus;
     readonly removeStatus: string[];
-    constructor(target: Actor);
+    constructor();
 }

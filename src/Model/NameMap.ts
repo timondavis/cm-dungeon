@@ -115,4 +115,8 @@ export class NameMap<T> {
     public forEachKey( callback : ( key : string, index? : number, array? : string[] ) => void ) : void {
         this.getKeys().forEach( callback );
     }
+
+    public get length() : number {
+        return Object.keys( this.collection ).length;
+    }
 }

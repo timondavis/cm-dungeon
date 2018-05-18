@@ -1,13 +1,22 @@
 import 'mocha';
 import {expect} from 'chai';
 import {Actor} from "../../Model/Actor";
+import {Effect} from "../../Model/Effect";
+import {EffectRenderer} from "../../Control/EffectRenderer";
+import {DieBag} from "cm-check/lib/Die/DieBag";
 
 describe( 'EffectRenderer', () => {
 
     let attacker = new Actor();
     let defender = new Actor();
+    let effects : Effect[] = [];
 
-    let initActors = () => {
+    let rand = function( min : number, max : number ) {
+
+        return Math.floor( Math.random() * max + min);
+    };
+
+    let initTest = () => {
 
         attacker.attributes.add( 'Strength',        10 );
         attacker.attributes.add( 'Dexterity',       10 );
@@ -28,10 +37,32 @@ describe( 'EffectRenderer', () => {
         defender.attributes.add( 'HP',              10 );
         defender.attributes.add( 'MaxHP',           10 );
         defender.attributes.add( 'AC',              10 );
+
+        effects = [];
     };
 
-    it( 'processes the attribute modifiers on an event and applies to the target actor', () => {
+    it( 'will process the attribute modifiers on an event and apply them to the target actor', () => {
 
-        initActors();
+        initTest();
+
+        let randomNumber = rand(1, 10) * -1
+
+        let effect = new Effect();
+        effect.modifyAttributes.add( 'HP', randomNumber );
+        effects.push( effect );
+
+        EffectRenderer.renderEffects( defender, effects );
+
+        expect( defender.attributes.get('HP') ).to.be.equal( 10 + randomNumber );
+
+        console.log( 'damage: ' + randomNumber * -1 );
+        console.log( 'hp remaining: ' + defender.attributes.get( 'HP' ));
+    });
+
+    it( 'will process attribute value assignments and overrides from evens, and apply to target actor', () => {
+
+        initTest();
+
+
     });
 });

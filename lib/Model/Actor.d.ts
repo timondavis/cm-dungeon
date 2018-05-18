@@ -1,6 +1,6 @@
 import { Ability } from "./Ability/Ability";
-import { Effect } from "./Effect";
 import { NameMap } from "./NameMap";
+import { Status } from "./Status";
 export declare class Actor {
     protected _attributes: NameMap<number>;
     readonly attributes: NameMap<number>;
@@ -10,7 +10,7 @@ export declare class Actor {
     readonly labels: NameMap<string>;
     protected _flags: NameMap<boolean>;
     readonly flags: NameMap<boolean>;
-    protected _statusEffects: NameMap<Effect>;
-    readonly statusEffects: NameMap<Effect>;
+    protected _statusEffects: NameMap<Status>;
+    readonly statusEffects: NameMap<Status>;
     constructor();
 }

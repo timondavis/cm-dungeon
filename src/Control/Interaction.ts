@@ -38,23 +38,15 @@ export class Interaction {
 
         if( this.doResistanceCheck() ) {
 
+            EffectRenderer.renderEffects( this.target, this.effects );
         }
-    }
 
+        return this.resistanceCheck.isPass();
+    }
 
     protected doResistanceCheck() : boolean {
 
         CheckExecutor.getInstance().execute( this.resistanceCheck );
-        if ( this.resistanceCheck.isPass() ) {
-
-            this.effects.forEach(( value : Effect, index: number ) => {
-                EffectRenderer.renderEffects( this.target, value );
-            });
-
-            return true;
-        } else {
-            return false;
-        }
+        return this.resistanceCheck.isPass();
     }
-
 }

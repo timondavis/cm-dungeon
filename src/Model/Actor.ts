@@ -1,7 +1,6 @@
 import {Ability} from "./Ability/Ability";
-import {EffectRenderer} from "../Control/EffectRenderer";
-import {Effect} from "./Effect";
 import {NameMap} from "./NameMap";
+import {Status} from "./Status";
 
 export class Actor {
 
@@ -17,8 +16,8 @@ export class Actor {
     protected _flags : NameMap<boolean>;
     public get flags() : NameMap<boolean> { return this._flags; }
 
-    protected _statusEffects : NameMap<Effect>;
-    public get statusEffects() : NameMap<Effect> { return this._statusEffects; }
+    protected _statusEffects : NameMap<Status>;
+    public get statusEffects() : NameMap<Status> { return this._statusEffects; }
 
     constructor() {
 

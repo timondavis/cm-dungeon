@@ -4,9 +4,6 @@ import {Actor} from "./Actor";
 
 export class Effect {
 
-    private _target : Actor;
-    public get target() { return this._target; }
-
     private _modifyAttributes : NameMap<number>;
     public get modifyAttributes() { return this._modifyAttributes; }
 
@@ -22,6 +19,7 @@ export class Effect {
     private _removeLabels : string[];
     public get removeLabels() { return this._removeLabels; }
 
+
     private _setFlags : NameMap<boolean>;
     public get setFlags() { return this._setFlags; }
 
@@ -34,9 +32,7 @@ export class Effect {
     private _removeStatus : string[];
     public get removeStatus() { return this._removeStatus; }
 
-    constructor(target : Actor) {
-
-        this._target = target;
+    constructor() {
 
         this._modifyAttributes = new NameMap();
         this._setAttributes = new NameMap();

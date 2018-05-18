@@ -10,9 +10,9 @@ export class D20_Attack implements Ability {
 
     disabled: boolean = false;
 
-    execute(source: Actor, target: Actor, data? : any ): Ability {
+    execute(source: Actor, target: Actor): Ability {
 
-        const effect = new Effect( target );
+        const effect = new Effect();
         let check = this.generateCheck( source, target );
         let damage = this.getDamage() * -1;
         effect.modifyAttributes.add('HP', damage);
