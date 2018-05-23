@@ -3,7 +3,6 @@ import {expect} from 'chai';
 import {Actor} from "../../Model/Actor";
 import {Effect} from "../../Model/Effect";
 import {EffectRenderer} from "../../Control/EffectRenderer";
-import {DieBag} from "cm-check/lib/Die/DieBag";
 
 describe( 'EffectRenderer', () => {
 
@@ -17,6 +16,10 @@ describe( 'EffectRenderer', () => {
     };
 
     let initTest = () => {
+
+        attacker = new Actor();
+        defender = new Actor();
+        effects = [];
 
         attacker.attributes.add( 'Strength',        10 );
         attacker.attributes.add( 'Dexterity',       10 );
@@ -37,15 +40,13 @@ describe( 'EffectRenderer', () => {
         defender.attributes.add( 'HP',              10 );
         defender.attributes.add( 'MaxHP',           10 );
         defender.attributes.add( 'AC',              10 );
-
-        effects = [];
     };
 
     it( 'will process the attribute modifiers on an event and apply them to the target actor', () => {
 
         initTest();
 
-        let randomNumber = rand(1, 10) * -1
+        let randomNumber = rand(1, 10) * -1;
 
         let effect = new Effect();
         effect.modifyAttributes.add( 'HP', randomNumber );
@@ -54,15 +55,28 @@ describe( 'EffectRenderer', () => {
         EffectRenderer.renderEffects( defender, effects );
 
         expect( defender.attributes.get('HP') ).to.be.equal( 10 + randomNumber );
-
-        console.log( 'damage: ' + randomNumber * -1 );
-        console.log( 'hp remaining: ' + defender.attributes.get( 'HP' ));
     });
 
-    it( 'will process attribute value assignments and overrides from evens, and apply to target actor', () => {
+    it( 'will process attribute value assignments and overrides from events, and apply to target actor', () => {
 
         initTest();
 
+        let randomNumber = rand( 1, 10 );
 
+        let effect = new Effect();
+        effect.setAttributes.add( 'HP', randomNumber );
+        effects.push( effect );
+
+        EffectRenderer.renderEffects( defender, effects );
+
+        expect( defender.attributes.get( 'HP' ) ).to.be.equal( randomNumber );
+    });
+
+    it ( 'will remove attributes from the actor, based on directives from the event', () => {
+
+        initTest();
+
+        let effect = new Effect();
+        effect.removeAttributes.add( 'Strength' );
     });
 });

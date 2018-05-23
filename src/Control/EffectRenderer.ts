@@ -5,116 +5,100 @@ export class EffectRenderer {
 
     public static renderEffects( owner: Actor, effects: Effect[] ) {
 
-        EffectRenderer.modifyAttributes( owner, effects );
-    }
-
-    protected static modifyAttributes( owner: Actor, effects : Effect[] ) {
-
-        effects.forEach( (effect : Effect) => {
-
-            if ( ! effect.modifyAttributes.length ) { return; }
-
-            effect.modifyAttributes.forEachKey( ( key : string ) => {
-                let attributeValue : number = owner.attributes.get(key);
-                attributeValue += effect.modifyAttributes.get(key);
-                owner.attributes.replace( key, attributeValue );
-            });
-        }) ;
-    }
-
-    protected setAttributes( owner : Actor, effects : Effect[] ) {
-
-        effects.forEach( (effect : Effect) => {
-
-            if ( ! effect.setAttributes.length ) { return; }
-
-            effect.setAttributes.forEachKey( ( key : string ) => {
-                owner.attributes.set( key, effect.setAttributes.get(key));
-            });
-        });
-    }
-
-    protected removeAttributes( owner : Actor, effects : Effect[] ) {
-
         effects.forEach(( effect : Effect ) => {
 
-            if ( ! effect.removeAttributes.length ) { return; }
-
-            effect.removeAttributes.forEach( ( key : string) => {
-                owner.attributes.remove( key );
-            });
+            EffectRenderer.modifyAttributes( owner, effect );
+            EffectRenderer.setAttributes( owner, effect );
+            EffectRenderer.removeAttributes( owner, effect );
+            EffectRenderer.setLabels( owner, effect );
+            EffectRenderer.removeLabels( owner, effect );
+            EffectRenderer.setFlags( owner, effect );
+            EffectRenderer.removeFlags( owner, effect );
+            EffectRenderer.setStatus( owner, effect );
+            EffectRenderer.removeStatus( owner, effect );
         });
     }
 
-    protected setLabels( owner : Actor, effects : Effect[] ) {
+    protected static modifyAttributes( owner: Actor, effect : Effect ) {
 
-        effects.forEach(( effect : Effect ) => {
+        if ( ! effect.modifyAttributes.length ) { return; }
 
-            if ( ! effect.setLabels.length ) { return; }
-
-            effect.setLabels.forEachKey( ( key : string ) => {
-                owner.labels.set( key, effect.setLabels.get( key ));
-            });
+        effect.modifyAttributes.forEachKey( ( key : string ) => {
+            let attributeValue : number = owner.attributes.get(key);
+            attributeValue += effect.modifyAttributes.get(key);
+            owner.attributes.replace( key, attributeValue );
         });
     }
 
-    protected removeLabels( owner : Actor, effects : Effect[] ) {
+    protected static setAttributes( owner : Actor, effect : Effect ) {
 
-        effects.forEach( ( effect : Effect ) => {
+        if ( ! effect.setAttributes.length ) { return; }
 
-            if ( ! effect.removeLabels.length ) { return; }
-
-            effect.removeLabels.forEach( ( key : string ) => {
-               owner.labels.remove( key );
-            });
+        effect.setAttributes.forEachKey( ( key : string ) => {
+            owner.attributes.set( key, effect.setAttributes.get(key));
         });
     }
 
-    protected setFlags( owner : Actor, effects : Effect[] ) {
+    protected static removeAttributes( owner : Actor, effect : Effect ) {
 
-        effects.forEach( ( effect : Effect ) => {
+        if ( ! effect.removeAttributes.length ) { return; }
 
-            if ( ! effect.setFlags.length ) { return; }
-
-            effect.setFlags.forEachKey( ( key : string ) => {
-               owner.flags.set( key, effect.setFlags.get( key ));
-            });
+        effect.removeAttributes.forEachItem( ( item : string ) => {
+            owner.attributes.remove(item);
         });
     }
 
-    protected removeFlags( owner : Actor, effects : Effect[] ) {
+    protected static setLabels( owner : Actor, effect : Effect ) {
 
-        effects.forEach( ( effect : Effect ) => {
+        if ( ! effect.setLabels.length ) { return; }
 
-            if ( ! effect.removeFlags.length ) { return; }
-
-            effect.removeFlags.forEach( (key : string) => {
-                owner.flags.remove( key );
-            });
+        effect.setLabels.forEachKey( ( key : string ) => {
+            owner.labels.set( key, effect.setLabels.get( key ));
         });
     }
 
-    protected setStatus( owner : Actor, effects : Effect[] ) {
+    protected static removeLabels( owner : Actor, effect : Effect ) {
 
-        effects.forEach( ( effect : Effect ) => {
+        if ( ! effect.removeLabels.length ) { return; }
 
-            if ( ! effect.setStatus.length ) { return; }
-
-            effect.setStatus.forEachKey( ( key : string ) => {
-                owner.statusEffects.set( key, effect.setStatus.get( key ));
-            });
+        effect.removeLabels.forEachItem( ( key : string ) => {
+           owner.labels.remove( key );
         });
     }
 
-    protected removeStatus( owner : Actor, effects : Effect[] ) {
+    protected static setFlags( owner : Actor, effect : Effect ) {
 
-        effects.forEach(( effect : Effect ) => {
+        if ( ! effect.setFlags.length ) { return; }
 
-            if ( ! effect.removeStatus.length ) { return; }
+        effect.setFlags.forEachKey( ( key : string ) => {
+           owner.flags.set( key, effect.setFlags.get( key ));
+        });
+    }
 
-            effect.removeStatus.forEach(( key : string ) => {
-               owner.statusEffects.remove( key );
-            });
+    protected static removeFlags( owner : Actor, effect : Effect ) {
+
+        if ( ! effect.removeFlags.length ) { return; }
+
+        effect.removeFlags.forEachItem( (key : string) => {
+            owner.flags.remove( key );
+        });
+    }
+
+    protected static setStatus( owner : Actor, effect : Effect ) {
+
+        if ( ! effect.setStatus.length ) { return; }
+
+        effect.setStatus.forEachKey( ( key : string ) => {
+            owner.statusEffects.set( key, effect.setStatus.get( key ));
+        });
+    }
+
+    protected static removeStatus( owner : Actor, effect : Effect ) {
+
+        if ( ! effect.removeStatus.length ) { return; }
+
+        effect.removeStatus.forEachItem(( key : string ) => {
+           owner.statusEffects.remove( key );
         });
     }
 }

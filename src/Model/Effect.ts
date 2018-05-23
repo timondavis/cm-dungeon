@@ -1,6 +1,6 @@
 import {NameMap} from "./NameMap";
 import {Status} from "./Status";
-import {Actor} from "./Actor";
+import {List} from "./List";
 
 export class Effect {
 
@@ -10,38 +10,37 @@ export class Effect {
     private _setAttributes : NameMap<number>;
     public get setAttributes() { return this._setAttributes; }
 
-    private _removeAttributes : string[];
+    private _removeAttributes : List<string>;
     public get removeAttributes() { return this._removeAttributes; }
 
     private _setLabels : NameMap<string>;
     public get setLabels() { return this._setLabels; }
 
-    private _removeLabels : string[];
+    private _removeLabels : List<string>;
     public get removeLabels() { return this._removeLabels; }
-
 
     private _setFlags : NameMap<boolean>;
     public get setFlags() { return this._setFlags; }
 
-    private _removeFlags : string[];
+    private _removeFlags : List<string>;
     public get removeFlags() { return this._removeFlags; }
 
     private _setStatus : NameMap<Status>;
     public get setStatus() { return this._setStatus; }
 
-    private _removeStatus : string[];
+    private _removeStatus : List<string>;
     public get removeStatus() { return this._removeStatus; }
 
     constructor() {
 
         this._modifyAttributes = new NameMap();
         this._setAttributes = new NameMap();
-        this._removeAttributes = [];
+        this._removeAttributes = new List();
         this._setLabels = new NameMap();
-        this._removeLabels = [];
+        this._removeLabels = new List();
         this._setFlags = new NameMap();
-        this._removeFlags = [];
+        this._removeFlags = new List();
         this._setStatus = new NameMap();
-        this._removeStatus = [];
+        this._removeStatus = new List();
     }
 }

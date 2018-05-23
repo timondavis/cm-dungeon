@@ -16,7 +16,7 @@ export class NameMap<T> {
     public add( key : string, value : T ) : NameMap<T> {
 
         if ( this.has( key ) ) {
-            throw "Item with name " + key + " already exists."
+            throw Error( "Item with name " + key + " already exists." );
         }
 
         this.collection[key] = value;
