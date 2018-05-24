@@ -21,83 +21,83 @@ export class EffectRenderer {
 
     protected static modifyAttributes( owner: Actor, effect : Effect ) {
 
-        if ( ! effect.modifyAttributes.length ) { return; }
+        if ( ! effect.attributeModifications.length ) { return; }
 
-        effect.modifyAttributes.forEachKey( ( key : string ) => {
+        effect.attributeModifications.forEachKey( ( key : string ) => {
             let attributeValue : number = owner.attributes.get(key);
-            attributeValue += effect.modifyAttributes.get(key);
+            attributeValue += effect.attributeModifications.get(key);
             owner.attributes.replace( key, attributeValue );
         });
     }
 
     protected static setAttributes( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.setAttributes.length ) { return; }
+        if ( ! effect.attributeAssignments.length ) { return; }
 
-        effect.setAttributes.forEachKey( ( key : string ) => {
-            owner.attributes.set( key, effect.setAttributes.get(key));
+        effect.attributeAssignments.forEachKey( ( key : string ) => {
+            owner.attributes.set( key, effect.attributeAssignments.get(key));
         });
     }
 
     protected static removeAttributes( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.removeAttributes.length ) { return; }
+        if ( ! effect.attributeRemovals.length ) { return; }
 
-        effect.removeAttributes.forEachItem( ( item : string ) => {
+        effect.attributeRemovals.forEachItem( ( item : string ) => {
             owner.attributes.remove(item);
         });
     }
 
     protected static setLabels( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.setLabels.length ) { return; }
+        if ( ! effect.labelAssignments.length ) { return; }
 
-        effect.setLabels.forEachKey( ( key : string ) => {
-            owner.labels.set( key, effect.setLabels.get( key ));
+        effect.labelAssignments.forEachKey( ( key : string ) => {
+            owner.labels.set( key, effect.labelAssignments.get( key ));
         });
     }
 
     protected static removeLabels( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.removeLabels.length ) { return; }
+        if ( ! effect.labelRemovals.length ) { return; }
 
-        effect.removeLabels.forEachItem( ( key : string ) => {
+        effect.labelRemovals.forEachItem( ( key : string ) => {
            owner.labels.remove( key );
         });
     }
 
     protected static setFlags( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.setFlags.length ) { return; }
+        if ( ! effect.flagAssignments.length ) { return; }
 
-        effect.setFlags.forEachKey( ( key : string ) => {
-           owner.flags.set( key, effect.setFlags.get( key ));
+        effect.flagAssignments.forEachKey( ( key : string ) => {
+           owner.flags.set( key, effect.flagAssignments.get( key ));
         });
     }
 
     protected static removeFlags( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.removeFlags.length ) { return; }
+        if ( ! effect.flagRemovals.length ) { return; }
 
-        effect.removeFlags.forEachItem( (key : string) => {
+        effect.flagRemovals.forEachItem( (key : string) => {
             owner.flags.remove( key );
         });
     }
 
     protected static setStatus( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.setStatus.length ) { return; }
+        if ( ! effect.statusAssignments.length ) { return; }
 
-        effect.setStatus.forEachKey( ( key : string ) => {
-            owner.statusEffects.set( key, effect.setStatus.get( key ));
+        effect.statusAssignments.forEachKey( ( key : string ) => {
+            owner.statusEffects.set( key, effect.statusAssignments.get( key ));
         });
     }
 
     protected static removeStatus( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.removeStatus.length ) { return; }
+        if ( ! effect.statusRemovals.length ) { return; }
 
-        effect.removeStatus.forEachItem(( key : string ) => {
+        effect.statusRemovals.forEachItem(( key : string ) => {
            owner.statusEffects.remove( key );
         });
     }

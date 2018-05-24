@@ -7,15 +7,15 @@ export class List<T> {
     }
 
     public add( item : T ) : void {
-        this.push( item );
-    }
-
-    public push( item : T ) : void {
         this._collection.push( item );
     }
 
     public remove( index : number ) {
         this._collection.splice(index, 1);
+    }
+
+    public clear() : void {
+        this._collection = [];
     }
 
     public get( index : number ) : T {

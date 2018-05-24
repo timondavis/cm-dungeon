@@ -40,7 +40,7 @@ describe( 'NameMap', () => {
         expect( Object.keys(map.getAll())).to.have.lengthOf(2);
     });
 
-    it ( 'facilitates lassiez-faire additions on keys that may or may not exists, if preffered,', () => {
+    it ( 'facilitates lassiez-faire additions on keys that may or may not exist, if preferred,', () => {
 
         map = new NameMap();
 
@@ -113,4 +113,35 @@ describe( 'NameMap', () => {
         expect( collection[s2.name] ).to.be.equal(s2);
         expect( collection[s3.name] ).to.be.equal(s3);
     });
+
+    it( 'will return the keys in the map as an array', () => {
+
+        map = new NameMap();
+
+        map.add( s1.name, s1 );
+        map.add( s2.name, s2 );
+        map.add( s3.name, s3 );
+
+        let keys : string[] = map.getKeys();
+
+        expect( keys[0] == s1.name );
+        expect( keys[1] == s2.name );
+        expect( keys[2] == s3.name );
+    });
+
+    it( 'supplies an foreach function which takes a callback function, ' +
+        'which can be used to process over the entire collection', () => {
+
+        map = new NameMap();
+
+        map.add(s1.name, s1);
+        map.add(s2.name, s2);
+        map.add(s3.name, s3);
+
+        map.forEachKey((key : string) => {
+
+            let s : Sample = map.get(key);
+            expect( s.name ).to.be.equal( key );
+        });
+    })
 });

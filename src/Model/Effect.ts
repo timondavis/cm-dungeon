@@ -4,43 +4,43 @@ import {List} from "./List";
 
 export class Effect {
 
-    private _modifyAttributes : NameMap<number>;
-    public get modifyAttributes() { return this._modifyAttributes; }
+    private _attributeModifications : NameMap<number>;
+    public get attributeModifications() { return this._attributeModifications; }
 
-    private _setAttributes : NameMap<number>;
-    public get setAttributes() { return this._setAttributes; }
+    private _attributeAssignments : NameMap<number>;
+    public get attributeAssignments() { return this._attributeAssignments; }
 
-    private _removeAttributes : List<string>;
-    public get removeAttributes() { return this._removeAttributes; }
+    private _attributeRemovals : List<string>;
+    public get attributeRemovals() { return this._attributeRemovals; }
 
-    private _setLabels : NameMap<string>;
-    public get setLabels() { return this._setLabels; }
+    private _labelAssignments : NameMap<string>;
+    public get labelAssignments() { return this._labelAssignments; }
 
-    private _removeLabels : List<string>;
-    public get removeLabels() { return this._removeLabels; }
+    private _labelRemovals : List<string>;
+    public get labelRemovals() { return this._labelRemovals; }
 
-    private _setFlags : NameMap<boolean>;
-    public get setFlags() { return this._setFlags; }
+    private _flagAssignments : NameMap<boolean>;
+    public get flagAssignments() { return this._flagAssignments; }
 
-    private _removeFlags : List<string>;
-    public get removeFlags() { return this._removeFlags; }
+    private _flagRemovals : List<string>;
+    public get flagRemovals() { return this._flagRemovals; }
 
-    private _setStatus : NameMap<Status>;
-    public get setStatus() { return this._setStatus; }
+    private _statusAssignments : NameMap<Status>;
+    public get statusAssignments() { return this._statusAssignments; }
 
-    private _removeStatus : List<string>;
-    public get removeStatus() { return this._removeStatus; }
+    private _statusRemovals : List<string>;
+    public get statusRemovals() { return this._statusRemovals; }
 
     constructor() {
 
-        this._modifyAttributes = new NameMap();
-        this._setAttributes = new NameMap();
-        this._removeAttributes = new List();
-        this._setLabels = new NameMap();
-        this._removeLabels = new List();
-        this._setFlags = new NameMap();
-        this._removeFlags = new List();
-        this._setStatus = new NameMap();
-        this._removeStatus = new List();
+        this._attributeModifications = new NameMap();
+        this._attributeAssignments = new NameMap();
+        this._attributeRemovals = new List();
+        this._labelAssignments = new NameMap();
+        this._labelRemovals = new List();
+        this._flagAssignments = new NameMap();
+        this._flagRemovals = new List();
+        this._statusAssignments = new NameMap();
+        this._statusRemovals = new List();
     }
 }
