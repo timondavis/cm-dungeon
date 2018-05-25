@@ -1,9 +1,9 @@
 export class NameMap<T> {
 
-    protected collection : { [key:string] : T };
+    protected _collection : { [key:string] : T };
 
     constructor() {
-        this.collection = {};
+        this._collection = {};
     }
 
     /**
@@ -19,7 +19,7 @@ export class NameMap<T> {
             throw Error( "Item with name " + key + " already exists." );
         }
 
-        this.collection[key] = value;
+        this._collection[key] = value;
         return this;
     }
 
@@ -32,7 +32,7 @@ export class NameMap<T> {
      */
     public set( key : string, value : T ) : NameMap<T> {
 
-        this.collection[key] = value;
+        this._collection[key] = value;
         return this;
     }
 
@@ -46,10 +46,10 @@ export class NameMap<T> {
     public replace( key : string, value : T ) : NameMap<T> {
 
         if ( ! this.has( key )) {
-            throw "Cannot replace " + key + " item.  It does not exist on the NameMap";
+            throw Error( "Cannot replace " + key + " item.  It does not exist on the NameMap" );
         }
 
-        this.collection[key] = value;
+        this._collection[key] = value;
         return this;
     }
 
@@ -63,10 +63,10 @@ export class NameMap<T> {
 
         if ( this.has( key )) {
 
-            return this.collection[key];
+            return this._collection[key];
         }
 
-        throw "Cannot find item with key " + key;
+        throw new Error( 'Cannot find item with key ' + key );
     }
 
     /**
@@ -75,7 +75,7 @@ export class NameMap<T> {
      * @returns {{[p: string]: T}}
      */
     public getAll() : { [key:string] : T } {
-        return this.collection;
+        return this._collection;
     }
 
     /**
@@ -86,7 +86,7 @@ export class NameMap<T> {
      */
     public has( key : string ) : boolean {
 
-        if ( this.collection.hasOwnProperty(key) ) {
+        if ( this._collection.hasOwnProperty(key) ) {
             return true;
         }
 
@@ -102,21 +102,33 @@ export class NameMap<T> {
     public remove( key: string ) : NameMap<T> {
 
         if ( this.has( key )) {
-            delete(this.collection[key]);
+            delete(this._collection[key]);
         }
 
         return this;
     }
 
+    /**
+     * Get the keys belonging to the map as an array.
+     * @returns {string[]}
+     */
     public getKeys() : string[] {
-        return Object.keys( this.collection );
+        return Object.keys( this._collection );
     }
 
+    /**
+     * Provide a callback function - this function will be invoked for every item in the map.
+     * @param {(key: string, index?: number, array?: string[]) => void} callback
+     */
     public forEachKey( callback : ( key : string, index? : number, array? : string[] ) => void ) : void {
         this.getKeys().forEach( callback );
     }
 
+    /**
+     * Get the number of items in the map.
+     * @returns {number}
+     */
     public get length() : number {
-        return Object.keys( this.collection ).length;
+        return Object.keys( this._collection ).length;
     }
 }

@@ -3,7 +3,8 @@ import {Actor} from "./Actor";
 
 export class Status {
 
-    public _owner : Actor;
+    protected _owner : Actor;
+    public get owner() { return this._owner; }
 
     protected _attributeFilters : NameMap<(value : number) => number>;
     public get attributeFilters() { return this._attributeFilters; }
@@ -17,9 +18,9 @@ export class Status {
     protected _blockedStatusNames  : string[];
     public get blockedStatusNames() { return this._blockedStatusNames; }
 
-    constructor( owner : Actor ) {
+    public setOwner( owner : Actor ) { this._owner = owner; }
 
-        this._owner = owner;
+    constructor() {
         this._attributeFilters = new NameMap();
         this._labelFilters = new NameMap();
         this._flagFilters = new NameMap();

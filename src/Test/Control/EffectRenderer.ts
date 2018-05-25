@@ -3,6 +3,7 @@ import {expect} from 'chai';
 import {Actor} from "../../Model/Actor";
 import {Effect} from "../../Model/Effect";
 import {EffectRenderer} from "../../Control/EffectRenderer";
+import {Status} from "../../Model/Status";
 
 describe( 'EffectRenderer', () => {
 
@@ -87,7 +88,7 @@ describe( 'EffectRenderer', () => {
         expect( () => defender.attributes.get( 'Strength' )).to.throw;
     });
 
-    it( 'will set (new or override) new labels on the actor, based on directives from the effect', () => {
+    it( 'will set (new or override) new flags on the actor, based on directives from the effect', () => {
 
         initTest();
 
@@ -113,13 +114,13 @@ describe( 'EffectRenderer', () => {
         expect( defender.flags.get( 'IsCowardly' )).to.be.false;
     });
 
-    it( 'will remove labels from the actor, if they exist.  Orders to remove non-existing labels will be ignored', () => {
+    it( 'will remove flags from the actor, if they exist.  Orders to remove non-existing labels will be ignored', () => {
 
         initTest();
 
         defender.flags.add( 'RemoveMe!', true );
 
-        expect( defender.flags.get( 'RemoveMe!' )).to.be.true;
+        expect( () => defender.flags.get( 'RemoveMe!' )).not.to.throw;
 
         let effect = new Effect();
         effect.flagRemovals.add( 'RemoveMe!' );
@@ -127,11 +128,107 @@ describe( 'EffectRenderer', () => {
 
         EffectRenderer.renderEffects( defender, effects );
 
-        expect( defender.flags.get( 'RemoveMe!' )).to.throw;
+        expect( () => defender.flags.get( 'RemoveMe!' )).to.throw;
     });
 
-    it( 'will set (new or override) new flags on the actor, based on directives from the effect' );
-    it( 'will remove flags from the actor, if they exist.  Order to remove non-existing flags will be ignored.' );
-    it( 'will set (new or override) new statuses on the actor, based on directives from the effect' );
-    it( 'will remove statuses from the actor, if they exist.  Order to remove non-existing statuses will be ignored.' );
+    it( 'will set (new or override) new labels on the actor, based on directives from the effect', () => {
+
+        initTest();
+
+        let effect = new Effect();
+        effect.labelAssignments.add( 'Class', 'Paladin' );
+        effects.push( effect );
+
+        EffectRenderer.renderEffects( defender, effects );
+
+        expect( defender.labels.get( 'Class' )).to.be.equal( 'Paladin' );
+
+        effect = new Effect();
+        effect.labelAssignments.add( 'Class', 'Paladin/Ranger' );
+        effects.push( effect );
+
+        EffectRenderer.renderEffects( defender, effects );
+
+        expect( defender.labels.get( 'Class' )).to.be.equal( 'Paladin/Ranger' );
+    });
+
+    it( 'will remove labels from the actor, if they exist.  Order to remove non-existing flags will be ignored.', () => {
+
+        initTest();
+        defender.labels.add( 'First Name', 'Smith' );
+
+        expect( () => defender.labels.get( 'First Name' )).not.to.throw;
+        expect( () => defender.labels.get( 'Last Name' )).to.throw;
+
+        let effect = new Effect();
+        effect.labelRemovals.add( 'First Name' );
+        effect.labelRemovals.add( 'Last Name' );
+
+        EffectRenderer.renderEffects( defender, effects );
+
+        expect( () => defender.labels.get( 'First Name' )).to.throw;
+        expect( () => defender.labels.get( 'Last Name' )).to.throw;
+    });
+
+    it( 'will set (new or override) new statuses on the actor, based on directives from the effect', () => {
+
+        initTest();
+        let s : Status = new Status();
+        s.setOwner( defender );
+
+        s.attributeFilters.add( 'Intelligence', (value : number) => {
+            return value - 2;
+        });
+
+        let effect = new Effect();
+        effect.statusAssignments.add( 'Fear', s );
+        effects.push( effect );
+
+        EffectRenderer.renderEffects( defender, effects );
+
+        let retrievedStatus = defender.statusEffects.get( 'Fear' );
+
+        expect( () => retrievedStatus.attributeFilters.get( 'Bravery' )).to.throw;
+        expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).not.to.throw;
+    });
+
+    it( 'will remove statuses from the actor, if they exist.  Order to remove non-existing statuses will be ignored.', () => {
+
+        initTest();
+        let s1 : Status = new Status();
+        let s2 : Status = new Status();
+        s1.setOwner( defender );
+        s2.setOwner( defender );
+
+        s1.attributeFilters.add( 'Intelligence', (value : number) => {
+            return value - 2;
+        });
+        s2.attributeFilters.add( 'Wisdom', (value : number) => {
+            return value - 4;
+        })
+
+        let effect = new Effect();
+        effect.statusAssignments.add( 'Fear', s1 );
+        effect.statusAssignments.add( 'Wroth', s2 );
+        effects.push( effect );
+
+        EffectRenderer.renderEffects( defender, effects );
+
+        let retrievedStatus = defender.statusEffects.get( 'Fear' );
+
+        expect( () => retrievedStatus.attributeFilters.get( 'Bravery' )).to.throw;
+        expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).not.to.throw;
+        expect( () => retrievedStatus.attributeFilters.get( 'Wroth' )).not.to.throw;
+
+        effects = [];
+
+        effect = new Effect();
+        effect.statusRemovals.add( 'Fear' );
+        effect.statusRemovals.add( 'Potion of Strength' );
+        effects.push( effect );
+
+        expect( () => retrievedStatus.attributeFilters.get( 'Bravery' )).to.throw;
+        expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).to.throw;
+        expect( () => retrievedStatus.attributeFilters.get( 'Wroth' )).not.to.throw;
+    });
 });

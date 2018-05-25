@@ -1,5 +1,5 @@
 export declare class NameMap<T> {
-    protected collection: {
+    protected _collection: {
         [key: string]: T;
     };
     constructor();
@@ -56,7 +56,19 @@ export declare class NameMap<T> {
      * @returns {NameMap<T>}
      */
     remove(key: string): NameMap<T>;
+    /**
+     * Get the keys belonging to the map as an array.
+     * @returns {string[]}
+     */
     getKeys(): string[];
+    /**
+     * Provide a callback function - this function will be invoked for every item in the map.
+     * @param {(key: string, index?: number, array?: string[]) => void} callback
+     */
     forEachKey(callback: (key: string, index?: number, array?: string[]) => void): void;
+    /**
+     * Get the number of items in the map.
+     * @returns {number}
+     */
     readonly length: number;
 }
