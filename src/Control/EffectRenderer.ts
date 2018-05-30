@@ -24,10 +24,21 @@ export class EffectRenderer {
 
         if ( ! effect.attributeModifications.length ) { return; }
 
-        effect.attributeModifications.forEachKey( ( key : string ) => {
-            let attributeValue : number = owner.attributes.get(key);
-            attributeValue += effect.attributeModifications.get(key);
-            owner.attributes.replace( key, attributeValue );
+        effect.attributeModifications.forEachKey( ( attributeKey : string ) => {
+
+            let attributeValue : number = owner.attributes.get( attributeKey );
+            let modificationValue : number = effect.attributeModifications.get( attributeKey );
+
+            owner.statuses.forEachKey( ( statusKey : string) => {
+                if ( owner.statuses.has( statusKey )) {
+                    modificationValue = owner.statuses.get( statusKey )
+                        .attributeEffectFilters.get( attributeKey )
+                        .call( modificationValue );
+                }
+            });
+
+            attributeValue += effect.attributeModifications.get( attributeKey );
+            owner.attributes.replace( attributeKey, attributeValue );
         });
     }
 
@@ -90,7 +101,7 @@ export class EffectRenderer {
         if ( ! effect.statusAssignments.length ) { return; }
 
         effect.statusAssignments.forEachKey( ( key : string ) => {
-            owner.statusEffects.set( key, effect.statusAssignments.get( key ));
+            owner.statuses.set( key, effect.statusAssignments.get( key ));
         });
     }
 
@@ -99,7 +110,7 @@ export class EffectRenderer {
         if ( ! effect.statusRemovals.length ) { return; }
 
         effect.statusRemovals.forEachItem(( key : string ) => {
-           owner.statusEffects.remove( key );
+           owner.statuses.remove( key );
         });
     }
 }

@@ -10,8 +10,8 @@ export declare class Actor {
     readonly labels: NameMap<string>;
     protected _flags: NameMap<boolean>;
     readonly flags: NameMap<boolean>;
-    protected _statusEffects: NameMap<Status>;
-    readonly statusEffects: NameMap<Status>;
+    protected _statuses: NameMap<Status>;
+    readonly statuses: NameMap<Status>;
     constructor();
     /**
      * Execute an ability belonging to the actor

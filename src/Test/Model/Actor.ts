@@ -25,8 +25,6 @@ describe( 'Actor', function() {
         reset();
 
         a.attributes.add( 'Strength', 5 );
-
-        let strength = a.attributes.get( 'Strength' );
         expect(a.attributes.get( 'Strength' )).to.be.equal( 5 );
     });
 
@@ -38,6 +36,7 @@ describe( 'Actor', function() {
         a.abilities.add( 'Attack', attackAbility );
         a.abilities.get( 'Attack' ).execute( a, b );
 
+        expect( b.attributes.get( 'HP' )).to.be.lessThan( 10 );
     });
 
 });

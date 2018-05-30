@@ -6,17 +6,30 @@ export class Status {
     protected _owner : Actor;
     public get owner() { return this._owner; }
 
-    protected _attributeFilters : NameMap<(value : number) => number>;
-    public get attributeFilters() { return this._attributeFilters; }
+    protected _attributeEffectFilters : NameMap<( value : number ) => number>;
+    public get attributeEffectFilters() { return this._attributeEffectFilters; }
 
-    protected _labelFilters     : NameMap<(value : string) => string>;
-    public get labelFilters() { return this._labelFilters; }
+    protected _attributeReportFilters : NameMap<( value : number ) => number>;
+    public get attributeReportFilters() { return this._attributeReportFilters; }
 
-    protected _flagFilters      : NameMap<(value : string) => boolean>;
-    public get flagFilters() { return this._flagFilters; }
+    protected _labelEffectFilters     : NameMap<( value : string ) => string>;
+    public get labelEffectFilters() { return this._labelEffectFilters; }
 
-    protected _statusFilters  : NameMap<(value : Status) => Status>;
-    public get statusFilters() { return this._statusFilters; }
+    protected _labelReportFilters     : NameMap<( value  :string ) => string>;
+    public get labelReportFilters() { return this._labelReportFilters; }
+
+    protected _flagEffectFilters      : NameMap<( value : string ) => boolean>;
+    public get flagEffectFilters() { return this._flagEffectFilters; }
+
+    protected _flagReportFilters      : NameMap<( value : string ) => boolean>;
+    public get flagReportFilters() { return this._flagReportFilters; }
+
+    protected _statusEffectFilters  : NameMap<(value : Status) => Status>;
+    public get statusEffectFilters() { return this._statusEffectFilters; }
+
+    protected _statusReportFilters  : NameMap<(value : Status) => Status>;
+    public get statusReportFilters() { return this._statusReportFilters; }
+
 
     public setOwner( owner : Actor ) { this._owner = owner; }
 
@@ -24,18 +37,22 @@ export class Status {
 
         let tempStatus = new Status();
         tempStatus._owner = this.owner;
-        tempStatus._attributeFilters = this.attributeFilters;
-        tempStatus._labelFilters = this.labelFilters;
-        tempStatus._flagFilters = this.flagFilters;
-        tempStatus._statusFilters = this.statusFilters;
+        tempStatus._attributeEffectFilters = this.attributeEffectFilters;
+        tempStatus._labelEffectFilters     = this.labelEffectFilters;
+        tempStatus._flagEffectFilters      = this.flagEffectFilters;
+        tempStatus._statusEffectFilters    = this.statusEffectFilters;
 
         return tempStatus;
     }
 
     constructor() {
-        this._attributeFilters = new NameMap();
-        this._labelFilters = new NameMap();
-        this._flagFilters = new NameMap();
-        this._statusFilters = new NameMap();
+        this._attributeEffectFilters = new NameMap();
+        this._attributeReportFilters = new NameMap();
+        this._labelEffectFilters = new NameMap();
+        this._labelReportFilters = new NameMap();
+        this._flagEffectFilters = new NameMap();
+        this._flagReportFilters = new NameMap();
+        this._statusEffectFilters = new NameMap();
+        this._statusReportFilters = new NameMap();
     }
 }

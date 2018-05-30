@@ -177,7 +177,7 @@ describe( 'EffectRenderer', () => {
         let s : Status = new Status();
         s.setOwner( defender );
 
-        s.attributeFilters.add( 'Intelligence', (value : number) => {
+        s.attributeEffectFilters.add( 'Intelligence', (value : number) => {
             return value - 2;
         });
 
@@ -187,10 +187,10 @@ describe( 'EffectRenderer', () => {
 
         EffectRenderer.renderEffects( defender, effects );
 
-        let retrievedStatus = defender.statusEffects.get( 'Fear' );
+        let retrievedStatus = defender.statuses.get( 'Fear' );
 
-        expect( () => retrievedStatus.attributeFilters.get( 'Bravery' )).to.throw;
-        expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).not.to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Bravery' )).to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Fear' )).not.to.throw;
     });
 
     it( 'will remove statuses from the actor, if they exist.  Order to remove non-existing statuses will be ignored.', () => {
@@ -201,12 +201,12 @@ describe( 'EffectRenderer', () => {
         s1.setOwner( defender );
         s2.setOwner( defender );
 
-        s1.attributeFilters.add( 'Intelligence', (value : number) => {
+        s1.attributeEffectFilters.add( 'Intelligence', (value : number) => {
             return value - 2;
         });
-        s2.attributeFilters.add( 'Wisdom', (value : number) => {
+        s2.attributeEffectFilters.add( 'Wisdom', (value : number) => {
             return value - 4;
-        })
+        });
 
         let effect = new Effect();
         effect.statusAssignments.add( 'Fear', s1 );
@@ -215,11 +215,11 @@ describe( 'EffectRenderer', () => {
 
         EffectRenderer.renderEffects( defender, effects );
 
-        let retrievedStatus = defender.statusEffects.get( 'Fear' );
+        let retrievedStatus = defender.statuses.get( 'Fear' );
 
-        expect( () => retrievedStatus.attributeFilters.get( 'Bravery' )).to.throw;
-        expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).not.to.throw;
-        expect( () => retrievedStatus.attributeFilters.get( 'Wroth' )).not.to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Bravery' )).to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Fear' )).not.to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Wroth' )).not.to.throw;
 
         effects = new List<Effect>();
 
@@ -228,8 +228,17 @@ describe( 'EffectRenderer', () => {
         effect.statusRemovals.add( 'Potion of Strength' );
         effects.add( effect );
 
-        expect( () => retrievedStatus.attributeFilters.get( 'Bravery' )).to.throw;
-        expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).to.throw;
-        expect( () => retrievedStatus.attributeFilters.get( 'Wroth' )).not.to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Bravery' )).to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Fear' )).to.throw;
+        expect( () => retrievedStatus.attributeEffectFilters.get( 'Wroth' )).not.to.throw;
+    });
+
+    it( 'processes status effect filters for attributes', () => {
+
+        initTest();
+
+        let s = new Status();
+
+        // TODO PICKUP HERE
     });
 });
