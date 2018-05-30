@@ -1,7 +1,8 @@
 import { Effect } from "../Model/Effect";
 import { Actor } from "../Model/Actor";
+import { List } from "../Model/List";
 export declare class EffectRenderer {
-    static renderEffects(owner: Actor, effects: Effect[]): void;
+    static renderEffects(owner: Actor, effects: List<Effect>): void;
     protected static modifyAttributes(owner: Actor, effect: Effect): void;
     protected static setAttributes(owner: Actor, effect: Effect): void;
     protected static removeAttributes(owner: Actor, effect: Effect): void;

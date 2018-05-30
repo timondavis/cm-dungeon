@@ -15,10 +15,10 @@ export class D20_Attack implements Ability {
         const effect = new Effect();
         let check = this.generateCheck( source, target );
         let damage = this.getDamage() * -1;
-        effect.modifyAttributes.add('HP', damage);
+        effect.attributeModifications.add('HP', damage);
 
         let attackInteraction = new Interaction( source, target, check );
-        attackInteraction.effects.push( effect );
+        attackInteraction.effects.add( effect );
 
         attackInteraction.execute();
 
@@ -29,10 +29,8 @@ export class D20_Attack implements Ability {
 
         const CE = CheckExecutor.getInstance();
 
-        const strength = source.attributes.get( 'Strength' );
-
-        let strengthModifier = CE.generateModifier( 'Strength' );
-        strengthModifier.setValue( strength );
+        let strengthModifier = CE.generateModifier( 'result' );
+        strengthModifier.setValue( 2 );
 
         const AC = target.attributes.get( 'AC' );
 

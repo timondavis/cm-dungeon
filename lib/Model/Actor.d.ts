@@ -13,4 +13,9 @@ export declare class Actor {
     protected _statusEffects: NameMap<Status>;
     readonly statusEffects: NameMap<Status>;
     constructor();
+    /**
+     * Execute an ability belonging to the actor
+     * @param {string} abilityName
+     */
+    execute(abilityName: string, target: Actor, data?: any): Ability;
 }

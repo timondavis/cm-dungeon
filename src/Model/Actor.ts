@@ -27,4 +27,17 @@ export class Actor {
         this._flags = new NameMap();
         this._statusEffects = new NameMap();
     }
+
+    /**
+     * Execute an ability belonging to the actor
+     * @param {string} abilityName
+     */
+    public execute( abilityName : string, target : Actor, data? : any) : Ability {
+
+        if ( ! this.abilities.has( abilityName )) {
+            throw Error( "Ability with name " + abilityName + " could not be found on target actor.")
+        }
+
+        return this.abilities.get( abilityName ).execute( this, target, data );
+    }
 }

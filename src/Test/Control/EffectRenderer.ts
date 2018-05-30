@@ -4,12 +4,13 @@ import {Actor} from "../../Model/Actor";
 import {Effect} from "../../Model/Effect";
 import {EffectRenderer} from "../../Control/EffectRenderer";
 import {Status} from "../../Model/Status";
+import {List} from "../../Model/List";
 
 describe( 'EffectRenderer', () => {
 
     let attacker = new Actor();
     let defender = new Actor();
-    let effects : Effect[] = [];
+    let effects : List<Effect> = new List<Effect>();
 
     let rand = function( min : number, max : number ) {
 
@@ -20,7 +21,7 @@ describe( 'EffectRenderer', () => {
 
         attacker = new Actor();
         defender = new Actor();
-        effects = [];
+        effects = new List<Effect>();
 
         attacker.attributes.add( 'Strength',        10 );
         attacker.attributes.add( 'Dexterity',       10 );
@@ -51,7 +52,7 @@ describe( 'EffectRenderer', () => {
 
         let effect = new Effect();
         effect.attributeModifications.add( 'HP', randomNumber );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -66,7 +67,7 @@ describe( 'EffectRenderer', () => {
 
         let effect = new Effect();
         effect.attributeAssignments.add( 'HP', randomNumber );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -81,7 +82,7 @@ describe( 'EffectRenderer', () => {
 
         let effect = new Effect();
         effect.attributeRemovals.add( 'Strength' );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -95,18 +96,18 @@ describe( 'EffectRenderer', () => {
         let effect = new Effect();
         effect.flagAssignments.add( 'IsDaring', true );
         effect.flagAssignments.add( 'IsCowardly', false );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
         expect( defender.flags.get( 'IsDaring' )).to.be.true;
         expect( defender.flags.get( 'IsCowardly' )).to.be.false;
 
-        effects = [];
+        effects = new List<Effect>();
 
         effect = new Effect();
         effect.flagAssignments.add( 'IsDaring', false );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -124,7 +125,7 @@ describe( 'EffectRenderer', () => {
 
         let effect = new Effect();
         effect.flagRemovals.add( 'RemoveMe!' );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -137,7 +138,7 @@ describe( 'EffectRenderer', () => {
 
         let effect = new Effect();
         effect.labelAssignments.add( 'Class', 'Paladin' );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -145,7 +146,7 @@ describe( 'EffectRenderer', () => {
 
         effect = new Effect();
         effect.labelAssignments.add( 'Class', 'Paladin/Ranger' );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -182,7 +183,7 @@ describe( 'EffectRenderer', () => {
 
         let effect = new Effect();
         effect.statusAssignments.add( 'Fear', s );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -210,7 +211,7 @@ describe( 'EffectRenderer', () => {
         let effect = new Effect();
         effect.statusAssignments.add( 'Fear', s1 );
         effect.statusAssignments.add( 'Wroth', s2 );
-        effects.push( effect );
+        effects.add( effect );
 
         EffectRenderer.renderEffects( defender, effects );
 
@@ -220,12 +221,12 @@ describe( 'EffectRenderer', () => {
         expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).not.to.throw;
         expect( () => retrievedStatus.attributeFilters.get( 'Wroth' )).not.to.throw;
 
-        effects = [];
+        effects = new List<Effect>();
 
         effect = new Effect();
         effect.statusRemovals.add( 'Fear' );
         effect.statusRemovals.add( 'Potion of Strength' );
-        effects.push( effect );
+        effects.add( effect );
 
         expect( () => retrievedStatus.attributeFilters.get( 'Bravery' )).to.throw;
         expect( () => retrievedStatus.attributeFilters.get( 'Fear' )).to.throw;

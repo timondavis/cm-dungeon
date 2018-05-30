@@ -3,6 +3,7 @@ import {Check} from "cm-check/lib/Check/Check";
 import {Effect} from "../Model/Effect";
 import {CheckExecutor} from "cm-check/lib/Check/CheckExecutor";
 import {EffectRenderer} from "./EffectRenderer";
+import {List} from "../Model/List";
 
 export class Interaction {
 
@@ -15,7 +16,7 @@ export class Interaction {
     private _resistanceCheck : Check;
     public get resistanceCheck() { return this._resistanceCheck }
 
-    private _effects : Effect[];
+    private _effects : List<Effect>;
     public get effects() { return this._effects; }
 
     public _type : string;
@@ -23,6 +24,7 @@ export class Interaction {
 
     constructor( source : Actor, target: Actor, check : Check ) {
 
+        this._effects = new List<Effect>();
         this._source = source;
         this._target = target;
         this._resistanceCheck = check;

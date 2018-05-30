@@ -1,11 +1,12 @@
 import {Effect} from "../Model/Effect";
 import {Actor} from "../Model/Actor";
+import {List} from "../Model/List";
 
 export class EffectRenderer {
 
-    public static renderEffects( owner: Actor, effects: Effect[] ) {
+    public static renderEffects( owner: Actor, effects: List<Effect> ) {
 
-        effects.forEach(( effect : Effect ) => {
+        effects.forEachItem(( effect : Effect ) => {
 
             EffectRenderer.modifyAttributes( owner, effect );
             EffectRenderer.setAttributes( owner, effect );
