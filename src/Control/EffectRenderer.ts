@@ -29,15 +29,16 @@ export class EffectRenderer {
             let attributeValue : number = owner.attributes.get( attributeKey );
             let modificationValue : number = effect.attributeModifications.get( attributeKey );
 
-            owner.statuses.forEachKey( ( statusKey : string) => {
-                if ( owner.statuses.has( statusKey )) {
+            owner.statuses.forEachKey( ( statusKey : string ) => {
+                if ( owner.statuses.get( statusKey ).attributeEffectFilters.has( attributeKey )) {
+
                     modificationValue = owner.statuses.get( statusKey )
                         .attributeEffectFilters.get( attributeKey )
                         .call( modificationValue );
                 }
             });
 
-            attributeValue += effect.attributeModifications.get( attributeKey );
+            attributeValue += modificationValue;
             owner.attributes.replace( attributeKey, attributeValue );
         });
     }

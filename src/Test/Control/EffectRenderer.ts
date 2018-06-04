@@ -5,6 +5,7 @@ import {Effect} from "../../Model/Effect";
 import {EffectRenderer} from "../../Control/EffectRenderer";
 import {Status} from "../../Model/Status";
 import {List} from "../../Model/List";
+import {D20_Attack} from "../../Model/Ability/d20/D20_Attack";
 
 describe( 'EffectRenderer', () => {
 
@@ -237,8 +238,29 @@ describe( 'EffectRenderer', () => {
 
         initTest();
 
-        let s = new Status();
+        let invincibilityStatus = new Status();
 
-        // TODO PICKUP HERE
+        // Always return a delta of 0 when affecting HP
+        invincibilityStatus.attributeEffectFilters.add( 'HP', () => {
+            return 0;
+        });
+
+        defender.attributes.set( 'AC', 100 );
+
+        attacker.abilities.add('Attack', new D20_Attack());
+        attacker.execute( 'Attack', defender );
+
+        expect( defender.attributes.get( 'HP' )).to.be.equal( 10 );
+
+        defender.attributes.set( 'AC', 0 );
+        attacker.execute( 'Attack', defender );
+
+        expect( defender.attributes.get( 'HP' )).to.be.lessThan( 10 );
+
+        defender.attributes.set( 'HP', 10 );
+        defender.statuses.add( 'Invincibility', invincibilityStatus );
+        attacker.execute( 'Attack', defender );
+
+        expect( defender.attributes.get( 'HP' )).to.be.equal( 10 );
     });
 });
