@@ -56,6 +56,12 @@ export declare class PrioritizedNameMap<T> {
         [key: string]: T;
     };
     /**
+     * Get all of the items in the collection, reported back as one NameMap.
+     *
+     * @returns {NameMap<T>}
+     */
+    getAllAsNameMap(): NameMap<T>;
+    /**
      * Request information on whether or not an item with a given key exists
      *
      * @param {string} key
@@ -93,6 +99,13 @@ export declare class PrioritizedNameMap<T> {
      */
     readonly length: number;
     /**
+     * Get the priority for the item with the given key
+     *
+     * @param {string} key
+     * @returns {number}
+     */
+    getKeyPriority(key: string): number;
+    /**
      * Will search for the priority of the given key.  If no such key is found,
      * this function will return the DEFAULT PRIORITY value.  Handy for situations where
      * you just need a number to assign, and don't require the key to already have been registered
@@ -101,5 +114,5 @@ export declare class PrioritizedNameMap<T> {
      * @param {string} key
      * @returns {number}
      */
-    protected getPriorityOfKey(key: string): number;
+    protected getPriorityOfKeyOrDefault(key: string): number;
 }

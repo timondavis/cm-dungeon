@@ -56,7 +56,7 @@ export class PrioritizedNameMap<T> {
     public set( key : string, value : T, priority : number|null = null ) : PrioritizedNameMap<T> {
 
         if (priority == null) {
-            priority = this.getPriorityOfKey( key );
+            priority = this.getPriorityOfKeyOrDefault( key );
         }
 
         if ( ! this.prioritizedNames.has( priority )) {
@@ -158,6 +158,29 @@ export class PrioritizedNameMap<T> {
         });
 
         return collection;
+    }
+
+    /**
+     * Get all of the items in the collection, reported back as one NameMap.
+     *
+     * @returns {NameMap<T>}
+     */
+    public getAllAsNameMap() : NameMap<T> {
+
+        let reportMap : NameMap<T> = new NameMap<T>();
+        let priorityMap : NameMap<T>;
+
+        this.prioritizedNames.forEachKey( (priorityKey : number ) => {
+
+            priorityMap = this.prioritizedNames.get( priorityKey );
+
+            priorityMap.forEachKey( ( mapKey : string ) => {
+
+                reportMap.add( mapKey, priorityMap.get( mapKey ));
+            });
+        });
+
+        return reportMap;
     }
 
     /**
@@ -279,6 +302,17 @@ export class PrioritizedNameMap<T> {
     }
 
     /**
+     * Get the priority for the item with the given key
+     *
+     * @param {string} key
+     * @returns {number}
+     */
+    public getKeyPriority( key : string ) : number {
+
+        return this.namePriorityIndex.get( key );
+    }
+
+    /**
      * Will search for the priority of the given key.  If no such key is found,
      * this function will return the DEFAULT PRIORITY value.  Handy for situations where
      * you just need a number to assign, and don't require the key to already have been registered
@@ -287,7 +321,7 @@ export class PrioritizedNameMap<T> {
      * @param {string} key
      * @returns {number}
      */
-    protected getPriorityOfKey( key : string ) : number {
+    protected getPriorityOfKeyOrDefault( key : string ) : number {
 
         try {
 
