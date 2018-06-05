@@ -177,4 +177,115 @@ describe( 'PrioritizedNameMap', () => {
         expect( nameMap.get( 'value5' )).to.be.equal( 5 );
     });
 
+    it( 'should report on whether any items in the collection have an indicated key', () => {
+
+        resetTest();
+
+        map.add( 'value1', 1, 57 );
+        map.add( 'value2', 2, 1837 );
+        map.add( 'value3', 3, 382 );
+        map.add( 'value4', 4, 38299 );
+        map.add( 'value5', 5, 1122 );
+
+        expect( map.has( 'value1' )).to.be.true;
+        expect( map.has( 'value2' )).to.be.true;
+        expect( map.has( 'value3' )).to.be.true;
+        expect( map.has( 'value4' )).to.be.true;
+        expect( map.has( 'value5' )).to.be.true;
+        expect( map.has( 'value6' )).to.be.false;
+    });
+
+    it( 'should facilitate removal of items with the given key', () => {
+        resetTest();
+
+        map.add( 'value1', 5, 101 );
+
+        expect( map.has( 'value1' )).to.be.true;
+        expect( map.get( 'value1' )).to.be.equal( 5 );
+
+        map.remove( 'value1' );
+
+        expect( map.has( 'value1' )).to.be.false;
+        expect( () => map.get( 'value1' )).to.throw;
+        expect( () => map.getKeyPriority( 'value1' )).to.throw;
+    });
+
+    it( 'should throw an exception when attempting to remove a non-existing item', () => {
+        resetTest();
+
+        expect( () => map.remove( 'non-existing-item-key' ));
+    });
+
+    it( 'should return the keys of the entire collection as a flat array', () => {
+
+        resetTest();
+
+        map.add( 'value1', 1, 57 );
+        map.add( 'value2', 2, 1837 );
+        map.add( 'value3', 3, 382 );
+        map.add( 'value4', 4, 38299 );
+        map.add( 'value5', 5, 1122 );
+
+        let foundNames : any = {
+            'value1' : false,
+            'value2' : false,
+            'value3' : false,
+            'value4' : false,
+            'value5' : false
+        };
+
+        let keys : string[] = map.getKeys();
+
+        keys.forEach( ( value : string ) => {
+
+            foundNames[value] = true;
+        });
+
+        expect( foundNames.value1 ).to.be.true;
+        expect( foundNames.value2 ).to.be.true;
+        expect( foundNames.value3 ).to.be.true;
+        expect( foundNames.value4 ).to.be.true;
+        expect( foundNames.value5 ).to.be.true;
+    });
+
+    it( 'should return the keys of a specified priority tier as a flat array', () => {
+
+        resetTest();
+
+        map.add( 'value1', 1, 1 );
+        map.add( 'value2', 2, 2 );
+        map.add( 'value3', 3, 1 );
+        map.add( 'value4', 4, 2 );
+        map.add( 'value5', 5, 1 );
+
+        let keys1 : string[] = map.getKeys( 1 );
+        let keys2 : string[] = map.getKeys( 2 );
+
+        let foundNames : any = {
+            'value1' : false,
+            'value2' : false,
+            'value3' : false,
+            'value4' : false,
+            'value5' : false
+        };
+
+        keys1.forEach( ( value : string ) => {
+
+            foundNames[value] = true;
+        });
+
+        expect( foundNames.value1 ).to.be.true;
+        expect( foundNames.value2 ).to.be.false;
+        expect( foundNames.value3 ).to.be.true;
+        expect( foundNames.value4 ).to.be.false;
+        expect( foundNames.value5 ).to.be.true;
+
+        keys2.forEach( ( value : string) => {
+
+           foundNames[value] = true;
+        });
+
+        expect( foundNames.value2 ).to.be.true;
+        expect( foundNames.value4 ).to.be.true;
+    });
 });

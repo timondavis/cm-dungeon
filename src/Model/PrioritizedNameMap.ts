@@ -209,11 +209,8 @@ export class PrioritizedNameMap<T> {
      */
     public remove( key: string ) : PrioritizedNameMap<T> {
 
-        this.prioritizedNames.forEachKey( ( priorityKey : number ) => {
-            if ( this.prioritizedNames.get( priorityKey ).has( key )) {
-                this.prioritizedNames.get( priorityKey ).remove( key );
-            }
-        });
+        this.getMapForPriority( this.getKeyPriority( key )).remove( key );
+        this.namePriorityIndex.remove( key );
 
         return this;
     }
@@ -225,7 +222,7 @@ export class PrioritizedNameMap<T> {
     public getKeys( priority : number|null = null ) : string[] {
 
         if ( priority ) {
-            return Object.keys(this.prioritizedNames.get( priority ));
+            return this.prioritizedNames.get( priority ).getKeys();
         }
         else {
 
@@ -242,6 +239,7 @@ export class PrioritizedNameMap<T> {
         }
     }
 
+    // @TODO Allow prioritized for each key?
     /**
      * Provide a callback function - this function will be invoked for every item in the map.  Will deliver items
      * from priority tiers in ASCENDING order ( starting with 0, then 1, etc... ).
@@ -323,14 +321,7 @@ export class PrioritizedNameMap<T> {
      */
     protected getPriorityOfKeyOrDefault( key : string ) : number {
 
-        try {
-
-            return this.namePriorityIndex.get( key );
-        }
-        catch ( ex ){
-
-            return PrioritizedNameMap.DEFAULT_PRIORITY;
-        }
-
+        try { return this.namePriorityIndex.get( key ); }
+        catch ( ex ){ return PrioritizedNameMap.DEFAULT_PRIORITY; }
     }
 }
