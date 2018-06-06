@@ -2,8 +2,18 @@ import {Effect} from "../Model/Effect";
 import {Actor} from "../Model/Actor";
 import {List} from "../Model/List";
 
+/**
+ * @class EffectRenderer
+ * The EffectRenderer facilitates the application of Effects to Actors.
+ */
 export class EffectRenderer {
 
+    /**
+     * Render every effect in the effect list passed into the EffectRenderer.
+     *
+     * @param {Actor} owner
+     * @param {List<Effect>} effects
+     */
     public static renderEffects( owner: Actor, effects: List<Effect> ) {
 
         effects.forEachItem(( effect : Effect ) => {
@@ -20,6 +30,14 @@ export class EffectRenderer {
         });
     }
 
+    // @TODO Write up tests to back up operation of this function, then code out the rest of them.
+    // @TODO DONT FORGET THAT THE STATUS FILTERS ARE -PRIORITIZED- IN THOSE TESTS!
+    /**
+     * Modify the attributes of the owning (target) actor, using the Effect to provide the directives.
+     *
+     * @param {Actor} owner
+     * @param {Effect} effect
+     */
     protected static modifyAttributes( owner: Actor, effect : Effect ) {
 
         if ( ! effect.attributeModifications.length ) { return; }
