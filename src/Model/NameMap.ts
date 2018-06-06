@@ -15,6 +15,8 @@ export class NameMap<T> {
      */
     public add( key : string, value : T ) : NameMap<T> {
 
+        key = key.trim();
+
         if ( this.has( key ) ) {
             throw Error( "Item with name " + key + " already exists." );
         }
@@ -32,6 +34,8 @@ export class NameMap<T> {
      */
     public set( key : string, value : T ) : NameMap<T> {
 
+        key = key.trim();
+
         this._collection[key] = value;
         return this;
     }
@@ -44,6 +48,8 @@ export class NameMap<T> {
      * @returns {NameMap<T>}
      */
     public replace( key : string, value : T ) : NameMap<T> {
+
+        key = key.trim();
 
         if ( ! this.has( key )) {
             throw Error( "Cannot replace " + key + " item.  It does not exist on the NameMap" );
@@ -60,6 +66,8 @@ export class NameMap<T> {
      * @returns {T}
      */
     public get( key : string ) : T {
+
+        key = key.trim();
 
         if ( this.has( key )) {
 
@@ -86,6 +94,8 @@ export class NameMap<T> {
      */
     public has( key : string ) : boolean {
 
+        key = key.trim();
+
         if ( this._collection.hasOwnProperty(key) ) {
             return true;
         }
@@ -100,6 +110,8 @@ export class NameMap<T> {
      * @returns {NameMap<T>}
      */
     public remove( key: string ) : NameMap<T> {
+
+        key = key.trim();
 
         if ( this.has( key )) {
             delete(this._collection[key]);

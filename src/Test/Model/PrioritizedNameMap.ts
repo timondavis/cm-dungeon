@@ -43,41 +43,6 @@ describe( 'PrioritizedNameMap', () => {
         expect( map.get( 'ToasterSetting' )).to.be.equal( 1 );
     });
 
-    it( 'should allow priority to be changed with the set method', () => {
-
-        resetTest();
-
-        map.set( 'ToasterSetting', 5 );
-        expect( map.get( 'ToasterSetting' )).to.be.equal( 5 );
-        expect( map.getMapForPriority( 1000 ).has( 'ToasterSetting' )).to.be.true;
-        expect( map.getMapForPriority( 1000 ).get( 'ToasterSetting' )).to.be.equal( 5 );
-
-        map.set( 'ToasterSetting', 7, 10 );
-        expect( map.get( 'ToasterSetting' )).to.be.equal( 7 );
-
-        expect( map.getMapForPriority( 10 ).has( 'ToasterSetting' ));
-        expect( map.getMapForPriority( 10 ).get( 'ToasterSetting' )).to.be.equal( 7 );
-
-        expect( map.getMapForPriority( 1000 ).has( 'ToasterSetting' )).to.be.false;
-        expect( () => map.getMapForPriority( 1000 ).get( 'ToasterSetting' )).to.throw;
-    });
-
-    it( 'should retain an items priority when set() is invoked without specifying an ' +
-        'explicit priority on an existing item', () => {
-
-        resetTest();
-
-        map.set( 'ToasterSetting', 5, 25 );
-        expect( map.get( 'ToasterSetting' )).to.be.equal( 5 );
-        expect( map.getMapForPriority( 25 ).has( 'ToasterSetting' )).to.be.true;
-        expect( map.getMapForPriority( 25 ).get( 'ToasterSetting' )).to.be.equal( 5 );
-
-        map.set( 'ToasterSetting', 10 );
-        expect( map.get( 'ToasterSetting' )).to.be.equal( 10 );
-        expect( map.getMapForPriority( 25 ).has( 'ToasterSetting' )).to.be.true;
-        expect( map.getMapForPriority( 25 ).get( 'ToasterSetting' )).to.be.equal( 10 );
-    });
-
     it( 'should allow for the explicit replacement of a value, automatically detecting priority', () => {
 
         resetTest();
@@ -287,5 +252,122 @@ describe( 'PrioritizedNameMap', () => {
 
         expect( foundNames.value2 ).to.be.true;
         expect( foundNames.value4 ).to.be.true;
+    });
+
+    it( 'should allow forEach traversal of all keys contained within the collection', () => {
+
+        resetTest();
+
+        let foundNames : any = {
+            'value1' : false,
+            'value2' : false,
+            'value3' : false,
+            'value4' : false,
+            'value5' : false
+        };
+
+        map.add( 'value1', 1, 1 );
+        map.add( 'value2', 2, 2 );
+        map.add( 'value3', 3, 1 );
+        map.add( 'value4', 4, 2 );
+        map.add( 'value5', 5, 1 );
+
+        map.forEachKey( ( key : string ) => {
+            foundNames[key] = true;
+        });
+
+        expect( foundNames.value1 ).to.be.true;
+        expect( foundNames.value2 ).to.be.true;
+        expect( foundNames.value3 ).to.be.true;
+        expect( foundNames.value4 ).to.be.true;
+        expect( foundNames.value5 ).to.be.true;
+        expect( () => foundNames.value6 ).to.throw;
+    });
+
+    it( 'should allow forEach traversal of all keys within an indicated priority tier', () => {
+        resetTest();
+
+        let foundNames : any = {
+            'value1' : false,
+            'value2' : false,
+            'value3' : false,
+            'value4' : false,
+            'value5' : false
+        };
+
+        map.add( 'value1', 1, 1 );
+        map.add( 'value2', 2, 2 );
+        map.add( 'value3', 3, 1 );
+        map.add( 'value4', 4, 2 );
+        map.add( 'value5', 5, 1 );
+
+        map.forEachKey( ( key : string ) => {
+
+            foundNames[key] = true;
+        }, 1);
+
+        expect( foundNames.value1 ).to.be.true;
+        expect( foundNames.value2 ).to.be.false;
+        expect( foundNames.value3 ).to.be.true;
+        expect( foundNames.value4 ).to.be.false;
+        expect( foundNames.value5 ).to.be.true;
+        expect( () => foundNames.value6 ).to.throw;
+    });
+
+    it( 'should allow items, indicated by key, to be moved to a different priority tier', () => {
+
+        resetTest();
+
+        map.add( 'value1', 64, 15 );
+
+        expect( map.getKeyPriority( 'value1' )).to.be.equal( 15 );
+        expect( map.get( 'value1' )).to.be.equal( 64 );
+        expect( map.getMapForPriority( 15 ).has( 'value1')).to.be.true;
+
+        map.updatePriority( 'value1', 6 );
+
+        expect( map.getKeyPriority( 'value1' )).to.be.equal( 6 );
+        expect( map.get( 'value1' )).to.be.equal( 64 );
+        expect( () => map.getMapForPriority( 15 )).to.throw;
+        expect( map.getMapForPriority( 6 ).has( 'value1' )).to.be.true;
+    });
+
+    // @ STILL TODO - Prioritized Names (starting with length() tests, then the Number Map - I think there's tests, but double check that ish!
+    it( 'should accurately report the length (item count) of the collection', () => {
+
+        resetTest();
+
+        map.add( 'value1', 1, 1 );
+        map.add( 'value2', 2, 2 );
+        map.add( 'value3', 3, 3 );
+        map.add( 'value4', 4, 4 );
+        map.add( 'value5', 5, 5 );
+
+        expect( map.length ).to.be.equal( 5 );
+
+        map.remove( 'value2' );
+        map.updatePriority( 'value1', 2 );
+        map.set( 'value3', 7 );
+        map.add( 'value6', 6 );
+        map.remove( 'value4' );
+
+        expect( map.length ).to.be.equal( 4 );
+    });
+
+    it( 'should report on the priority of a given key', () => {
+
+        resetTest();
+
+        map.add( 'value1', 1, 1 );
+        map.add( 'value2', 2, 2 );
+        map.add( 'value3', 3, 3 );
+        map.add( 'value4', 4, 4 );
+        map.add( 'value5', 5, 5 );
+
+        expect( map.getKeyPriority( 'value1' )).to.be.equal( 1 );
+        expect( map.getKeyPriority( 'value2' )).to.be.equal( 2 );
+        expect( map.getKeyPriority( 'value3' )).to.be.equal( 3 );
+        expect( map.getKeyPriority( 'value4' )).to.be.equal( 4 );
+        expect( map.getKeyPriority( 'value5' )).to.be.equal( 5 );
     });
 });

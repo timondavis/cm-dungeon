@@ -27,6 +27,8 @@ export class PrioritizedNameMap<T> {
     public add( key : string, value : T, priority : number = PrioritizedNameMap.DEFAULT_PRIORITY )
         : PrioritizedNameMap<T> {
 
+        key = key.trim();
+
         if ( priority < 0 ) {
             throw new Error( "Priority cannot be less than 0" );
         }
@@ -50,38 +52,21 @@ export class PrioritizedNameMap<T> {
      *
      * @param {string} key
      * @param {T} value
-     * @param {number|null} priority  Leave null to leave
      * @returns {NameMap<T>}
      */
-    public set( key : string, value : T, priority : number|null = null ) : PrioritizedNameMap<T> {
+    public set( key : string, value : T ) : PrioritizedNameMap<T> {
 
-        if (priority == null) {
-            priority = this.getPriorityOfKeyOrDefault( key );
-        }
+        key = key.trim();
+
+        let priority = this.getPriorityOfKeyOrDefault( key );
 
         if ( ! this.prioritizedNames.has( priority )) {
             this.prioritizedNames.add( priority, new NameMap<T>());
         }
 
-        if ( this.has( key )) {
-
-            const existingKeyPriority =  this.namePriorityIndex.get( key );
-
-            if ( priority == existingKeyPriority ) {
-                // Swap out the existing value at the same priority tier
-                this.prioritizedNames.get( priority ).set( key, value );
-            } else {
-                // Remove the registration at the existing priority tier, register new value at new tier.
-                this.prioritizedNames.get( existingKeyPriority ).remove( key );
-                this.prioritizedNames.get( priority ).add( key, value );
-                this.namePriorityIndex.replace( key, priority );
-            }
-        } else {
-
-            this.add( key, value, priority );
-        }
-
-
+        // Swap out the existing value at the same priority tier
+        this.prioritizedNames.get( priority ).set( key, value );
+        this.namePriorityIndex.set( key, priority );
 
         return this;
     }
@@ -94,6 +79,8 @@ export class PrioritizedNameMap<T> {
      * @returns {NameMap<T>}
      */
     public replace( key : string, value : T ) : PrioritizedNameMap<T> {
+
+        key = key.trim();
 
         if ( ! this.has( key )) {
             throw Error( "Cannot replace " + key + " item.  It does not exist on the NameMap" );
@@ -112,6 +99,8 @@ export class PrioritizedNameMap<T> {
      * @returns {T}
      */
     public get( key : string ) : T {
+
+        key = key.trim();
 
         if ( ! this.has( key )) {
 
@@ -191,6 +180,8 @@ export class PrioritizedNameMap<T> {
      */
     public has( key : string, priority : number|null = null ) : boolean {
 
+        key = key.trim();
+
         let itemFound : boolean = false;
 
         // Loop through each priority tier's name map and check for the given key
@@ -209,7 +200,13 @@ export class PrioritizedNameMap<T> {
      */
     public remove( key: string ) : PrioritizedNameMap<T> {
 
+        key = key.trim();
+
         this.getMapForPriority( this.getKeyPriority( key )).remove( key );
+
+        if ( this.getMapForPriority( this.getKeyPriority( key )).length == 0 ) {
+            this.prioritizedNames.remove( this.getKeyPriority( key ));
+        }
         this.namePriorityIndex.remove( key );
 
         return this;
@@ -239,15 +236,25 @@ export class PrioritizedNameMap<T> {
         }
     }
 
-    // @TODO Allow prioritized for each key?
     /**
      * Provide a callback function - this function will be invoked for every item in the map.  Will deliver items
-     * from priority tiers in ASCENDING order ( starting with 0, then 1, etc... ).
+     * from priority tiers in ASCENDING order ( starting with 0, then 1, etc... ).  If a priority is specified, then only
+     * items on that priority tier will be processed.
+     *
      * @param {(key: string, index?: number, array?: string[]) => void} callback
+     * @param {number} priority
      */
-    public forEachKey( callback : ( key : string, index? : number, array? : string[] ) => void ) : void {
+    public forEachKey( callback : ( key : string, index? : number, array? : string[] ) => void,
+                       priority : number | null = null ) : void {
 
-        let keys : number[] = this.prioritizedNames.getKeys();
+        let keys : number[];
+
+        if ( priority == null ) {
+            keys = this.prioritizedNames.getKeys();
+        } else {
+            keys = [];
+            keys.push( priority );
+        }
 
         keys.sort( ( a : number, b : number ) => {
 
@@ -258,7 +265,7 @@ export class PrioritizedNameMap<T> {
 
         for ( let i = 0 ; i < keys.length ; i++ ) {
 
-            this.prioritizedNames.get( i ).forEachKey ( callback );
+            this.prioritizedNames.get( keys[i] ).forEachKey ( callback );
         }
     }
 
@@ -270,6 +277,8 @@ export class PrioritizedNameMap<T> {
      */
     public updatePriority( key : string, newPriority : number ) {
 
+        key = key.trim();
+
         // Collect values
         let itemPriority : number = this.namePriorityIndex.get( key );
         let value : T = this.prioritizedNames.get( itemPriority ).get( key );
@@ -277,6 +286,10 @@ export class PrioritizedNameMap<T> {
         // Remove Values
         this.prioritizedNames.get( itemPriority ).remove( key );
         this.namePriorityIndex.remove( key );
+
+        if ( this.prioritizedNames.get( itemPriority ).length == 0 ) {
+            this.prioritizedNames.remove( itemPriority );
+        }
 
         // Add replacement value.
         this.add( key, value, newPriority );
@@ -307,6 +320,8 @@ export class PrioritizedNameMap<T> {
      */
     public getKeyPriority( key : string ) : number {
 
+        key = key.trim();
+
         return this.namePriorityIndex.get( key );
     }
 
@@ -320,6 +335,8 @@ export class PrioritizedNameMap<T> {
      * @returns {number}
      */
     protected getPriorityOfKeyOrDefault( key : string ) : number {
+
+        key = key.trim();
 
         try { return this.namePriorityIndex.get( key ); }
         catch ( ex ){ return PrioritizedNameMap.DEFAULT_PRIORITY; }

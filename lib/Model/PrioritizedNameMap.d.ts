@@ -21,10 +21,9 @@ export declare class PrioritizedNameMap<T> {
      *
      * @param {string} key
      * @param {T} value
-     * @param {number|null} priority  Leave null to leave
      * @returns {NameMap<T>}
      */
-    set(key: string, value: T, priority?: number | null): PrioritizedNameMap<T>;
+    set(key: string, value: T): PrioritizedNameMap<T>;
     /**
      * Replace an existing item in the collection with a given key.
      *
@@ -82,10 +81,13 @@ export declare class PrioritizedNameMap<T> {
     getKeys(priority?: number | null): string[];
     /**
      * Provide a callback function - this function will be invoked for every item in the map.  Will deliver items
-     * from priority tiers in ASCENDING order ( starting with 0, then 1, etc... ).
+     * from priority tiers in ASCENDING order ( starting with 0, then 1, etc... ).  If a priority is specified, then only
+     * items on that priority tier will be processed.
+     *
      * @param {(key: string, index?: number, array?: string[]) => void} callback
+     * @param {number} priority
      */
-    forEachKey(callback: (key: string, index?: number, array?: string[]) => void): void;
+    forEachKey(callback: (key: string, index?: number, array?: string[]) => void, priority?: number | null): void;
     /**
      * Change the priority of the indicated item with the given key.
      *
