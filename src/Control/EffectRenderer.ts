@@ -52,7 +52,7 @@ export class EffectRenderer {
 
                     modificationValue = owner.statuses.get( statusKey )
                         .attributeEffectFilters.get( attributeKey )
-                        .call( modificationValue );
+                        .call( this, modificationValue );
                 }
             });
 

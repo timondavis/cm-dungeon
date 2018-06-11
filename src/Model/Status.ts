@@ -6,28 +6,28 @@ export class Status {
     protected _owner : Actor;
     public get owner() { return this._owner; }
 
-    protected _attributeEffectFilters : PrioritizedNameMap<( value : number ) => number>;
+    protected _attributeEffectFilters : PrioritizedNameMap<( modifierValue : number ) => number>;
     public get attributeEffectFilters() { return this._attributeEffectFilters; }
 
     protected _attributeReportFilters : PrioritizedNameMap<( value : number ) => number>;
     public get attributeReportFilters() { return this._attributeReportFilters; }
 
-    protected _labelEffectFilters     : PrioritizedNameMap<( value : string ) => string>;
+    protected _labelEffectFilters     : PrioritizedNameMap<( newValue : string ) => string>;
     public get labelEffectFilters()   { return this._labelEffectFilters; }
 
     protected _labelReportFilters     : PrioritizedNameMap<( value  :string ) => string>;
     public get labelReportFilters()   { return this._labelReportFilters; }
 
-    protected _flagEffectFilters      : PrioritizedNameMap<( value : string ) => boolean>;
+    protected _flagEffectFilters      : PrioritizedNameMap<( newValue : string ) => boolean>;
     public get flagEffectFilters()    { return this._flagEffectFilters; }
 
     protected _flagReportFilters      : PrioritizedNameMap<( value : string ) => boolean>;
     public get flagReportFilters()    { return this._flagReportFilters; }
 
-    protected _statusEffectFilters    : PrioritizedNameMap<(value : Status) => Status>;
+    protected _statusEffectFilters    : PrioritizedNameMap<( newValue : Status ) => Status>;
     public get statusEffectFilters()  { return this._statusEffectFilters; }
 
-    protected _statusReportFilters    : PrioritizedNameMap<(value : Status) => Status>;
+    protected _statusReportFilters    : PrioritizedNameMap<( value : Status ) => Status>;
     public get statusReportFilters()  { return this._statusReportFilters; }
 
 

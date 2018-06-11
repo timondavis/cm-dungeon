@@ -1,6 +1,7 @@
 import {Ability} from "./Ability/Ability";
 import {NameMap} from "./NameMap";
 import {Status} from "./Status";
+import {PrioritizedNameMap} from "./PrioritizedNameMap";
 
 export class Actor {
 
@@ -16,8 +17,8 @@ export class Actor {
     protected _flags : NameMap<boolean>;
     public get flags() : NameMap<boolean> { return this._flags; }
 
-    protected _statuses : NameMap<Status>;
-    public get statuses() : NameMap<Status> { return this._statuses; }
+    protected _statuses : PrioritizedNameMap<Status>;
+    public get statuses() : PrioritizedNameMap<Status> { return this._statuses; }
 
     constructor() {
 
@@ -25,7 +26,7 @@ export class Actor {
         this._abilities = new NameMap();
         this._labels = new NameMap();
         this._flags = new NameMap();
-        this._statuses = new NameMap();
+        this._statuses = new PrioritizedNameMap();
     }
 
     /**

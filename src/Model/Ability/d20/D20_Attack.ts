@@ -51,5 +51,4 @@ export class D20_Attack implements Ability {
 
         return damageRoll.getTotal();
     }
-
 }
