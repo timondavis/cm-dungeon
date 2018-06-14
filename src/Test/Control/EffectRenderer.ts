@@ -75,21 +75,6 @@ describe( 'EffectRenderer', () => {
         expect(defender.attributes.get('HP')).to.be.equal(randomNumber);
     });
 
-    it('will remove attributes from the actor, based on directives from the effect', () => {
-
-        initTest();
-
-        expect(() => defender.attributes.get('Strength')).not.to.throw;
-
-        let effect = new Effect();
-        effect.attributeRemovals.add('Strength');
-        effects.add(effect);
-
-        EffectRenderer.renderEffects(defender, effects);
-
-        expect(() => defender.attributes.get('Strength')).to.throw;
-    });
-
     it('will set (new or override) new flags on the actor, based on directives from the effect', () => {
 
         initTest();
@@ -116,23 +101,6 @@ describe( 'EffectRenderer', () => {
         expect(defender.flags.get('IsCowardly')).to.be.false;
     });
 
-    it('will remove flags from the actor, if they exist.  Orders to remove non-existing labels will be ignored', () => {
-
-        initTest();
-
-        defender.flags.add('RemoveMe!', true);
-
-        expect(() => defender.flags.get('RemoveMe!')).not.to.throw;
-
-        let effect = new Effect();
-        effect.flagRemovals.add('RemoveMe!');
-        effects.add(effect);
-
-        EffectRenderer.renderEffects(defender, effects);
-
-        expect(() => defender.flags.get('RemoveMe!')).to.throw;
-    });
-
     it('will set (new or override) new labels on the actor, based on directives from the effect', () => {
 
         initTest();
@@ -152,24 +120,6 @@ describe( 'EffectRenderer', () => {
         EffectRenderer.renderEffects(defender, effects);
 
         expect(defender.labels.get('Class')).to.be.equal('Paladin/Ranger');
-    });
-
-    it('will remove labels from the actor, if they exist.  Order to remove non-existing flags will be ignored.', () => {
-
-        initTest();
-        defender.labels.add('First Name', 'Smith');
-
-        expect(() => defender.labels.get('First Name')).not.to.throw;
-        expect(() => defender.labels.get('Last Name')).to.throw;
-
-        let effect = new Effect();
-        effect.labelRemovals.add('First Name');
-        effect.labelRemovals.add('Last Name');
-
-        EffectRenderer.renderEffects(defender, effects);
-
-        expect(() => defender.labels.get('First Name')).to.throw;
-        expect(() => defender.labels.get('Last Name')).to.throw;
     });
 
     it('will set (new or override) new statuses on the actor, based on directives from the effect', () => {
@@ -295,5 +245,10 @@ describe( 'EffectRenderer', () => {
         attacker.execute( 'attack', defender );
 
         expect( defender.attributes.get( 'HP' )).to.be.equal( 8 );
+
+        defender.statuses.remove( 'Set Damage To Zero' );
+        attacker.execute( 'attack', defender );
+
+        expect( defender.attributes.get( 'HP' )).to.be.lessThan( 8 );
     });
 });

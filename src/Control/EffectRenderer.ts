@@ -1,6 +1,7 @@
 import {Effect} from "../Model/Effect";
 import {Actor} from "../Model/Actor";
 import {List} from "../Model/List";
+import {Status} from "../Model/Status";
 
 /**
  * @class EffectRenderer
@@ -20,18 +21,13 @@ export class EffectRenderer {
 
             EffectRenderer.modifyAttributes( owner, effect );
             EffectRenderer.setAttributes( owner, effect );
-            EffectRenderer.removeAttributes( owner, effect );
             EffectRenderer.setLabels( owner, effect );
-            EffectRenderer.removeLabels( owner, effect );
             EffectRenderer.setFlags( owner, effect );
-            EffectRenderer.removeFlags( owner, effect );
             EffectRenderer.setStatus( owner, effect );
             EffectRenderer.removeStatus( owner, effect );
         });
     }
 
-    // @TODO Write up tests to back up operation of this function, then code out the rest of them.
-    // @TODO DONT FORGET THAT THE STATUS FILTERS ARE -PRIORITIZED- IN THOSE TESTS!
     /**
      * Modify the attributes of the owning (target) actor, using the Effect to provide the directives.
      *
@@ -42,94 +38,191 @@ export class EffectRenderer {
 
         if ( ! effect.attributeModifications.length ) { return; }
 
+        let originalValue : number;
+        let modifierValue : number;
+
         effect.attributeModifications.forEachKey( ( attributeKey : string ) => {
 
-            let attributeValue : number = owner.attributes.get( attributeKey );
-            let modificationValue : number = effect.attributeModifications.get( attributeKey );
+             originalValue = owner.attributes.get( attributeKey );
+             modifierValue = effect.attributeModifications.get( attributeKey );
 
             owner.statuses.forEachKey( ( statusKey : string ) => {
                 if ( owner.statuses.get( statusKey ).attributeEffectFilters.has( attributeKey )) {
 
-                    modificationValue = owner.statuses.get( statusKey )
+                    modifierValue = owner.statuses.get( statusKey )
                         .attributeEffectFilters.get( attributeKey )
-                        .call( this, modificationValue );
+                        .call( this, modifierValue, originalValue );
                 }
             });
 
-            attributeValue += modificationValue;
-            owner.attributes.replace( attributeKey, attributeValue );
+            originalValue += modifierValue;
+            owner.attributes.replace( attributeKey, originalValue );
         });
     }
 
+    /**
+     * Set the attribute from the effect.  Respects attribute assignment filters in priority order.
+     *
+     * @param {Actor} owner
+     * @param {Effect} effect
+     */
     protected static setAttributes( owner : Actor, effect : Effect ) {
 
         if ( ! effect.attributeAssignments.length ) { return; }
 
-        effect.attributeAssignments.forEachKey( ( key : string ) => {
-            owner.attributes.set( key, effect.attributeAssignments.get(key));
+        let newValue : number;
+        let originalValue : number;
+
+        effect.attributeAssignments.forEachKey( ( attributeKey : string ) => {
+
+            originalValue = owner.attributes.get( attributeKey );
+            newValue = effect.attributeAssignments.get( attributeKey );
+
+            owner.statuses.forEachKey( ( statusKey : string ) => {
+                if ( owner.statuses.get( statusKey ).attributeAssignmentFilters.has( attributeKey )) {
+
+                   newValue = owner.statuses.get( statusKey )
+                        .attributeAssignmentFilters.get( attributeKey )
+                        .call( this, newValue, originalValue );
+                }
+
+            });
+
+            owner.attributes.set( attributeKey, newValue );
         });
     }
 
-    protected static removeAttributes( owner : Actor, effect : Effect ) {
 
-        if ( ! effect.attributeRemovals.length ) { return; }
-
-        effect.attributeRemovals.forEachItem( ( item : string ) => {
-            owner.attributes.remove(item);
-        });
-    }
-
+    /**
+     * Set the labels on the owning actor as defined in the effect.  Respects status filters in priority order.
+     *
+     * @param {Actor} owner
+     * @param {Effect} effect
+     */
     protected static setLabels( owner : Actor, effect : Effect ) {
 
         if ( ! effect.labelAssignments.length ) { return; }
 
-        effect.labelAssignments.forEachKey( ( key : string ) => {
-            owner.labels.set( key, effect.labelAssignments.get( key ));
+        let originalValue : string;
+        let newValue : string;
+
+        effect.labelAssignments.forEachKey( ( labelKey : string ) => {
+
+            originalValue = owner.labels.get( labelKey );
+            newValue = effect.labelAssignments.get( labelKey );
+
+            owner.statuses.forEachKey( ( statusKey : string ) => {
+
+                if ( owner.statuses.get( statusKey ).labelAssignmentFilters.has( labelKey )) {
+
+                    newValue = owner.statuses.get( statusKey )
+                        .labelAssignmentFilters.get( labelKey )
+                        .call( this, newValue, originalValue );
+                }
+
+            });
+
+            owner.labels.set( labelKey, newValue );
         });
     }
 
-    protected static removeLabels( owner : Actor, effect : Effect ) {
-
-        if ( ! effect.labelRemovals.length ) { return; }
-
-        effect.labelRemovals.forEachItem( ( key : string ) => {
-           owner.labels.remove( key );
-        });
-    }
-
+    /**
+     * Set flags on the owning actors as defined in the effect. Respects status filters in priority order.
+     *
+     * @param {Actor} owner
+     * @param {Effect} effect
+     */
     protected static setFlags( owner : Actor, effect : Effect ) {
 
         if ( ! effect.flagAssignments.length ) { return; }
 
-        effect.flagAssignments.forEachKey( ( key : string ) => {
-           owner.flags.set( key, effect.flagAssignments.get( key ));
+        let originalValue : boolean;
+        let newValue : boolean;
+
+        effect.flagAssignments.forEachKey( ( flagKey : string ) => {
+
+            originalValue = owner.flags.get( flagKey );
+            newValue = effect.flagAssignments.get( flagKey );
+
+            owner.statuses.forEachKey( ( statusKey : string ) => {
+
+                if ( owner.statuses.get( statusKey ).flagAssignmentFilters.has( flagKey )) {
+
+                    newValue = owner.statuses.get( statusKey )
+                        .flagAssignmentFilters.get( flagKey )
+                        .call( this, newValue, originalValue );
+                }
+            });
+
+            owner.flags.set( flagKey, newValue );
         });
     }
 
-    protected static removeFlags( owner : Actor, effect : Effect ) {
-
-        if ( ! effect.flagRemovals.length ) { return; }
-
-        effect.flagRemovals.forEachItem( (key : string) => {
-            owner.flags.remove( key );
-        });
-    }
-
+    /**
+     * Set a status on the owner as defined in the effect.  Respects status filters in priority order.
+     *
+     * @param {Actor} owner
+     * @param {Effect} effect
+     */
     protected static setStatus( owner : Actor, effect : Effect ) {
 
         if ( ! effect.statusAssignments.length ) { return; }
 
-        effect.statusAssignments.forEachKey( ( key : string ) => {
-            owner.statuses.set( key, effect.statusAssignments.get( key ));
+        let status : Status;
+        let updateStatus : boolean;
+
+        effect.statusAssignments.forEachKey( ( statusInstanceKey  : string ) => {
+
+            status = effect.statusAssignments.get( statusInstanceKey );
+            updateStatus = true;
+
+            owner.statuses.forEachKey( ( statusKey : string ) => {
+
+                if ( owner.statuses.get( statusKey ).statusAssignmentFilters.has( statusInstanceKey )) {
+
+                    updateStatus = owner.statuses.get( statusKey )
+                        .statusAssignmentFilters.get( statusInstanceKey )
+                        .call( this, updateStatus, status );
+                }
+            });
+
+            if ( updateStatus ) {
+                owner.statuses.set( statusInstanceKey, status );
+            }
+
         });
     }
 
+    /**
+     * Remove a status from the owner as defined on the effect.  Respects status filters in priority order.
+     * @param {Actor} owner
+     * @param {Effect} effect
+     */
     protected static removeStatus( owner : Actor, effect : Effect ) {
 
         if ( ! effect.statusRemovals.length ) { return; }
 
-        effect.statusRemovals.forEachItem(( key : string ) => {
-           owner.statuses.remove( key );
+        let status : Status;
+        let updateStatus : boolean;
+
+        effect.statusRemovals.forEachItem(( statusInstanceKey : string ) => {
+
+            status = effect.statusAssignments.get( statusInstanceKey );
+            updateStatus = true;
+
+            owner.statuses.forEachKey( ( statusKey : string ) => {
+
+                if ( owner.statuses.get( statusKey ).statusAssignmentFilters.has( statusInstanceKey )) {
+
+                    updateStatus = owner.statuses.get( statusKey )
+                        .statusAssignmentFilters.get( statusInstanceKey )
+                        .call( this, updateStatus, status);
+                }
+            });
+
+            if ( updateStatus ) {
+                owner.statuses.remove( statusInstanceKey );
+            }
         });
     }
 }

@@ -6,9 +6,7 @@ import {Effect} from "../../Effect";
 import {DieBag} from "cm-check/lib/Die/DieBag";
 
 
-export class D20_Attack implements Ability {
-
-    disabled: boolean = false;
+export class D20_Attack extends Ability {
 
     execute(source: Actor, target: Actor): Ability {
 
