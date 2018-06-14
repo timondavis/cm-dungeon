@@ -108,7 +108,7 @@ export class EffectRenderer {
 
         effect.labelAssignments.forEachKey( ( labelKey : string ) => {
 
-            originalValue = owner.labels.get( labelKey );
+            originalValue = ( owner.labels.has( labelKey ) ) ? owner.labels.get( labelKey ) : "";
             newValue = effect.labelAssignments.get( labelKey );
 
             owner.statuses.forEachKey( ( statusKey : string ) => {
@@ -141,7 +141,7 @@ export class EffectRenderer {
 
         effect.flagAssignments.forEachKey( ( flagKey : string ) => {
 
-            originalValue = owner.flags.get( flagKey );
+            originalValue = ( owner.flags.has( flagKey )) ? owner.flags.get( flagKey ) : false;
             newValue = effect.flagAssignments.get( flagKey );
 
             owner.statuses.forEachKey( ( statusKey : string ) => {
