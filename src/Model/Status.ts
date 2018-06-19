@@ -12,10 +12,10 @@ export class Status {
     protected _attributeAssignmentFilters : PrioritizedNameMap<( newValue : number, originalValue : number ) => number>;
     public get attributeAssignmentFilters() { return this._attributeAssignmentFilters; }
 
-    protected _labelAssignmentFilters     : PrioritizedNameMap<( newValue : string, originalValue : number ) => string>;
+    protected _labelAssignmentFilters     : PrioritizedNameMap<( newValue : string, originalValue : string ) => string>;
     public get labelAssignmentFilters()   { return this._labelAssignmentFilters; }
 
-    protected _flagAssignmentFilters      : PrioritizedNameMap<( newValue : string, originalValue : number ) => boolean>;
+    protected _flagAssignmentFilters      : PrioritizedNameMap<( newValue : string, originalValue : boolean ) => boolean>;
     public get flagAssignmentFilters()    { return this._flagAssignmentFilters; }
 
     protected _statusAssignmentFilters    : PrioritizedNameMap<( newValue : boolean, status : Status ) => Status|boolean>;

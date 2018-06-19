@@ -38,5 +38,4 @@ describe( 'Actor', function() {
 
         expect( b.attributes.get( 'HP' )).to.be.lessThan( 10 );
     });
-
 });
