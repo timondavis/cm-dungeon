@@ -466,8 +466,8 @@ describe( 'EffectRenderer', () => {
         attacker.execute( 'AssignTestStatus', defender );
         attacker.execute( 'Sap Strength' , defender );
 
-        expect( defender.statuses.has( 'FlatStrength' )).to.be.false;
-        expect( defender.attributes.get( 'Strength' )).to.be.equal( 0 );
+        expect( defender.statuses.has( 'FlatStrength' )).to.be.true;
+        expect( defender.attributes.get( 'Strength' )).to.be.equal( 5 );
 
         defender.statuses.remove( 'FlatStrength' );
         defender.attributes.set( 'Strength', 10 );
