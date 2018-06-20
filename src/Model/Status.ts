@@ -15,7 +15,7 @@ export class Status {
     protected _labelAssignmentFilters     : PrioritizedNameMap<( newValue : string, originalValue : string ) => string>;
     public get labelAssignmentFilters()   { return this._labelAssignmentFilters; }
 
-    protected _flagAssignmentFilters      : PrioritizedNameMap<( newValue : string, originalValue : boolean ) => boolean>;
+    protected _flagAssignmentFilters      : PrioritizedNameMap<( newValue : boolean, originalValue : boolean ) => boolean>;
     public get flagAssignmentFilters()    { return this._flagAssignmentFilters; }
 
     protected _statusAssignmentFilters    : PrioritizedNameMap<( newValue : boolean, status : Status ) => Status|boolean>;

@@ -354,6 +354,132 @@ describe( 'EffectRenderer', () => {
         expect( defender.labels.get( 'Label Value' )).to.be.equal ( 'Replacement ValuA' );
     });
 
+    it( 'respects priority when applying statuses with flag setters', () => {
+
+        let restoreOriginalValue : Status = new Status();
+        let turnFlagOff : Status = new Status();
+        let turnFlagOn : Status = new Status();
+        let toggleFlag : Status = new Status();
+
+        restoreOriginalValue.flagAssignmentFilters.add( 'IsGolden', (newValue : boolean, originalValue : boolean) => {
+            return originalValue;
+        });
+
+        turnFlagOff.flagAssignmentFilters.add( 'IsGolden', () => false);
+        turnFlagOn.flagAssignmentFilters.add( 'IsGolden', () => true );
+        toggleFlag.flagAssignmentFilters.add( 'IsGolden', (newValue : boolean) => !newValue );
+
+        defender.statuses.add( 'restoreOriginalValue', restoreOriginalValue, 50 );
+        defender.statuses.add( 'turnFlagOff', turnFlagOff, 40 );
+        defender.statuses.add( 'turnFlagOn', turnFlagOn, 30 );
+        defender.statuses.add( 'toggleFlag', toggleFlag, 20 );
+
+        attacker.abilities.add( 'Flag', new TestAssignFlags() );
+        defender.attributes.set( 'AC', 0 );
+        defender.flags.set( 'IsGolden', true );
+
+        attacker.execute( 'Flag', defender );
+        expect( defender.flags.get( 'IsGolden' )).to.be.true;
+
+        defender.statuses.updatePriority( 'turnFlagOff', 60 );
+        attacker.execute( 'Flag', defender );
+        expect( defender.flags.get( 'IsGolden' )).to.be.false;
+
+        defender.statuses.updatePriority( 'toggleFlag', 70 );
+        attacker.execute( 'Flag', defender );
+        expect( defender.flags.get( 'IsGolden' )).to.be.true;
+
+        defender.statuses.remove( 'toggleFlag' );
+        attacker.execute( 'Flag', defender );
+        expect( defender.flags.get( 'IsGolden' )).to.be.false;
+    });
+
+    it( 'respects priority when applying statuses with status setters', () => {
+
+        initTest();
+
+        let removeThatStatus : Status = new Status();
+        let applyThatStatus : Status = new Status();
+        let toggleApplyStatus : Status = new Status();
+
+        removeThatStatus.statusAssignmentFilters.add( 'FlatStrength', () => false );
+        applyThatStatus.statusAssignmentFilters.add( 'FlatStrength', () => true );
+        toggleApplyStatus.statusAssignmentFilters.add( 'FlatStrength', (value) => !value );
+
+        defender.statuses.add( 'removeThatStatus', removeThatStatus, 100 );
+        defender.statuses.add( 'applyThatStatus', applyThatStatus, 200 );
+        defender.statuses.add( 'toggleApplyStatus', toggleApplyStatus, 300);
+
+        attacker.abilities.add( 'AssignTestStatus', new AssignTestStatus());
+        attacker.abilities.add( 'Sap Strength', new SapStrength() );
+        attacker.execute( 'AssignTestStatus', defender );
+        expect( defender.statuses.has( 'FlatStrength' )).to.be.false;
+
+        attacker.execute( 'Sap Strength', defender );
+        expect( defender.attributes.get( 'Strength' )).to.be.equal( 0 );
+
+        defender.attributes.set( 'Strength', 10 );
+        defender.statuses.remove( 'toggleApplyStatus' );
+        attacker.execute( 'AssignTestStatus', defender );
+        attacker.execute( 'Sap Strength' , defender );
+
+        expect( defender.statuses.has( 'FlatStrength' )).to.be.true;
+        expect( defender.attributes.get( 'Strength' )).to.be.equal( 5 );
+
+        defender.statuses.remove( 'FlatStrength' );
+        defender.attributes.set( 'Strength', 10 );
+        defender.statuses.updatePriority( 'applyThatStatus', 1 );
+        attacker.execute( 'AssignTestStatus' , defender );
+
+        expect( defender.statuses.has( 'FlatStrength' )).to.be.false;
+
+        attacker.execute( 'Sap Strength', defender );
+        expect( defender.attributes.get( 'Strength' )).to.be.equal( 0 );
+    });
+
+    it( 'respects priority when removing statuses with status filters', () => {
+
+        initTest();
+
+        let removeThatStatus : Status = new Status();
+        let applyThatStatus : Status = new Status();
+        let toggleApplyStatus : Status = new Status();
+
+        removeThatStatus.statusRemovalFilters.add( 'FlatStrength', () => true );
+        applyThatStatus.statusRemovalFilters.add( 'FlatStrength', () => false );
+        toggleApplyStatus.statusRemovalFilters.add( 'FlatStrength', (value) => !value );
+
+        defender.statuses.add( 'removeThatStatus', removeThatStatus, 100 );
+        defender.statuses.add( 'applyThatStatus', applyThatStatus, 200 );
+        defender.statuses.add( 'toggleApplyStatus', toggleApplyStatus, 300);
+
+        attacker.abilities.add( 'AssignTestStatus', new AssignTestStatus());
+        attacker.abilities.add( 'Sap Strength', new SapStrength() );
+        attacker.execute( 'AssignTestStatus', defender );
+        expect( defender.statuses.has( 'FlatStrength' )).to.be.true;
+
+        attacker.execute( 'Sap Strength', defender );
+        expect( defender.attributes.get( 'Strength' )).to.be.equal( 5 );
+
+        defender.attributes.set( 'Strength', 10 );
+        defender.statuses.remove( 'toggleApplyStatus' );
+        attacker.execute( 'AssignTestStatus', defender );
+        attacker.execute( 'Sap Strength' , defender );
+
+        expect( defender.statuses.has( 'FlatStrength' )).to.be.false;
+        expect( defender.attributes.get( 'Strength' )).to.be.equal( 0 );
+
+        defender.statuses.remove( 'FlatStrength' );
+        defender.attributes.set( 'Strength', 10 );
+        defender.statuses.updatePriority( 'applyThatStatus', 1 );
+        attacker.execute( 'AssignTestStatus' , defender );
+
+        expect( defender.statuses.has( 'FlatStrength' )).to.be.true;
+
+        attacker.execute( 'Sap Strength', defender );
+        expect( defender.attributes.get( 'Strength' )).to.be.equal( 5 );
+    });
+
     class TestAssignAttributes extends Ability{
 
         execute(source: Actor, target: Actor, data?: any): Ability {
@@ -377,6 +503,70 @@ describe( 'EffectRenderer', () => {
             const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
             let e : Effect = new Effect();
             e.labelAssignments.add( 'Label Value', 'Replacement Value' );
+
+            let i : Interaction = new Interaction( source, target, check );
+            i.effects.add( e );
+            i.execute();
+
+            return this;
+        }
+    }
+
+    class TestAssignFlags extends Ability {
+
+        execute(source: Actor, target: Actor, data?: any): Ability {
+
+            const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
+            let e : Effect = new Effect();
+            e.flagAssignments.add( 'IsGolden', false );
+
+            let i : Interaction = new Interaction( source, target, check );
+            i.effects.add( e );
+            i.execute();
+
+            return this;
+        }
+    }
+
+    class AssignTestStatus extends Ability {
+        execute( source : Actor, target : Actor, data?: any): Ability {
+
+            const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
+            let e : Effect = new Effect();
+            let testStatus : Status = new Status();
+            testStatus.attributeAssignmentFilters.add( 'Strength', () => 5 );
+            e.statusAssignments.add( 'FlatStrength', testStatus );
+
+            let i : Interaction = new Interaction( source, target, check );
+            i.effects.add( e );
+            i.execute();
+
+            return this;
+        }
+    }
+
+    class RevokeTestStatus extends Ability {
+       execute( source : Actor, target: Actor, data? : any ) : Ability {
+
+           const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
+           let e : Effect = new Effect();
+           e.statusRemovals.add( 'Protect Strength' );
+
+           let i : Interaction = new Interaction( source, target, check );
+           i.effects.add( e );
+           i.execute();
+
+           return this;
+       }
+    }
+
+    class SapStrength extends Ability {
+
+        execute( source : Actor, target : Actor, data? : any ): Ability {
+
+            const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
+            let e : Effect = new Effect();
+            e.attributeAssignments.add( 'Strength', 0 );
 
             let i : Interaction = new Interaction( source, target, check );
             i.effects.add( e );
