@@ -22,12 +22,16 @@ export class Interaction {
     public _type : string;
     public get type() { return this._type; }
 
+    public _preCheckCallbacks : List<(source : Actor, target : Actor, check : Check) => void>;
+    public get preCheckCallbacks() { return this._preCheckCallbacks; }
+
     constructor( source : Actor, target: Actor, check : Check ) {
 
-        this._effects = new List<Effect>();
+        this._effects = new List();
         this._source = source;
         this._target = target;
         this._resistanceCheck = check;
+        this._preCheckCallbacks = new List();
     }
 
     /**
@@ -48,6 +52,10 @@ export class Interaction {
 
     protected doResistanceCheck() : boolean {
 
+        this.preCheckCallbacks.forEachItem( (callback) => {
+
+            callback.call( this.source, this.target, this.resistanceCheck );
+        });
         CheckExecutor.getInstance().execute( this.resistanceCheck );
         return this.resistanceCheck.isPass();
     }

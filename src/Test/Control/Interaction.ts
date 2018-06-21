@@ -58,4 +58,6 @@ describe( 'Interaction', () => {
         expect( b.flags.get( 'hit' )).to.be.true;
         expect( () => a.flags.get( 'hit' )).to.throw;
     });
+
+    it( 'employs pre-check callbacks')
 });

@@ -12,7 +12,6 @@ describe( 'PrioritizedNameMap', () => {
         map = new PrioritizedNameMap<number>();
     }
 
-
     it( 'should allow new items to be added with distinct priority assignment', () => {
 
         resetTest();
