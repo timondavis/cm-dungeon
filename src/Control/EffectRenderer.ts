@@ -19,7 +19,6 @@ export class EffectRenderer {
 
         effects.forEachItem(( effect : Effect ) => {
 
-            EffectRenderer.modifyAttributes( owner, effect );
             EffectRenderer.setAttributes( owner, effect );
             EffectRenderer.setLabels( owner, effect );
             EffectRenderer.setFlags( owner, effect );
@@ -29,44 +28,13 @@ export class EffectRenderer {
     }
 
     /**
-     * Modify the attributes of the owning (target) actor, using the Effect to provide the directives.
-     *
-     * @param {Actor} owner
-     * @param {Effect} effect
-     */
-    protected static modifyAttributes( owner: Actor, effect : Effect ) {
-
-        if ( ! effect.attributeModifications.length ) { return; }
-
-        let originalValue : number;
-        let modifierValue : number;
-
-        effect.attributeModifications.forEachKey( ( attributeKey : string ) => {
-
-             originalValue = owner.attributes.get( attributeKey );
-             modifierValue = effect.attributeModifications.get( attributeKey );
-
-            owner.statuses.forEachKey( ( statusKey : string ) => {
-                if ( owner.statuses.get( statusKey ).attributeEffectFilters.has( attributeKey )) {
-
-                    modifierValue = owner.statuses.get( statusKey )
-                        .attributeEffectFilters.get( attributeKey )
-                        .call( this, modifierValue, originalValue );
-                }
-            });
-
-            originalValue += modifierValue;
-            owner.attributes.replace( attributeKey, originalValue );
-        });
-    }
-
-    /**
      * Set the attribute from the effect.  Respects attribute assignment filters in priority order.
      *
      * @param {Actor} owner
      * @param {Effect} effect
+     * @param {?Any} data - supplied at will
      */
-    protected static setAttributes( owner : Actor, effect : Effect ) {
+    protected static setAttributes( owner : Actor, effect : Effect, data? : any ) {
 
         if ( ! effect.attributeAssignments.length ) { return; }
 
@@ -76,7 +44,7 @@ export class EffectRenderer {
         effect.attributeAssignments.forEachKey( ( attributeKey : string ) => {
 
             originalValue = owner.attributes.get( attributeKey );
-            newValue = effect.attributeAssignments.get( attributeKey );
+            newValue = effect.attributeAssignments.get( attributeKey )(originalValue, data);
 
             owner.statuses.forEachKey( ( statusKey : string ) => {
                 if ( owner.statuses.get( statusKey ).attributeAssignmentFilters.has( attributeKey )) {
@@ -98,8 +66,9 @@ export class EffectRenderer {
      *
      * @param {Actor} owner
      * @param {Effect} effect
+     * @param {Any?} data
      */
-    protected static setLabels( owner : Actor, effect : Effect ) {
+    protected static setLabels( owner : Actor, effect : Effect, data? : any ) {
 
         if ( ! effect.labelAssignments.length ) { return; }
 
@@ -109,7 +78,7 @@ export class EffectRenderer {
         effect.labelAssignments.forEachKey( ( labelKey : string ) => {
 
             originalValue = ( owner.labels.has( labelKey ) ) ? owner.labels.get( labelKey ) : "";
-            newValue = effect.labelAssignments.get( labelKey );
+            newValue = effect.labelAssignments.get( labelKey )(originalValue, data);
 
             owner.statuses.forEachKey( ( statusKey : string ) => {
 
@@ -132,7 +101,7 @@ export class EffectRenderer {
      * @param {Actor} owner
      * @param {Effect} effect
      */
-    protected static setFlags( owner : Actor, effect : Effect ) {
+    protected static setFlags( owner : Actor, effect : Effect, data? : any ) {
 
         if ( ! effect.flagAssignments.length ) { return; }
 
@@ -142,7 +111,7 @@ export class EffectRenderer {
         effect.flagAssignments.forEachKey( ( flagKey : string ) => {
 
             originalValue = ( owner.flags.has( flagKey )) ? owner.flags.get( flagKey ) : false;
-            newValue = effect.flagAssignments.get( flagKey );
+            newValue = effect.flagAssignments.get( flagKey )(originalValue, data);
 
             owner.statuses.forEachKey( ( statusKey : string ) => {
 

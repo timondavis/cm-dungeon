@@ -56,7 +56,7 @@ describe( 'EffectRenderer', () => {
         let randomNumber = rand(1, 10) * -1;
 
         let effect = new Effect();
-        effect.attributeModifications.add('HP', randomNumber);
+        effect.attributeAssignments.add('HP', (value) => value + randomNumber);
         effects.add(effect);
 
         EffectRenderer.renderEffects(defender, effects);
@@ -71,7 +71,7 @@ describe( 'EffectRenderer', () => {
         let randomNumber = rand(1, 10);
 
         let effect = new Effect();
-        effect.attributeAssignments.add('HP', randomNumber);
+        effect.attributeAssignments.add('HP', () => randomNumber);
         effects.add(effect);
 
         EffectRenderer.renderEffects(defender, effects);
@@ -84,8 +84,8 @@ describe( 'EffectRenderer', () => {
         initTest();
 
         let effect = new Effect();
-        effect.flagAssignments.add('IsDaring', true);
-        effect.flagAssignments.add('IsCowardly', false);
+        effect.flagAssignments.add('IsDaring', () => true);
+        effect.flagAssignments.add('IsCowardly', () => false);
         effects.add(effect);
 
         EffectRenderer.renderEffects(defender, effects);
@@ -96,7 +96,7 @@ describe( 'EffectRenderer', () => {
         effects = new List<Effect>();
 
         effect = new Effect();
-        effect.flagAssignments.add('IsDaring', false);
+        effect.flagAssignments.add('IsDaring', () => false);
         effects.add(effect);
 
         EffectRenderer.renderEffects(defender, effects);
@@ -110,7 +110,7 @@ describe( 'EffectRenderer', () => {
         initTest();
 
         let effect = new Effect();
-        effect.labelAssignments.add('Class', 'Paladin');
+        effect.labelAssignments.add('Class', () => 'Paladin');
         effects.add(effect);
 
         EffectRenderer.renderEffects(defender, effects);
@@ -118,7 +118,7 @@ describe( 'EffectRenderer', () => {
         expect(defender.labels.get('Class')).to.be.equal('Paladin');
 
         effect = new Effect();
-        effect.labelAssignments.add('Class', 'Paladin/Ranger');
+        effect.labelAssignments.add('Class', () => 'Paladin/Ranger');
         effects.add(effect);
 
         EffectRenderer.renderEffects(defender, effects);
@@ -132,7 +132,7 @@ describe( 'EffectRenderer', () => {
         let s: Status = new Status();
         s.setOwner(defender);
 
-        s.attributeEffectFilters.add('Intelligence', (value: number) => {
+        s.attributeAssignmentFilters.add('Intelligence', (value: number) => {
             return value - 2;
         });
 
@@ -144,8 +144,8 @@ describe( 'EffectRenderer', () => {
 
         let retrievedStatus = defender.statuses.get('Fear');
 
-        expect(() => retrievedStatus.attributeEffectFilters.get('Bravery')).to.throw;
-        expect(() => retrievedStatus.attributeEffectFilters.get('Fear')).not.to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Bravery')).to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Fear')).not.to.throw;
     });
 
     it('will remove statuses from the actor, if they exist.  Order to remove non-existing statuses will be ignored.', () => {
@@ -156,10 +156,10 @@ describe( 'EffectRenderer', () => {
         s1.setOwner(defender);
         s2.setOwner(defender);
 
-        s1.attributeEffectFilters.add('Intelligence', (value: number) => {
+        s1.attributeAssignmentFilters.add('Intelligence', (value: number) => {
             return value - 2;
         });
-        s2.attributeEffectFilters.add('Wisdom', (value: number) => {
+        s2.attributeAssignmentFilters.add('Wisdom', (value: number) => {
             return value - 4;
         });
 
@@ -172,20 +172,20 @@ describe( 'EffectRenderer', () => {
 
         let retrievedStatus = defender.statuses.get('Fear');
 
-        expect(() => retrievedStatus.attributeEffectFilters.get('Bravery')).to.throw;
-        expect(() => retrievedStatus.attributeEffectFilters.get('Fear')).not.to.throw;
-        expect(() => retrievedStatus.attributeEffectFilters.get('Wroth')).not.to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Bravery')).to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Fear')).not.to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Wroth')).not.to.throw;
 
         effects = new List<Effect>();
 
         effect = new Effect();
-        effect.statusRemovals.add('Fear');
-        effect.statusRemovals.add('Potion of Strength');
+        effect.statusRemovals.add( 'Fear' );
+        effect.statusRemovals.add( 'Potion of Strength' );
         effects.add(effect);
 
-        expect(() => retrievedStatus.attributeEffectFilters.get('Bravery')).to.throw;
-        expect(() => retrievedStatus.attributeEffectFilters.get('Fear')).to.throw;
-        expect(() => retrievedStatus.attributeEffectFilters.get('Wroth')).not.to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Bravery')).to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Fear')).to.throw;
+        expect(() => retrievedStatus.attributeAssignmentFilters.get('Wroth')).not.to.throw;
     });
 
     it('processes status effect filters for attributes', () => {
@@ -195,9 +195,7 @@ describe( 'EffectRenderer', () => {
         let invincibilityStatus = new Status();
 
         // Always return a delta of 0 when affecting HP
-        invincibilityStatus.attributeEffectFilters.add('HP', () => {
-            return 0;
-        });
+        invincibilityStatus.attributeAssignmentFilters.add('HP', (value, originalValue) => originalValue );
 
         defender.attributes.set('AC', 100);
 
@@ -225,14 +223,11 @@ describe( 'EffectRenderer', () => {
         let damageToZero: Status = new Status();
         let addTwoToAllIncomingDamage: Status = new Status();
 
-        damageToZero.attributeEffectFilters.add('HP', ( modifierValue : number ) => {
+        damageToZero.attributeAssignmentFilters.add('HP', (value, originalValue) => originalValue );
 
-            return 0;
-        });
+        addTwoToAllIncomingDamage.attributeAssignmentFilters.add('HP', ( value : number ) => {
 
-        addTwoToAllIncomingDamage.attributeEffectFilters.add('HP', (modifierValue: number) => {
-
-            return modifierValue -2;
+            return value - 2;
         });
 
         defender.attributes.set('AC', 0);
@@ -486,7 +481,7 @@ describe( 'EffectRenderer', () => {
 
             const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
             let e : Effect = new Effect();
-            e.attributeAssignments.add( 'HP', 10 );
+            e.attributeAssignments.add( 'HP', () => 10 );
 
             let i : Interaction = new Interaction(source, target, check);
             i.effects.add( e );
@@ -502,7 +497,7 @@ describe( 'EffectRenderer', () => {
 
             const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
             let e : Effect = new Effect();
-            e.labelAssignments.add( 'Label Value', 'Replacement Value' );
+            e.labelAssignments.add( 'Label Value', () => 'Replacement Value' );
 
             let i : Interaction = new Interaction( source, target, check );
             i.effects.add( e );
@@ -518,7 +513,7 @@ describe( 'EffectRenderer', () => {
 
             const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
             let e : Effect = new Effect();
-            e.flagAssignments.add( 'IsGolden', false );
+            e.flagAssignments.add( 'IsGolden', () => false );
 
             let i : Interaction = new Interaction( source, target, check );
             i.effects.add( e );
@@ -566,7 +561,7 @@ describe( 'EffectRenderer', () => {
 
             const check : Check = CheckExecutor.getInstance().generateCheck().setTarget(0);
             let e : Effect = new Effect();
-            e.attributeAssignments.add( 'Strength', 0 );
+            e.attributeAssignments.add( 'Strength', () => 0 );
 
             let i : Interaction = new Interaction( source, target, check );
             i.effects.add( e );

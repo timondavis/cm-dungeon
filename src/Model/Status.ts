@@ -6,9 +6,6 @@ export class Status {
     protected _owner : Actor;
     public get owner() { return this._owner; }
 
-    protected _attributeEffectFilters : PrioritizedNameMap<( modifierValue : number, originalValue : number ) => number>;
-    public get attributeEffectFilters() { return this._attributeEffectFilters; }
-
     protected _attributeAssignmentFilters : PrioritizedNameMap<( newValue : number, originalValue : number ) => number>;
     public get attributeAssignmentFilters() { return this._attributeAssignmentFilters; }
 
@@ -30,7 +27,6 @@ export class Status {
 
         let tempStatus = new Status();
         tempStatus._owner = this.owner;
-        tempStatus._attributeEffectFilters      = this.attributeEffectFilters;
         tempStatus._attributeAssignmentFilters  = this.attributeAssignmentFilters;
         tempStatus._labelAssignmentFilters      = this.labelAssignmentFilters;
         tempStatus._flagAssignmentFilters       = this.flagAssignmentFilters;
@@ -41,7 +37,6 @@ export class Status {
     }
 
     constructor() {
-        this._attributeEffectFilters     = new PrioritizedNameMap();
         this._attributeAssignmentFilters = new PrioritizedNameMap();
         this._labelAssignmentFilters     = new PrioritizedNameMap();
         this._flagAssignmentFilters      = new PrioritizedNameMap();

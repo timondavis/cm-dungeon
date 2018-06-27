@@ -13,7 +13,7 @@ export class D20_Attack extends Ability {
         const effect = new Effect();
         let check = this.generateCheck( source, target );
         let damage = this.getDamage() * -1;
-        effect.attributeModifications.add('HP', damage);
+        effect.attributeAssignments.add( 'HP', (value) => (value + damage) );
 
         let attackInteraction = new Interaction( source, target, check );
         attackInteraction.effects.add( effect );

@@ -4,16 +4,13 @@ import {List} from "./List";
 
 export class Effect {
 
-    private _attributeModifications : NameMap<number>;
-    public get attributeModifications() { return this._attributeModifications; }
-
-    private _attributeAssignments : NameMap<number>;
+    private _attributeAssignments : NameMap<(value : number, data? : any ) => number>;
     public get attributeAssignments() { return this._attributeAssignments; }
 
-    private _labelAssignments : NameMap<string>;
+    private _labelAssignments : NameMap<(value : string, data? : any ) => string>;
     public get labelAssignments() { return this._labelAssignments; }
 
-    private _flagAssignments : NameMap<boolean>;
+    private _flagAssignments : NameMap<(value : boolean, data? : any ) => boolean>;
     public get flagAssignments() { return this._flagAssignments; }
 
     private _statusAssignments : NameMap<Status>;
@@ -24,7 +21,6 @@ export class Effect {
 
     constructor() {
 
-        this._attributeModifications = new NameMap();
         this._attributeAssignments = new NameMap();
         this._labelAssignments = new NameMap();
         this._flagAssignments = new NameMap();
