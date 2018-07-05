@@ -1,5 +1,6 @@
 export declare class List<T> {
     private _collection;
+    protected readonly collection: T[];
     constructor();
     add(item: T): void;
     remove(index: number): void;

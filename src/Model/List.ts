@@ -1,6 +1,7 @@
 export class List<T> {
 
     private _collection : T[];
+    protected get collection() { return this._collection; }
 
     constructor() {
         this._collection = [];

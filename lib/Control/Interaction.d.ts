@@ -11,8 +11,12 @@ export declare class Interaction {
     readonly resistanceCheck: Check;
     private _effects;
     readonly effects: List<Effect>;
-    _type: string;
+    private _type;
     readonly type: string;
+    private _preCheckCallbacks;
+    readonly preCheckCallbacks: List<(source: Actor, target: Actor, check: Check) => void>;
+    private _postCheckCallbacks;
+    readonly postCheckCallbacks: List<(source: Actor, target: Actor, check: Check) => void>;
     constructor(source: Actor, target: Actor, check: Check);
     /**
      * Returns TRUE if interaction is successful.  Failure is not an indication of error - randomization is
@@ -22,4 +26,5 @@ export declare class Interaction {
      */
     execute(): boolean;
     protected doResistanceCheck(): boolean;
+    protected logCheck(check: Check): void;
 }

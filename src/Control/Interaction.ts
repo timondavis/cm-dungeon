@@ -4,6 +4,8 @@ import {Effect} from "../Model/Effect";
 import {CheckExecutor} from "cm-check/lib/Check/CheckExecutor";
 import {EffectRenderer} from "./EffectRenderer";
 import {List} from "../Model/List";
+import {ConsoleLog, Logger} from "../Log/Logger";
+import {Modifier} from "cm-check/lib/Check/Modifier/Modifier";
 
 export class Interaction {
 
@@ -25,6 +27,9 @@ export class Interaction {
     private _preCheckCallbacks : List<(source : Actor, target : Actor, check : Check) => void>;
     public get preCheckCallbacks() { return this._preCheckCallbacks; }
 
+    private _postCheckCallbacks : List<(source : Actor, target : Actor, check : Check) => void>;
+    public get postCheckCallbacks() { return this._postCheckCallbacks; }
+
     constructor( source : Actor, target: Actor, check : Check ) {
 
         this._effects = new List();
@@ -32,6 +37,7 @@ export class Interaction {
         this._target = target;
         this._resistanceCheck = check;
         this._preCheckCallbacks = new List();
+        this._postCheckCallbacks = new List();
     }
 
     /**
@@ -56,7 +62,38 @@ export class Interaction {
 
             callback.call( this, this.source, this.target, this.resistanceCheck );
         });
+
         CheckExecutor.getInstance().execute( this.resistanceCheck );
+        this.logCheck( this.resistanceCheck );
+
+        this.postCheckCallbacks.forEachItem( (callback) => {
+
+            callback.call( this, this.source, this.target, this.resistanceCheck );
+        });
+
         return this.resistanceCheck.isPass();
+    }
+
+    protected logCheck( check : Check ) : void {
+
+        let console = Logger.getInstance();
+
+
+        console.log( 'Roll: ' + check.getDieBag().report() );
+        console.log( 'Raw Result: ' + check.getRawRollResult().toString() );
+
+        check.getModifiers().forEach( ( modifier ) => {
+            let modifierString = "";
+            modifierString += modifier.getName() + ": ";
+            modifierString += ( modifier.getValue() >= 0 ) ? " +" +
+                modifier.getValue().toString() :
+                " " + modifier.getValue().toString();
+
+            console.log( modifierString );
+        });
+
+        console.log( 'Final Result: ' + check.getResult() + " vs.");
+        console.log( 'Target: ' + check.getTarget() );
+        console.log( ( check.isPass() ) ? "Success" : "Failure" );
     }
 }
