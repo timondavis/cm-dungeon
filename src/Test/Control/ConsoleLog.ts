@@ -1,6 +1,5 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Queue} from "../../Model/Queue";
 import {Logger} from "../../Log/Logger";
 import {LogType} from "../../Log/LogType";
 
