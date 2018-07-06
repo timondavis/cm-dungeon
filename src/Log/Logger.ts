@@ -41,7 +41,7 @@ export class Logger {
             this.initializeLogType( type );
         }
 
-        this.logs.get(<number>type).logMessage(message);
+        this.logs.get( <number> type ).logMessage( message );
     }
 
     /**
@@ -52,7 +52,7 @@ export class Logger {
      */
     public getLog( logType : LogType = LogType.DEFAULT ) {
 
-        return this.logs.get(<number>logType);
+        return this.logs.get( <number> logType );
     }
 
     /**
@@ -63,7 +63,17 @@ export class Logger {
      */
     public hasLogType( logType : LogType ) {
 
-        return this.logs.has(<number> logType);
+        return this.logs.has( <number> logType );
+    }
+
+    public printLogToConsole( logType : LogType = LogType.DEFAULT) {
+
+        let log = this.getLog( logType );
+
+        log.forEachItem( ( entry ) => {
+
+            console.log( entry.message );
+        });
     }
 
     /**

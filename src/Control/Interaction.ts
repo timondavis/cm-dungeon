@@ -4,8 +4,7 @@ import {Effect} from "../Model/Effect";
 import {CheckExecutor} from "cm-check/lib/Check/CheckExecutor";
 import {EffectRenderer} from "./EffectRenderer";
 import {List} from "../Model/List";
-import {ConsoleLog, Logger} from "../Log/Logger";
-import {Modifier} from "cm-check/lib/Check/Modifier/Modifier";
+import {Logger} from "../Log/Logger";
 
 export class Interaction {
 
@@ -78,8 +77,6 @@ export class Interaction {
 
         let console = Logger.getInstance();
 
-
-        console.log( 'Roll: ' + check.getDieBag().report() );
         console.log( 'Raw Result: ' + check.getRawRollResult().toString() );
 
         check.getModifiers().forEach( ( modifier ) => {
@@ -92,8 +89,7 @@ export class Interaction {
             console.log( modifierString );
         });
 
-        console.log( 'Final Result: ' + check.getResult() + " vs.");
-        console.log( 'Target: ' + check.getTarget() );
+        console.log( 'Final Result: ' + check.getResult() + " vs " + check.getTarget() );
         console.log( ( check.isPass() ) ? "Success" : "Failure" );
     }
 }
