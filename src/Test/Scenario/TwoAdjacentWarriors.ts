@@ -122,6 +122,5 @@ describe ('TwoAdjacentWarriors', () => {
             joanTheWarrior.attributes.get( 'HP' ) > 0 );
 
         Logger.getInstance().printLogToConsole();
-
     });
 });
