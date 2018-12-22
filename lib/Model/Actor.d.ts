@@ -1,6 +1,7 @@
 import { Ability } from "./Ability/Ability";
 import { NameMap } from "./NameMap";
 import { Status } from "./Status";
+import { PrioritizedNameMap } from "./PrioritizedNameMap";
 export declare class Actor {
     protected _attributes: NameMap<number>;
     readonly attributes: NameMap<number>;
@@ -10,8 +11,8 @@ export declare class Actor {
     readonly labels: NameMap<string>;
     protected _flags: NameMap<boolean>;
     readonly flags: NameMap<boolean>;
-    protected _statuses: NameMap<Status>;
-    readonly statuses: NameMap<Status>;
+    protected _statuses: PrioritizedNameMap<Status>;
+    readonly statuses: PrioritizedNameMap<Status>;
     constructor();
     /**
      * Execute an ability belonging to the actor

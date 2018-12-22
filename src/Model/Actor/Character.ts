@@ -1,6 +1,6 @@
 import {Actor} from "../Actor";
 import {Item} from "./Item";
-import {NameMap} from "../../../lib/Model/NameMap";
+import {NameMap} from "../NameMap";
 
 export class Character extends Actor {
 

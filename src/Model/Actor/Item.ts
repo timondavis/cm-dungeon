@@ -1,5 +1,5 @@
 import {Actor} from "../Actor";
-import {Character} from "../../../lib/Model/Character";
+import {Character} from "./Character";
 
 export class Item extends Actor {
 
