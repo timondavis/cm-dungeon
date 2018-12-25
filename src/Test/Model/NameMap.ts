@@ -144,4 +144,21 @@ describe( 'NameMap', () => {
             expect( s.name ).to.be.equal( key );
         });
     })
+
+    it ( 'will return contents as an array if asked', () => {
+
+        map = new NameMap();
+
+        map.add( s1.name, s1 );
+        map.add( s2.name, s2 );
+        map.add( s3.name, s3 );
+
+        map.remove( s1.name );
+
+        let mapArray= map.toArray();
+
+        expect(mapArray.length).to.be.equal(2);
+        expect(mapArray[0]).to.be.equal(s2);
+        expect(mapArray[1]).to.be.equal(s3);
+    });
 });

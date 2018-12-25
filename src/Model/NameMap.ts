@@ -143,4 +143,14 @@ export class NameMap<T> {
     public get length() : number {
         return Object.keys( this._collection ).length;
     }
+
+    public toArray(): T[] {
+        let result: T[] = [];
+
+        Object.keys(this._collection).forEach((key: string) => {
+            result.push((<T>this._collection[key]));
+        });
+
+        return result;
+    }
 }

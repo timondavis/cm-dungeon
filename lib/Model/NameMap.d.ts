@@ -71,4 +71,5 @@ export declare class NameMap<T> {
      * @returns {number}
      */
     readonly length: number;
+    toArray(): T[];
 }
