@@ -8,6 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "9.3.0",
+    "chai": "^4.2.0",
     "cm-check": "^1.0.1",
     "cm-entity": "0.0.1",
     "cm-maze": "^0.2.2",

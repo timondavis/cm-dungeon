@@ -15,6 +15,9 @@ export class Status {
     protected _flagAssignmentFilters      : PrioritizedNameMap<( newValue : boolean, originalValue : boolean ) => boolean>;
     public get flagAssignmentFilters()    { return this._flagAssignmentFilters; }
 
+
+    // @todo Again with the explicit assign removes - should be the same as other types. Can they be updated
+    // with null?  Or do the other attribute types also get a remove method?
     protected _statusAssignmentFilters    : PrioritizedNameMap<( newValue : boolean, status : Status ) => Status|boolean>;
     public get statusAssignmentFilters()  { return this._statusAssignmentFilters; }
 

@@ -13,6 +13,8 @@ export class Effect {
     private _flagAssignments : NameMap<(value : boolean, data? : any ) => boolean>;
     public get flagAssignments() { return this._flagAssignments; }
 
+    // @todo - Kinda weird that there's an remove/assign paradigm for status, but not other attribute types.
+    // Can that be straightened out?
     private _statusAssignments : NameMap<Status>;
     public get statusAssignments() { return this._statusAssignments; }
 
