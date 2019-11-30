@@ -9,9 +9,7 @@
   "dependencies": {
     "@types/node": "9.3.0",
     "chai": "^4.2.0",
-    "cm-check": "^1.0.1",
-    "cm-entity": "0.0.1",
-    "cm-maze": "^0.2.2",
+    "cm-check": "file:lib/cm-check",
     "dice-bag": "0.1.2",
     "events": "^3.0.0"
   },
