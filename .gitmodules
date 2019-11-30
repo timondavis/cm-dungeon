@@ -1,0 +1,3 @@
+[submodule "lib/cm-check"]
+	path = lib/cm-check
+	url = git@github.com:timondavis/cm-check.git
