@@ -18,6 +18,7 @@ import { PrioritizedNameMap } from './Model/PrioritizedNameMap';
 import { Queue } from './Model/Queue';
 import { Status } from './Model/Status';
 import { StatusLibrary } from './Model/StatusLibrary';
+import * as CmMaze from 'cm-maze';
 
 export {
     EffectRenderer,
@@ -39,5 +40,6 @@ export {
     PrioritizedNameMap,
     Queue,
     Status,
-    StatusLibrary
+    StatusLibrary,
+    CmMaze
 }
