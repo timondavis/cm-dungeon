@@ -2,25 +2,10 @@
 # yarn lockfile v1
 
 
-"@types/chai@^4.1.2":
-  version "4.2.5"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.5.tgz#f8da153ebbe30babb0adc9a528b9ad32be3175a2"
-  integrity sha512-YvbLiIc0DbbhiANrfVObdkLEHJksQZVq0Uvfg550SRAKVYaEJy+V70j65BVe2WNp6E3HtKsUczeijHFCjba3og==
-
-"@types/mocha@^2.2.48":
-  version "2.2.48"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.48.tgz#3523b126a0b049482e1c3c11877460f76622ffab"
-  integrity sha512-nlK/iyETgafGli8Zh9zJVCTicvU3iajSkRwOh3Hhiva598CMqNJ4NcVCGMTGKpGpTYj/9R8RLzS9NAykSSCqGw==
-
 "@types/node@9.3.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.3.0.tgz#3a129cda7c4e5df2409702626892cb4b96546dd5"
   integrity sha512-wNBfvNjzsJl4tswIZKXCFQY0lss9nKUyJnG6T94X/eqjRgI2jHZ4evdjhQYBSan/vGtF6XVXPApOmNH2rf0KKw==
-
-"@types/node@^9.3.0":
-  version "9.6.55"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.55.tgz#7cc1358c9c18e71f6c020e410962971863232cf5"
-  integrity sha512-e/5tg8Ok0gSrN6pvHphnwTK0/CD9VPZrtZqpvvpEFAtfs+ZntusgGaWkf2lSEq1OFe2EDPeUMiMVpy4nZpJ4AQ==
 
 "@types/strip-bom@^3.0.0":
   version "3.0.0"
@@ -313,31 +298,12 @@ cli-boxes@^1.0.0:
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-1.0.0.tgz#4fa917c3e59c94a004cd61f8ee509da651687143"
   integrity sha1-T6kXw+WclKAEzWH47lCdplFocUM=
 
-cm-check@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/cm-check/-/cm-check-1.0.1.tgz#45b2ef85e051f9da608ef4378a09e7ca82dc26c4"
-  integrity sha512-42amU+y5mbfjtznXd0ftXvraxP4q0NRDW0ZzWErCBRNlf11EbdH+gOJkydXy0x7vwj+4pP1Uxhpx1d5Luz9+tg==
+"cm-check@file:lib/cm-check":
+  version "1.0.0"
   dependencies:
     "@types/node" "9.3.0"
     dice-bag "0.1.2"
-
-cm-entity@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/cm-entity/-/cm-entity-0.0.1.tgz#5d527846e4cbafb9fabac700514507f725ba6ef5"
-  integrity sha512-BJ3sgP6KjyNFVnBK1zTSoB8Shup4AlFULE44wdC7WSNA7X0Va+wYddyml6cXaT5VG8mglOGuCsHkJDuowy5oiA==
-  dependencies:
-    "@types/node" "9.3.0"
-    dice-bag "0.1.2"
-
-cm-maze@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/cm-maze/-/cm-maze-0.2.2.tgz#b8aad3c68cc7f7af13fbfc1adeaa72de1dc6dba5"
-  integrity sha512-NsXW0sPM/JR7ioqoMThvPP3dGtX0prU2/W3jmxVgw4JjjKyWOZ6Ihe5f7Zfj8N6IOa0QDj43mt2DXycUJgft/w==
-  dependencies:
-    "@types/chai" "^4.1.2"
-    "@types/mocha" "^2.2.48"
-    "@types/node" "^9.3.0"
-    dice-bag "0.1.2"
+    events "^3.0.0"
 
 code-point-at@^1.0.0:
   version "1.1.0"
