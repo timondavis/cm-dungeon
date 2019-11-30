@@ -1,3 +1,6 @@
 [submodule "lib/cm-check"]
 	path = lib/cm-check
 	url = git@github.com:timondavis/cm-check.git
+[submodule "lib/cm-maze"]
+	path = lib/cm-maze
+	url = git@github.com:timondavis/cm-maze.git

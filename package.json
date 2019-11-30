@@ -10,6 +10,7 @@
     "@types/node": "9.3.0",
     "chai": "^4.2.0",
     "cm-check": "file:lib/cm-check",
+    "cm-maze": "file:lib/cm-maze",
     "dice-bag": "0.1.2",
     "events": "^3.0.0"
   },
