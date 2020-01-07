@@ -11,10 +11,10 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.14",
     "chai": "^4.2.0",
-    "cm-check": "file:lib/cm-check",
-    "cm-maze": "file:lib/cm-maze",
+    "cm-check": "file:..//cm-check",
     "dice-bag": "0.1.2",
-    "events": "^3.0.0"
+    "events": "^3.0.0",
+    "typescript": "~3.5.3"
   },
   "nodemonConfig": {
     "ignore": [
@@ -25,8 +25,7 @@
     "concurrently": "3.5.1",
     "mocha": "^6.2.2",
     "nodemon": "1.14.11",
-    "ts-node": "4.1.0",
-    "typescript": "^3.7.2"
+    "ts-node": "4.1.0"
   },
   "scripts": {
     "start": "concurrently \"npm run build:live\" \"npm run build:disk\"",
