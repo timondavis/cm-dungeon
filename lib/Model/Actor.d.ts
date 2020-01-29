@@ -3,6 +3,7 @@ import { NameMap } from "./NameMap";
 import { Status } from "./Status";
 import { PrioritizedNameMap } from "./PrioritizedNameMap";
 export declare class Actor {
+    id: string;
     protected _attributes: NameMap<number>;
     readonly attributes: NameMap<number>;
     protected _abilities: NameMap<Ability>;
