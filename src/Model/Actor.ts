@@ -5,6 +5,8 @@ import {PrioritizedNameMap} from "./PrioritizedNameMap";
 
 export class Actor {
 
+	public id: string;
+
     protected _attributes : NameMap<number>;
     public get attributes() : NameMap<number> { return this._attributes; }
 
