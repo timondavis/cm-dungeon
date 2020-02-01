@@ -27,7 +27,7 @@ export class ActorProfile {
 			configs.labels.forEach((item) => {
 				let defaultValue = (typeof(item) === 'object' && item.hasOwnProperty('default')) ?
 					item.default: '';
-				this.flags.push( {key: item.key, default: defaultValue});
+				this.labels.push( {key: item.key, default: defaultValue});
 			});
 		}
 	}
