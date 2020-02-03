@@ -3,6 +3,7 @@ export class ActorProfile {
 	public readonly attributes: {key: string, default?: number}[] = [];
 	public readonly flags: {key: string, default?: boolean}[] = [];
 	public readonly labels: {key: string, default?: string}[] = [];
+	public readonly actionPointsAttribute: string;
 
 	constructor(configs: any) {
 		this.name = configs.name;
@@ -30,5 +31,8 @@ export class ActorProfile {
 				this.labels.push( {key: item.key, default: defaultValue});
 			});
 		}
+
+		this.actionPointsAttribute  = (configs.hasOwnProperty('actionPointsAttribute')) ?
+			configs.actionPointsAttribute : null;
 	}
 }

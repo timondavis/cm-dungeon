@@ -12,5 +12,6 @@ export declare class ActorProfile {
         key: string;
         default?: string;
     }[];
+    readonly actionPointsAttribute: string;
     constructor(configs: any);
 }

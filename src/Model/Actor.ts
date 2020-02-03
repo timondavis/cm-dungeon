@@ -7,6 +7,8 @@ import {ActorProfile} from "./Actor/ActorProfile";
 export class Actor {
 
 	public id: string;
+	public faction: string;
+	public actionPointsAttribute: string;
 
     protected _attributes : NameMap<number>;
     public get attributes() : NameMap<number> { return this._attributes; }
@@ -54,6 +56,10 @@ export class Actor {
 						(actorProfile.labels[i].hasOwnProperty('default')) ? actorProfile.labels[i].default : ''
 					);
 				}
+			}
+
+			if (actorProfile.hasOwnProperty('actionPointsAttribute')) {
+				this.actionPointsAttribute = actorProfile.actionPointsAttribute;
 			}
 		}
     }
