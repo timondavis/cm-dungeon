@@ -9,6 +9,7 @@ export class Actor {
 	public id: string;
 	public faction: string;
 	public actionPointsAttribute: string;
+	public actionPointsRemaining: number;
 
     protected _attributes : NameMap<number>;
     public get attributes() : NameMap<number> { return this._attributes; }

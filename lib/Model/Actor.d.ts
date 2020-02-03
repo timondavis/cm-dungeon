@@ -7,6 +7,7 @@ export declare class Actor {
     id: string;
     faction: string;
     actionPointsAttribute: string;
+    actionPointsRemaining: number;
     protected _attributes: NameMap<number>;
     readonly attributes: NameMap<number>;
     protected _abilities: NameMap<Ability>;
