@@ -1,6 +1,7 @@
 import { Actor } from "./Actor";
 import { PrioritizedNameMap } from "./PrioritizedNameMap";
 export declare class Status {
+    id: string;
     protected _owner: Actor;
     readonly owner: Actor;
     protected _attributeAssignmentFilters: PrioritizedNameMap<(newValue: number, originalValue: number) => number>;

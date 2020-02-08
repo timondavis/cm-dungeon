@@ -4,6 +4,8 @@ import {List} from "./List";
 
 export class Effect {
 
+	public id: string;
+
     private _attributeAssignments : NameMap<(value : number, data? : any ) => number>;
     public get attributeAssignments() { return this._attributeAssignments; }
 
