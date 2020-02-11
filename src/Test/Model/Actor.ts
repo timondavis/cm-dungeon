@@ -4,6 +4,7 @@ import {Ability} from "../../Model/Ability/Ability";
 import {Character} from "../../Model/Actor/Character";
 import {Actor} from "../../Model/Actor";
 import {D20_Attack} from "../../Model/Ability/d20/D20_Attack";
+import {ActorProfile} from "../..";
 
 describe( 'Actor', function() {
 
@@ -38,4 +39,39 @@ describe( 'Actor', function() {
 
         expect( b.attributes.get( 'HP' )).to.be.lessThan( 10 );
     });
+
+    it( 'can be instantiated with an ActorProfile to assign default values', () => {
+
+    	reset();
+
+    	let str = Math.floor(Math.random() * 10);
+    	let dex = Math.floor( Math.random() * 10);
+    	let isJolly = true;
+    	let isMad = false;
+    	let name = 'john';
+    	let origin = 'Cincinatti';
+
+    	let profile = new ActorProfile({
+			attributes: [
+				{ key: 'STR', default: str},
+				{ key: 'DEX', default: dex}
+			],
+			flags: [
+				{ key: 'jolly', default: isJolly },
+				{ key: 'mad', default: isMad }
+			],
+			labels: [
+				{ key: 'name', default: name },
+				{ key: 'origin', default: origin }
+			]
+		});
+
+    	let a = new Actor(profile);
+    	expect(a.attributes.get('STR')).to.be.equal(str);
+		expect(a.attributes.get('DEX')).to.be.equal(dex);
+		expect(a.flags.get('jolly')).to.be.equal(isJolly);
+		expect(a.flags.get('mad')).to.be.equal(isMad);
+		expect(a.labels.get('name')).to.be.equal(name);
+		expect(a.labels.get('origin')).to.be.equal(origin);
+	});
 });

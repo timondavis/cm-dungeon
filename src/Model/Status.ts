@@ -3,6 +3,8 @@ import {PrioritizedNameMap} from "./PrioritizedNameMap";
 
 export class Status {
 
+	public id: string;
+
     protected _owner : Actor;
     public get owner() { return this._owner; }
 

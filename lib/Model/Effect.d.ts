@@ -2,6 +2,7 @@ import { NameMap } from "./NameMap";
 import { Status } from "./Status";
 import { List } from "./List";
 export declare class Effect {
+    id: string;
     private _attributeAssignments;
     readonly attributeAssignments: NameMap<(value: number, data?: any) => number>;
     private _labelAssignments;

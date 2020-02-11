@@ -10,6 +10,7 @@ import { Character } from './Model/Actor/Character';
 import { Item } from './Model/Actor/Item';
 import { Weapon } from './Model/Actor/Weapon';
 import { Actor } from './Model/Actor';
+import { ActorProfile } from './Model/Actor/ActorProfile';
 import { Effect } from './Model/Effect';
 import { List } from './Model/List';
 import { NameMap } from './Model/NameMap';
@@ -18,7 +19,6 @@ import { PrioritizedNameMap } from './Model/PrioritizedNameMap';
 import { Queue } from './Model/Queue';
 import { Status } from './Model/Status';
 import { StatusLibrary } from './Model/StatusLibrary';
-import * as CmMaze from 'cm-maze';
 
 export {
     EffectRenderer,
@@ -33,6 +33,7 @@ export {
     Item,
     Weapon,
     Actor,
+	ActorProfile,
     Effect,
     List,
     NameMap,
@@ -41,5 +42,4 @@ export {
     Queue,
     Status,
     StatusLibrary,
-    CmMaze
 }
