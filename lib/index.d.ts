@@ -19,27 +19,4 @@ import { PrioritizedNameMap } from './Model/PrioritizedNameMap';
 import { Queue } from './Model/Queue';
 import { Status } from './Model/Status';
 import { StatusLibrary } from './Model/StatusLibrary';
-
-export {
-    EffectRenderer,
-    Interaction,
-    Log,
-    LogEntry,
-    Logger,
-    LogType,
-    D20_Attack,
-    Ability,
-    Character,
-    Item,
-    Weapon,
-    Actor,
-	ActorProfile,
-    Effect,
-    List,
-    NameMap,
-    NumberMap,
-    PrioritizedNameMap,
-    Queue,
-    Status,
-    StatusLibrary,
-}
+export { EffectRenderer, Interaction, Log, LogEntry, Logger, LogType, D20_Attack, Ability, Character, Item, Weapon, Actor, ActorProfile, Effect, List, NameMap, NumberMap, PrioritizedNameMap, Queue, Status, StatusLibrary, };
