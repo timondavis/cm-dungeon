@@ -1,44 +1,54 @@
-export class List<T> {
+import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
-    private _collection : T[];
-    protected get collection() { return this._collection; }
+export interface IList<T> extends ISerializableModel {
+	collection: T[];
+}
+
+export class List<T> extends SerializableModel {
+
+	protected state: IList<T>;
+
+    protected get collection() { return this.state.collection; }
 
     constructor() {
-        this._collection = [];
+    	super();
+
+    	this.state = {
+			collection: []
+		};
     }
 
     public add( item : T ) : void {
-        this._collection.push( item );
+        this.collection.push( item );
     }
 
     public remove( index : number ) {
-        this._collection.splice(index, 1);
+        this.collection.splice(index, 1);
     }
 
     public clear() : void {
-        this._collection = [];
+        this.state.collection = [];
     }
 
     public get( index : number ) : T {
 
         if ( index >= 0 && index <= this.length ) {
 
-            return this._collection[index];
+            return this.collection[index];
         }
 
         throw Error( "Cannot find index " + index + " in List" );
     }
 
     public get length() : number {
-        return this._collection.length;
+        return this.collection.length;
     }
 
     public forEachItem( callback : ( item : T, index : number ) => void ) : void {
 
         for ( let i = 0 ; i < this.length ; i++ ){
 
-            callback(this._collection[i], i);
+            callback(this.collection[i], i);
         }
     }
-
 }

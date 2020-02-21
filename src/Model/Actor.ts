@@ -3,36 +3,45 @@ import {NameMap} from "./NameMap";
 import {Status} from "./Status";
 import {PrioritizedNameMap} from "./PrioritizedNameMap";
 import {ActorProfile} from "./Actor/ActorProfile";
+import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
-export class Actor {
+export interface IActor extends ISerializableModel {
 
-	public id: string;
-	public faction: string;
-	public actionPointsAttribute: string;
-	public actionPointsRemaining: number;
+	id: string;
+	faction: string;
+	actionPointsAttribute: string;
+	actionPointsRemaining: number;
+	attributes: NameMap<number>;
+	abilities: NameMap<Ability>;
+	labels: NameMap<string>;
+	flags: NameMap<boolean>;
+	statuses: PrioritizedNameMap<Status>;
+}
 
-    protected _attributes : NameMap<number>;
-    public get attributes() : NameMap<number> { return this._attributes; }
+export class Actor extends SerializableModel {
 
-    protected _abilities : NameMap<Ability>;
-    public get abilities() : NameMap<Ability> { return this._abilities; }
+	protected state: IActor;
 
-    protected _labels : NameMap<string>;
-    public get labels() : NameMap<string> { return this._labels; }
-
-    protected _flags : NameMap<boolean>;
-    public get flags() : NameMap<boolean> { return this._flags; }
-
-    protected _statuses : PrioritizedNameMap<Status>;
-    public get statuses() : PrioritizedNameMap<Status> { return this._statuses; }
+    public get attributes() : NameMap<number> { return this.state.attributes; }
+    public get abilities() : NameMap<Ability> { return this.state.abilities; }
+    public get labels() : NameMap<string> { return this.state.labels; }
+    public get flags() : NameMap<boolean> { return this.state.flags; }
+    public get statuses() : PrioritizedNameMap<Status> { return this.state.statuses; }
 
     constructor(actorProfile?: ActorProfile) {
+		super();
 
-        this._attributes = new NameMap();
-        this._abilities = new NameMap();
-        this._labels = new NameMap();
-        this._flags = new NameMap();
-        this._statuses = new PrioritizedNameMap();
+		this.state = {
+			abilities: new NameMap(),
+			actionPointsAttribute: "",
+			actionPointsRemaining: 0,
+			attributes: new NameMap(),
+			faction: "",
+			flags: new NameMap(),
+			id: "",
+			labels: new NameMap(),
+			statuses: new PrioritizedNameMap()
+		};
 
         if (actorProfile) {
         	if (actorProfile.hasOwnProperty('attributes') && actorProfile.attributes.length) {
@@ -60,7 +69,7 @@ export class Actor {
 			}
 
 			if (actorProfile.hasOwnProperty('actionPointsAttribute')) {
-				this.actionPointsAttribute = actorProfile.actionPointsAttribute;
+				this.state.actionPointsAttribute = actorProfile.actionPointsAttribute;
 			}
 		}
     }

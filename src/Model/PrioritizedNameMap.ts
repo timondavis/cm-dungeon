@@ -1,19 +1,27 @@
 import {NameMap} from "./NameMap";
 import {NumberMap} from "./NumberMap";
+import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
-export class PrioritizedNameMap<T> {
+export interface IPrioritizedNameMap<T> extends ISerializableModel {
+	prioritizedNames: NumberMap<NameMap<T>>;
+	namePriorityIndex: NameMap<number>;
+}
 
-    protected _prioritizedNames : NumberMap<NameMap<T>>;
-    private get prioritizedNames() { return this._prioritizedNames; }
+export class PrioritizedNameMap<T> extends SerializableModel {
 
-    protected _namePriorityIndex : NameMap<number>;
-    private get namePriorityIndex() { return this._namePriorityIndex; }
+	protected state: IPrioritizedNameMap<T>;
 
-    private static DEFAULT_PRIORITY : number = 1000;
+    private get prioritizedNames() { return this.state.prioritizedNames; }
+    private get namePriorityIndex() { return this.state.namePriorityIndex; }
 
-    public constructor() {
-        this._prioritizedNames = new NumberMap<NameMap<T>>();
-        this._namePriorityIndex = new NameMap<number>();
+	private static DEFAULT_PRIORITY : number = 1000;
+
+	public constructor() {
+		super();
+		this.state = {
+			namePriorityIndex: new NameMap<number>(),
+			prioritizedNames: new NumberMap<NameMap<T>>()
+		};
     }
 
     /**

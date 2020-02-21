@@ -1,9 +1,18 @@
-export class NumberMap<T> {
+import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
-    protected _collection : { [key:number] : T };
+export interface INumberMap<T> extends ISerializableModel {
+	collection: {[key:number] : T};
+}
+
+export class NumberMap<T> extends SerializableModel {
+
+	protected state: INumberMap<T>;
 
     constructor() {
-        this._collection = {};
+    	super();
+    	this.state = {
+			collection: {}
+    	};
     }
 
     /**
@@ -19,7 +28,7 @@ export class NumberMap<T> {
             throw Error( "Item with name " + key + " already exists." );
         }
 
-        this._collection[key] = value;
+        this.state.collection[key] = value;
         return this;
     }
 
@@ -32,7 +41,7 @@ export class NumberMap<T> {
      */
     public set( key : number, value : T ) : NumberMap<T> {
 
-        this._collection[key] = value;
+        this.state.collection[key] = value;
         return this;
     }
 
@@ -49,7 +58,7 @@ export class NumberMap<T> {
             throw Error( "Cannot replace " + key + " item.  It does not exist on the NumberMap" );
         }
 
-        this._collection[key] = value;
+        this.state.collection[key] = value;
         return this;
     }
 
@@ -63,7 +72,7 @@ export class NumberMap<T> {
 
         if ( this.has( key )) {
 
-            return this._collection[key];
+            return this.state.collection[key];
         }
 
         throw new Error( 'Cannot find item with key ' + key );
@@ -75,7 +84,7 @@ export class NumberMap<T> {
      * @returns {{[p: number]: T}}
      */
     public getAll() : { [key:number] : T } {
-        return this._collection;
+        return this.state.collection;
     }
 
     /**
@@ -86,7 +95,7 @@ export class NumberMap<T> {
      */
     public has( key : number ) : boolean {
 
-        if ( this._collection.hasOwnProperty(key.toString()) ) {
+        if ( this.state.collection.hasOwnProperty(key.toString()) ) {
             return true;
         }
 
@@ -102,7 +111,7 @@ export class NumberMap<T> {
     public remove( key: number ) : NumberMap<T> {
 
         if ( this.has( key )) {
-            delete(this._collection[key]);
+            delete(this.state.collection[key]);
         }
 
         return this;
@@ -113,7 +122,7 @@ export class NumberMap<T> {
      * @returns {string[]}
      */
     public getKeys() : number[] {
-        let keys = Object.keys( this._collection );
+        let keys = Object.keys( this.state.collection );
         let convertedToNumberKeys : number[] = [];
 
         keys.forEach( (key : string, index : number )  => {
@@ -143,6 +152,6 @@ export class NumberMap<T> {
      * @returns {number}
      */
     public get length() : number {
-        return Object.keys( this._collection ).length;
+        return Object.keys( this.state.collection ).length;
     }
 }

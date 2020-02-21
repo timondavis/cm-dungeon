@@ -1,6 +1,8 @@
 import {Actor} from "./Actor";
 import {PrioritizedNameMap} from "./PrioritizedNameMap";
 
+export interface
+
 export class Status {
 
 	public id: string;
