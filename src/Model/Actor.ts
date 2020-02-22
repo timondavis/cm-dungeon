@@ -22,13 +22,19 @@ export class Actor extends SerializableModel {
 
 	protected state: IActor;
 
+	public get id(): string { return this.state.id; }
+	public set id(id: string) { this.state.id = id; }
+	public get faction(): string { return this.state.faction; }
+	public set faction(faction: string) { this.state.faction = faction; }
     public get attributes(): NameMap<number> { return this.state.attributes; }
     public get abilities(): NameMap<Ability> { return this.state.abilities; }
     public get labels(): NameMap<string> { return this.state.labels; }
     public get flags(): NameMap<boolean> { return this.state.flags; }
     public get statuses(): PrioritizedNameMap<Status> { return this.state.statuses; }
     public get actionPointsAttribute(): string { return this.state.actionPointsAttribute; }
+    public set actionPointsAttribute(attr: string) { this.state.actionPointsRemaining; }
     public get actionPointsRemaining(): number { return this.state.actionPointsRemaining; }
+    public set actionPointsRemaining(pointsRemaining: number) { this.state.actionPointsRemaining = pointsRemaining; }
 
     constructor(actorProfile?: ActorProfile) {
 		super();
