@@ -1,6 +1,10 @@
-import { Actor } from "../Actor";
+import { Actor, IActor } from "../Actor";
 import { Character } from "./Character";
+export interface IItem extends IActor {
+    owner: Character;
+}
 export declare class Item extends Actor {
-    private _owner;
-    owner: Character | null;
+    protected state: IItem;
+    constructor();
+    owner: Character;
 }

@@ -1,53 +1,59 @@
 import {Actor} from "./Actor";
 import {PrioritizedNameMap} from "./PrioritizedNameMap";
+import {DomainConverter, ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
-export interface
+export interface IStatus extends ISerializableModel {
+	id: string;
+	owner: Actor;
+	attributeAssignmentFilters: PrioritizedNameMap<( newValue : number, originalValue : number ) => number>;
+	labelAssignmentFilters: PrioritizedNameMap<( newValue : string, originalValue : string ) => string>;
+	flagAssignmentFilters: PrioritizedNameMap<( newValue : boolean, originalValue : boolean ) => boolean>;
+	statusAssignmentFilters: PrioritizedNameMap<( newValue : boolean, status : Status ) => Status | boolean>;
+	statusRemovalFilters: PrioritizedNameMap<( newValue : boolean, status : Status ) => Status|boolean>;
+}
 
-export class Status {
+export class Status extends SerializableModel {
 
-	public id: string;
+	protected state: IStatus;
 
-    protected _owner : Actor;
-    public get owner() { return this._owner; }
-
-    protected _attributeAssignmentFilters : PrioritizedNameMap<( newValue : number, originalValue : number ) => number>;
-    public get attributeAssignmentFilters() { return this._attributeAssignmentFilters; }
-
-    protected _labelAssignmentFilters     : PrioritizedNameMap<( newValue : string, originalValue : string ) => string>;
-    public get labelAssignmentFilters()   { return this._labelAssignmentFilters; }
-
-    protected _flagAssignmentFilters      : PrioritizedNameMap<( newValue : boolean, originalValue : boolean ) => boolean>;
-    public get flagAssignmentFilters()    { return this._flagAssignmentFilters; }
+    public get owner() { return this.state.owner; }
+    public get attributeAssignmentFilters() { return this.state.attributeAssignmentFilters; }
+    public get labelAssignmentFilters() { return this.state.labelAssignmentFilters; }
+    public get flagAssignmentFilters() { return this.state.flagAssignmentFilters; }
+	public get statusRemovalFilters() { return this.state.statusRemovalFilters; }
 
 
-    // @todo Again with the explicit assign removes - should be the same as other types. Can they be updated
+	// @todo Again with the explicit assign removes - should be the same as other types. Can they be updated
     // with null?  Or do the other attribute types also get a remove method?
-    protected _statusAssignmentFilters    : PrioritizedNameMap<( newValue : boolean, status : Status ) => Status|boolean>;
-    public get statusAssignmentFilters()  { return this._statusAssignmentFilters; }
+    public get statusAssignmentFilters()  { return this.state.statusAssignmentFilters; }
 
-    protected _statusRemovalFilters     : PrioritizedNameMap<( newValue : boolean, status : Status ) => Status|boolean>;
-    public get statusRemovalFilters()     { return this._statusRemovalFilters; }
-
-    public setOwner( owner : Actor ) { this._owner = owner; }
+	// @todo setter should be used here, not setX().
+	public setOwner( owner : Actor ) { this.state.owner = owner; }
 
     public clone() : Status {
+        let tempStatus: IStatus = {
+			attributeAssignmentFilters: this.attributeAssignmentFilters,
+			flagAssignmentFilters: this.flagAssignmentFilters,
+			id: "",
+			labelAssignmentFilters: this.labelAssignmentFilters,
+			owner: this.owner,
+			statusAssignmentFilters: this.statusAssignmentFilters,
+			statusRemovalFilters: this.statusRemovalFilters
+		};
 
-        let tempStatus = new Status();
-        tempStatus._owner = this.owner;
-        tempStatus._attributeAssignmentFilters  = this.attributeAssignmentFilters;
-        tempStatus._labelAssignmentFilters      = this.labelAssignmentFilters;
-        tempStatus._flagAssignmentFilters       = this.flagAssignmentFilters;
-        tempStatus._statusAssignmentFilters     = this.statusAssignmentFilters;
-        tempStatus._statusRemovalFilters        = this.statusRemovalFilters;
-
-        return tempStatus;
+        return DomainConverter.hydrateModelFromData(Status, tempStatus);
     }
 
     constructor() {
-        this._attributeAssignmentFilters = new PrioritizedNameMap();
-        this._labelAssignmentFilters     = new PrioritizedNameMap();
-        this._flagAssignmentFilters      = new PrioritizedNameMap();
-        this._statusAssignmentFilters    = new PrioritizedNameMap();
-        this._statusRemovalFilters       = new PrioritizedNameMap();
+    	super();
+    	this.state = {
+			attributeAssignmentFilters: new PrioritizedNameMap(),
+			flagAssignmentFilters: new PrioritizedNameMap(),
+			id: "",
+			labelAssignmentFilters: new PrioritizedNameMap(),
+			owner: undefined,
+			statusAssignmentFilters: new PrioritizedNameMap(),
+			statusRemovalFilters: new PrioritizedNameMap()
+		};
     }
 }

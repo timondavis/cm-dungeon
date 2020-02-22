@@ -22,11 +22,13 @@ export class Actor extends SerializableModel {
 
 	protected state: IActor;
 
-    public get attributes() : NameMap<number> { return this.state.attributes; }
-    public get abilities() : NameMap<Ability> { return this.state.abilities; }
-    public get labels() : NameMap<string> { return this.state.labels; }
-    public get flags() : NameMap<boolean> { return this.state.flags; }
-    public get statuses() : PrioritizedNameMap<Status> { return this.state.statuses; }
+    public get attributes(): NameMap<number> { return this.state.attributes; }
+    public get abilities(): NameMap<Ability> { return this.state.abilities; }
+    public get labels(): NameMap<string> { return this.state.labels; }
+    public get flags(): NameMap<boolean> { return this.state.flags; }
+    public get statuses(): PrioritizedNameMap<Status> { return this.state.statuses; }
+    public get actionPointsAttribute(): string { return this.state.actionPointsAttribute; }
+    public get actionPointsRemaining(): number { return this.state.actionPointsRemaining; }
 
     constructor(actorProfile?: ActorProfile) {
 		super();
@@ -44,7 +46,7 @@ export class Actor extends SerializableModel {
 		};
 
         if (actorProfile) {
-        	if (actorProfile.hasOwnProperty('attributes') && actorProfile.attributes.length) {
+        	if (actorProfile.attributes.length) {
         		for (let i = 0 ; i < actorProfile.attributes.length ; i++) {
         			this.attributes.add(actorProfile.attributes[i].key,
 						(actorProfile.attributes[i].hasOwnProperty('default')) ? actorProfile.attributes[i].default : 0
@@ -52,7 +54,7 @@ export class Actor extends SerializableModel {
 				}
 			}
 
-			if (actorProfile.hasOwnProperty('flags') && actorProfile.flags.length) {
+			if (actorProfile.flags.length) {
 				for (let i = 0 ; i < actorProfile.flags.length ; i++) {
 					this.flags.add(actorProfile.flags[i].key,
 						(actorProfile.flags[i].hasOwnProperty('default')) ? actorProfile.flags[i].default : false
@@ -60,7 +62,7 @@ export class Actor extends SerializableModel {
 				}
 			}
 
-			if (actorProfile.hasOwnProperty('labels') && actorProfile.labels.length) {
+			if (actorProfile.labels.length) {
 				for (let i = 0 ; i < actorProfile.labels.length ; i++) {
 					this.labels.add(actorProfile.labels[i].key,
 						(actorProfile.labels[i].hasOwnProperty('default')) ? actorProfile.labels[i].default : ''
@@ -68,7 +70,7 @@ export class Actor extends SerializableModel {
 				}
 			}
 
-			if (actorProfile.hasOwnProperty('actionPointsAttribute')) {
+			if (actorProfile.actionPointsAttribute) {
 				this.state.actionPointsAttribute = actorProfile.actionPointsAttribute;
 			}
 		}

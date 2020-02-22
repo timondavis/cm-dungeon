@@ -1,6 +1,12 @@
 import { Status } from "./Status";
-export declare class StatusLibrary {
-    private _collection;
+import { NameMap } from "./NameMap";
+import { ISerializableModel } from "cm-domain-utilities/lib/Serializable.model";
+import { SerializableModel } from "cm-domain-utilities";
+export interface IStatusLibrary extends ISerializableModel {
+    collection: NameMap<Status>;
+}
+export declare class StatusLibrary extends SerializableModel {
+    protected state: IStatusLibrary;
     private static _instance;
     private constructor();
     /**

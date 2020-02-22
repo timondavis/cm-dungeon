@@ -1,12 +1,31 @@
-export class ActorProfile {
-	public readonly name: string = '';
-	public readonly attributes: {key: string, default?: number}[] = [];
-	public readonly flags: {key: string, default?: boolean}[] = [];
-	public readonly labels: {key: string, default?: string}[] = [];
-	public readonly actionPointsAttribute: string;
+import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
+
+export interface IActorProfile extends ISerializableModel {
+	name: string;
+	attributes: {key: string, default?: number}[];
+	flags: {key: string, default?: boolean}[];
+	labels: {key: string, default?: string}[];
+	actionPointsAttribute: string;
+}
+
+export class ActorProfile extends SerializableModel {
+	protected state: IActorProfile;
+
+	public get name(): string { return this.state.name; }
+	public get attributes(): {key: string, default?: number}[] { return this.state.attributes };
+	public get flags(): {key: string, default?: boolean}[] { return this.state.flags; }
+	public get labels(): {key: string, default?: string}[] { return this.state.labels; }
+	public get actionPointsAttribute(): string { return this.state.actionPointsAttribute; }
 
 	constructor(configs: any) {
-		this.name = configs.name;
+		super();
+		this.state = {
+			actionPointsAttribute: "",
+			attributes: [],
+			flags: [],
+			labels: [],
+			name: configs.hasOwnProperty('name') ? configs.name : ""
+		};
 
 		if (configs.hasOwnProperty('attributes')) {
 			configs.attributes.forEach((item) => {
@@ -32,7 +51,7 @@ export class ActorProfile {
 			});
 		}
 
-		this.actionPointsAttribute  = (configs.hasOwnProperty('actionPointsAttribute')) ?
+		this.state.actionPointsAttribute  = (configs.hasOwnProperty('actionPointsAttribute')) ?
 			configs.actionPointsAttribute : null;
 	}
 }

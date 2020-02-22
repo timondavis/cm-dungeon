@@ -1,5 +1,9 @@
-export declare class List<T> {
-    private _collection;
+import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
+export interface IList<T> extends ISerializableModel {
+    collection: T[];
+}
+export declare class List<T> extends SerializableModel {
+    protected state: IList<T>;
     protected readonly collection: T[];
     constructor();
     add(item: T): void;
