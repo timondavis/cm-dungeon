@@ -32,7 +32,7 @@ export class Actor extends SerializableModel {
     public get flags(): NameMap<boolean> { return this.state.flags; }
     public get statuses(): PrioritizedNameMap<Status> { return this.state.statuses; }
     public get actionPointsAttribute(): string { return this.state.actionPointsAttribute; }
-    public set actionPointsAttribute(attr: string) { this.state.actionPointsRemaining; }
+    public set actionPointsAttribute(attr: string) { this.state.actionPointsAttribute = attr; }
     public get actionPointsRemaining(): number { return this.state.actionPointsRemaining; }
     public set actionPointsRemaining(pointsRemaining: number) { this.state.actionPointsRemaining = pointsRemaining; }
 
