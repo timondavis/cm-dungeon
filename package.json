@@ -12,6 +12,7 @@
     "@types/node": "^12.12.14",
     "chai": "^4.2.0",
     "cm-check": "file:..//cm-check",
+    "cm-domain-utilities": "file:../cm-domain-utilities",
     "dice-bag": "0.1.2",
     "events": "^3.0.0",
     "typescript": "~3.5.3"

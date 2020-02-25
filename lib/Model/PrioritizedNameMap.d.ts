@@ -1,9 +1,13 @@
 import { NameMap } from "./NameMap";
 import { NumberMap } from "./NumberMap";
-export declare class PrioritizedNameMap<T> {
-    protected _prioritizedNames: NumberMap<NameMap<T>>;
+import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
+export interface IPrioritizedNameMap<T> extends ISerializableModel {
+    prioritizedNames: NumberMap<NameMap<T>>;
+    namePriorityIndex: NameMap<number>;
+}
+export declare class PrioritizedNameMap<T> extends SerializableModel {
+    protected state: IPrioritizedNameMap<T>;
     private readonly prioritizedNames;
-    protected _namePriorityIndex: NameMap<number>;
     private readonly namePriorityIndex;
     private static DEFAULT_PRIORITY;
     constructor();

@@ -1,4 +1,22 @@
-export declare class ActorProfile {
+import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
+export interface IActorProfile extends ISerializableModel {
+    name: string;
+    attributes: {
+        key: string;
+        default?: number;
+    }[];
+    flags: {
+        key: string;
+        default?: boolean;
+    }[];
+    labels: {
+        key: string;
+        default?: string;
+    }[];
+    actionPointsAttribute: string;
+}
+export declare class ActorProfile extends SerializableModel {
+    protected state: IActorProfile;
     readonly name: string;
     readonly attributes: {
         key: string;

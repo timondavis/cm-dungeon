@@ -1,7 +1,11 @@
-export declare class NameMap<T> {
-    protected _collection: {
+import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
+export interface INameMap<T> extends ISerializableModel {
+    collection: {
         [key: string]: T;
     };
+}
+export declare class NameMap<T> extends SerializableModel {
+    protected state: INameMap<T>;
     constructor();
     /**
      * Add an item to the collection with the given key.
