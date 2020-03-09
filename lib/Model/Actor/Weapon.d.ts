@@ -1,11 +1,14 @@
-import { Item } from "./Item";
+import { IItem, Item } from "./Item";
 import { Check } from "cm-check/lib/Check/Check";
 import { ResultModifier } from "cm-check/lib/Check/Modifier/ResultModifier";
 import { List } from "../List";
+export interface IWeapon extends IItem {
+    damageRoll: Check;
+    checkModifiers: List<ResultModifier>;
+}
 export declare class Weapon extends Item {
-    private _damageRoll;
+    protected state: IWeapon;
     readonly damageRoll: Check;
-    private _checkModifiers;
     checkModifiers(): List<ResultModifier>;
     constructor();
 }

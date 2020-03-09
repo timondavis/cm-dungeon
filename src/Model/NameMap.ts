@@ -1,9 +1,18 @@
-export class NameMap<T> {
+import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
-    protected _collection : { [key:string] : T };
+export interface INameMap<T> extends ISerializableModel {
+	collection: { [key:string]: T };
+}
+
+export class NameMap<T> extends SerializableModel {
+
+	protected state: INameMap<T>;
 
     constructor() {
-        this._collection = {};
+    	super();
+    	this.state = {
+			collection: {}
+		};
     }
 
     /**
@@ -21,7 +30,7 @@ export class NameMap<T> {
             throw Error( "Item with name " + key + " already exists." );
         }
 
-        this._collection[key] = value;
+        this.state.collection[key] = value;
         return this;
     }
 
@@ -36,7 +45,7 @@ export class NameMap<T> {
 
         key = key.trim();
 
-        this._collection[key] = value;
+        this.state.collection[key] = value;
         return this;
     }
 
@@ -55,7 +64,7 @@ export class NameMap<T> {
             throw Error( "Cannot replace " + key + " item.  It does not exist on the NameMap" );
         }
 
-        this._collection[key] = value;
+        this.state.collection[key] = value;
         return this;
     }
 
@@ -71,7 +80,7 @@ export class NameMap<T> {
 
         if ( this.has( key )) {
 
-            return this._collection[key];
+            return this.state.collection[key];
         }
 
         throw new Error( 'Cannot find item with key ' + key );
@@ -83,7 +92,7 @@ export class NameMap<T> {
      * @returns {{[p: string]: T}}
      */
     public getAll() : { [key:string] : T } {
-        return this._collection;
+        return this.state.collection;
     }
 
     /**
@@ -96,7 +105,7 @@ export class NameMap<T> {
 
         key = key.trim();
 
-        if ( this._collection.hasOwnProperty(key) ) {
+        if ( this.state.collection.hasOwnProperty(key) ) {
             return true;
         }
 
@@ -114,7 +123,7 @@ export class NameMap<T> {
         key = key.trim();
 
         if ( this.has( key )) {
-            delete(this._collection[key]);
+            delete(this.state.collection[key]);
         }
 
         return this;
@@ -125,7 +134,7 @@ export class NameMap<T> {
      * @returns {string[]}
      */
     public getKeys() : string[] {
-        return Object.keys( this._collection );
+        return Object.keys( this.state.collection );
     }
 
     /**
@@ -141,14 +150,14 @@ export class NameMap<T> {
      * @returns {number}
      */
     public get length() : number {
-        return Object.keys( this._collection ).length;
+        return Object.keys( this.state.collection ).length;
     }
 
     public toArray(): T[] {
         let result: T[] = [];
 
-        Object.keys(this._collection).forEach((key: string) => {
-            result.push((<T>this._collection[key]));
+        Object.keys(this.state.collection).forEach((key: string) => {
+            result.push((<T>this.state.collection[key]));
         });
 
         return result;

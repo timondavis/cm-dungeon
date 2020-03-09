@@ -3,21 +3,29 @@ import { NameMap } from "./NameMap";
 import { Status } from "./Status";
 import { PrioritizedNameMap } from "./PrioritizedNameMap";
 import { ActorProfile } from "./Actor/ActorProfile";
-export declare class Actor {
+import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
+export interface IActor extends ISerializableModel {
     id: string;
     faction: string;
     actionPointsAttribute: string;
     actionPointsRemaining: number;
-    protected _attributes: NameMap<number>;
+    attributes: NameMap<number>;
+    abilities: NameMap<Ability>;
+    labels: NameMap<string>;
+    flags: NameMap<boolean>;
+    statuses: PrioritizedNameMap<Status>;
+}
+export declare class Actor extends SerializableModel {
+    protected state: IActor;
+    id: string;
+    faction: string;
     readonly attributes: NameMap<number>;
-    protected _abilities: NameMap<Ability>;
     readonly abilities: NameMap<Ability>;
-    protected _labels: NameMap<string>;
     readonly labels: NameMap<string>;
-    protected _flags: NameMap<boolean>;
     readonly flags: NameMap<boolean>;
-    protected _statuses: PrioritizedNameMap<Status>;
     readonly statuses: PrioritizedNameMap<Status>;
+    actionPointsAttribute: string;
+    actionPointsRemaining: number;
     constructor(actorProfile?: ActorProfile);
     /**
      * Execute an ability belonging to the actor

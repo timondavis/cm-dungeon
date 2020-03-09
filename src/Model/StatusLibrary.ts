@@ -1,12 +1,23 @@
 import {Status} from "./Status";
 import {NameMap} from "./NameMap";
+import {ISerializableModel} from "cm-domain-utilities/lib/Serializable.model";
+import {SerializableModel} from "cm-domain-utilities";
 
-export class StatusLibrary {
+export interface IStatusLibrary extends ISerializableModel {
+	collection: NameMap<Status>
+}
 
-    private _collection : NameMap<Status>;
+export class StatusLibrary extends SerializableModel {
+
+	protected state: IStatusLibrary;
     private static _instance : StatusLibrary;
 
-    private constructor() {}
+    private constructor() {
+    	super();
+    	this.state = {
+			collection: undefined
+		};
+	}
 
     /**
      * Get the StatusLibrary instance.
@@ -28,8 +39,8 @@ export class StatusLibrary {
      * @param {string} key
      * @returns {Status}
      */
-    public get( key : string ) : Status {
-        return this._collection.get( key ).clone();
+    public get( key: string ) : Status {
+        return this.state.collection.get( key ).clone();
     }
 
     /**
@@ -37,8 +48,8 @@ export class StatusLibrary {
      * @param {string} key
      * @param {Status} status
      */
-    public set( key : string, status : Status ) : void {
-        this._collection.set( key, status.clone() );
+    public set( key: string, status : Status ) : void {
+        this.state.collection.set( key, status.clone() );
     }
 
     /**
@@ -47,7 +58,7 @@ export class StatusLibrary {
      * @param {string} key
      * @returns {boolean}
      */
-    public has( key : string ) : boolean {
-        return this._collection.has( key );
+    public has( key: string ) : boolean {
+        return this.state.collection.has( key );
     }
 }

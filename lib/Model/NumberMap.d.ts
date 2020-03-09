@@ -1,7 +1,11 @@
-export declare class NumberMap<T> {
-    protected _collection: {
+import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
+export interface INumberMap<T> extends ISerializableModel {
+    collection: {
         [key: number]: T;
     };
+}
+export declare class NumberMap<T> extends SerializableModel {
+    protected state: INumberMap<T>;
     constructor();
     /**
      * Add an item to the collection with the given key.

@@ -1,34 +1,38 @@
 import {NameMap} from "./NameMap";
 import {Status} from "./Status";
 import {List} from "./List";
+import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
-export class Effect {
+export interface IEffect extends ISerializableModel {
+	id: string;
+	attributeAssignments: NameMap<(value: number, data?: any) => number>;
+	labelAssignments: NameMap<(value: string, data?: any) => string>;
+	flagAssignments: NameMap<(value: boolean, data?: any) => boolean>;
+	statusAssignments: NameMap<Status>;
+	statusRemovals: List<string>;
+}
 
-	public id: string;
+export class Effect extends SerializableModel {
 
-    private _attributeAssignments : NameMap<(value : number, data? : any ) => number>;
-    public get attributeAssignments() { return this._attributeAssignments; }
+	protected state: IEffect;
 
-    private _labelAssignments : NameMap<(value : string, data? : any ) => string>;
-    public get labelAssignments() { return this._labelAssignments; }
+    public get attributeAssignments() { return this.state.attributeAssignments; }
+    public get labelAssignments() { return this.state.labelAssignments; }
+    public get flagAssignments() { return this.state.flagAssignments; }
+	public get statusRemovals() { return this.state.statusRemovals; }
 
-    private _flagAssignments : NameMap<(value : boolean, data? : any ) => boolean>;
-    public get flagAssignments() { return this._flagAssignments; }
-
-    // @todo - Kinda weird that there's an remove/assign paradigm for status, but not other attribute types.
-    // Can that be straightened out?
-    private _statusAssignments : NameMap<Status>;
-    public get statusAssignments() { return this._statusAssignments; }
-
-    private _statusRemovals : List<string>;
-    public get statusRemovals() { return this._statusRemovals; }
+	// @todo - Kinda weird that there's an remove/assign paradigm for status, but not other attribute types.
+    public get statusAssignments() { return this.state.statusAssignments; }
 
     constructor() {
-
-        this._attributeAssignments = new NameMap();
-        this._labelAssignments = new NameMap();
-        this._flagAssignments = new NameMap();
-        this._statusAssignments = new NameMap();
-        this._statusRemovals = new List();
+    	super();
+    	this.state = {
+			attributeAssignments: new NameMap(),
+			flagAssignments: new NameMap(),
+			id: "",
+			labelAssignments: new NameMap(),
+			statusAssignments: new NameMap(),
+			statusRemovals: new List()
+		};
     }
 }

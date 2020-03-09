@@ -1,19 +1,23 @@
-import {Actor} from "../Actor";
+import {Actor, IActor} from "../Actor";
 import {Item} from "./Item";
 import {NameMap} from "../NameMap";
 
+export interface ICharacter extends IActor {
+	inventory: NameMap<Item>;
+	equipped: NameMap<Item>;
+}
+
 export class Character extends Actor {
 
-    private _inventory : NameMap<Item>;
-    public get inventory() { return this._inventory; }
+	protected state: ICharacter;
 
-    private _equipped : NameMap<Item>;
-    public get equipped() { return this._equipped; }
+    public get inventory() { return this.state.inventory; }
+    public get equipped() { return this.state.equipped; }
 
     public constructor() {
         super();
 
-        this._inventory = new NameMap<Item>();
-        this._equipped = new NameMap<Item>();
+        this.state.inventory = new NameMap<Item>();
+        this.state.equipped = new NameMap<Item>();
     }
 }
