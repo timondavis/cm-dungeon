@@ -2,6 +2,8 @@ import {NameMap} from "../NameMap";
 import {ActorProfile} from "./ActorProfile";
 import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
+export const EntitySchema
+
 export interface IEntity extends ISerializableModel {
 	id: string;
 	actionPointsAttribute: string;
