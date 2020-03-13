@@ -1,10 +1,10 @@
 import 'mocha';
-import {Actor} from "../../Model/Actor";
+import {Actor} from "../../Model/Entity/Actor";
 import {Ability} from "../../Model/Ability/Ability";
-import {Character} from "../../Model/Actor/Character";
+import {Character} from "../../Model/Entity/Character";
 import {CheckExecutor} from "cm-check/lib/Check/CheckExecutor";
 import {Check} from "cm-check/lib/Check/Check";
-import {Weapon} from "../../Model/Actor/Weapon";
+import {Weapon} from "../../Model/Entity/Weapon";
 import {Effect} from "../../Model/Effect";
 import {Interaction} from "../../Control/Interaction";
 import {Logger} from "../../Log/Logger";

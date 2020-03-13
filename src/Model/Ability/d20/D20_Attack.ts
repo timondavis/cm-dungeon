@@ -1,6 +1,6 @@
 import {Ability} from "../Ability";
 import {Interaction} from "../../../Control/Interaction";
-import {Actor} from "../../Actor";
+import {Actor} from "../../Entity/Actor";
 import {CheckExecutor} from "cm-check/lib/Check/CheckExecutor";
 import {Effect} from "../../Effect";
 import {DieBag} from "cm-check/lib/Die/DieBag";

@@ -1,4 +1,4 @@
-import { Actor } from "../Model/Actor";
+import { Actor } from "../Model/Entity/Actor";
 import { Check } from "cm-check/lib/Check/Check";
 import { Effect } from "../Model/Effect";
 import { List } from "../Model/List";

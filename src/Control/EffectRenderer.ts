@@ -1,5 +1,5 @@
 import {Effect} from "../Model/Effect";
-import {Actor} from "../Model/Actor";
+import {Actor} from "../Model/Entity/Actor";
 import {List} from "../Model/List";
 import {Status} from "../Model/Status";
 

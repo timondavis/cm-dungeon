@@ -1,6 +1,6 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Actor} from "../../Model/Actor";
+import {Actor} from "../../Model/Entity/Actor";
 import {Effect} from "../../Model/Effect";
 import {EffectRenderer} from "../../Control/EffectRenderer";
 import {Status} from "../../Model/Status";

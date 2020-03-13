@@ -1,5 +1,5 @@
 import {Interaction} from "../../Control/Interaction";
-import {Actor} from "../Actor";
+import {Actor} from "../Entity/Actor";
 import {Modifier} from "cm-check/lib/Check/Modifier/Modifier";
 import {PrioritizedNameMap} from "../PrioritizedNameMap";
 

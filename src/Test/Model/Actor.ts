@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ability} from "../../Model/Ability/Ability";
-import {Character} from "../../Model/Actor/Character";
-import {Actor} from "../../Model/Actor";
+import {Character} from "../../Model/Entity/Character";
+import {Actor} from "../../Model/Entity/Actor";
 import {D20_Attack} from "../../Model/Ability/d20/D20_Attack";
 import {ActorProfile} from "../..";
 

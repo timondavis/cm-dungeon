@@ -1,4 +1,4 @@
-import {Actor, IActor} from "../Actor";
+import {Actor, IActor} from "./Actor";
 import {Character} from "./Character";
 
 export interface IItem extends IActor {

@@ -1,4 +1,4 @@
-import { Actor } from "./Actor";
+import { Actor } from "./Entity/Actor";
 import { PrioritizedNameMap } from "./PrioritizedNameMap";
 import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
 export interface IStatus extends ISerializableModel {

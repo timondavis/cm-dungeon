@@ -1,4 +1,4 @@
-import {Actor, IActor} from "../Actor";
+import {Actor, IActor} from "./Actor";
 import {Item} from "./Item";
 import {NameMap} from "../NameMap";
 
