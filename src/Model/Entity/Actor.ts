@@ -3,7 +3,12 @@ import {NameMap} from "../NameMap";
 import {Status} from "../Status";
 import {PrioritizedNameMap} from "../PrioritizedNameMap";
 import {ActorProfile} from "./ActorProfile";
-import {Entity, IEntity} from "./Entity";
+import {Entity, IEntity, EntitySchema} from "./Entity";
+
+export const ActorSchema =
+	EntitySchema.add({
+		// @todo
+	});
 
 export interface IActor extends IEntity {
 	faction: string;

@@ -309,14 +309,10 @@ export class PrioritizedNameMap<T> extends SerializableModel {
      * @returns {number}
      */
     public get length() : number {
-
         let length : number = 0;
-
         this.prioritizedNames.forEachKey( ( key : number ) => {
-
             length += this.prioritizedNames.get( key ).length;
         });
-
         return length;
     }
 
@@ -327,11 +323,13 @@ export class PrioritizedNameMap<T> extends SerializableModel {
      * @returns {number}
      */
     public getKeyPriority( key : string ) : number {
-
         key = key.trim();
-
         return this.namePriorityIndex.get( key );
     }
+
+    public toMap() {
+    	this.prioritizedNames.toMap();
+	}
 
     /**
      * Will search for the priority of the given key.  If no such key is found,
@@ -343,9 +341,7 @@ export class PrioritizedNameMap<T> extends SerializableModel {
      * @returns {number}
      */
     protected getPriorityOfKeyOrDefault( key : string ) : number {
-
         key = key.trim();
-
         try { return this.namePriorityIndex.get( key ); }
         catch ( ex ){ return PrioritizedNameMap.DEFAULT_PRIORITY; }
     }

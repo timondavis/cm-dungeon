@@ -76,4 +76,5 @@ export declare class NameMap<T> extends SerializableModel {
      */
     readonly length: number;
     toArray(): T[];
+    toMap(): Map<string, T>;
 }

@@ -162,4 +162,15 @@ export class NameMap<T> extends SerializableModel {
 
         return result;
     }
+
+    public toMap() : Map<string, T> {
+
+    	let map = new Map<string, T>();
+
+    	Object.keys(this.state.collection).forEach((key: string) => {
+			map.set(key, this.get(key));
+		});
+
+    	return map;
+	}
 }

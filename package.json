@@ -7,8 +7,9 @@
   "author": "Your Identification here",
   "license": "ISC",
   "dependencies": {
-    "@types/chai": "^4.2.5",
-    "@types/mocha": "^5.2.7",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/mongoose": "^5.7.6",
     "@types/node": "^12.12.14",
     "chai": "^4.2.0",
     "cm-check": "file:..//cm-check",
@@ -26,7 +27,7 @@
   },
   "devDependencies": {
     "concurrently": "3.5.1",
-    "mocha": "^6.2.2",
+    "mocha": "^7.1.0",
     "nodemon": "1.14.11",
     "ts-node": "4.1.0"
   },

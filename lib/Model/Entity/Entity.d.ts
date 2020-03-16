@@ -1,10 +1,10 @@
 import { NameMap } from "../NameMap";
 import { ActorProfile } from "./ActorProfile";
 import { ISerializableModel, SerializableModel } from "cm-domain-utilities";
+import { Schema } from "mongoose";
+export declare const EntitySchema: Schema<any>;
 export interface IEntity extends ISerializableModel {
-    id: string;
-    actionPointsAttribute: string;
-    actionPointsRemaining: number;
+    _id: string;
     attributes: NameMap<number>;
     labels: NameMap<string>;
     flags: NameMap<boolean>;

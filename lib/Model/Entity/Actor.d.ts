@@ -4,6 +4,7 @@ import { Status } from "../Status";
 import { PrioritizedNameMap } from "../PrioritizedNameMap";
 import { ActorProfile } from "./ActorProfile";
 import { Entity, IEntity } from "./Entity";
+export declare const ActorSchema: void;
 export interface IActor extends IEntity {
     faction: string;
     actionPointsAttribute: string;

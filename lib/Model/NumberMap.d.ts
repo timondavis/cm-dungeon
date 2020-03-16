@@ -75,4 +75,5 @@ export declare class NumberMap<T> extends SerializableModel {
      * @returns {number}
      */
     readonly length: number;
+    toMap(): Map<number, T>;
 }

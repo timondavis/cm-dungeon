@@ -1,13 +1,27 @@
 import {NameMap} from "../NameMap";
 import {ActorProfile} from "./ActorProfile";
 import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
+import {Schema} from "mongoose";
 
-export const EntitySchema
+export const EntitySchema = new Schema({
+	_id : String,
+	entityType: String,
+	attributes: {
+		type: Map,
+		of: Number
+	},
+	labels: {
+		type: Map,
+		of: String
+	},
+	flags: {
+		type: Map,
+		of: Boolean
+	}
+});
 
 export interface IEntity extends ISerializableModel {
-	id: string;
-	actionPointsAttribute: string;
-	actionPointsRemaining: number;
+	_id: string;
 	attributes: NameMap<number>;
 	labels: NameMap<string>;
 	flags: NameMap<boolean>;
@@ -18,8 +32,8 @@ export class Entity extends SerializableModel {
 
 	protected state: IEntity;
 
-	public get id(): string { return this.state.id; }
-	public set id(id: string) { this.state.id = id; }
+	public get id(): string { return this.state._id; }
+	public set id(id: string) { this.state._id = id; }
 	public get attributes(): NameMap<number> { return this.state.attributes; }
 	public get labels(): NameMap<string> { return this.state.labels; }
 	public get flags(): NameMap<boolean> { return this.state.flags; }
@@ -28,11 +42,9 @@ export class Entity extends SerializableModel {
 		super();
 
 		this.state = {
-			actionPointsAttribute: "",
-			actionPointsRemaining: 0,
+			_id: "",
 			attributes: new NameMap(),
 			flags: new NameMap(),
-			id: "",
 			labels: new NameMap(),
 			entityType: ""
 		};

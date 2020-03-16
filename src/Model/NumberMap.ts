@@ -154,4 +154,12 @@ export class NumberMap<T> extends SerializableModel {
     public get length() : number {
         return Object.keys( this.state.collection ).length;
     }
+
+    public toMap() : Map<number, T> {
+    	let map = new Map<number, T>();
+    	Object.keys(this.state.collection).forEach((key: string) => {
+    		map.set(Number(key), this.get(Number(key)));
+		});
+    	return map;
+	}
 }

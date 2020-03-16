@@ -111,6 +111,7 @@ export declare class PrioritizedNameMap<T> extends SerializableModel {
      * @returns {number}
      */
     getKeyPriority(key: string): number;
+    toMap(): void;
     /**
      * Will search for the priority of the given key.  If no such key is found,
      * this function will return the DEFAULT PRIORITY value.  Handy for situations where
