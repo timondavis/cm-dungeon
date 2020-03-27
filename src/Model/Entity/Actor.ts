@@ -5,7 +5,7 @@ import {PrioritizedNameMap} from "../PrioritizedNameMap";
 import {ActorProfile} from "./ActorProfile";
 import {Entity, IEntity, EntitySchema} from "./Entity";
 
-export const ActorSchema =
+export const ActorSchemaPattern =
 	EntitySchema.add({
 		// @todo
 	});

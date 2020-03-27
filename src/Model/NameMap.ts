@@ -173,4 +173,20 @@ export class NameMap<T> extends SerializableModel {
 
     	return map;
 	}
+
+	public toParallelArrayObject() : {keys: string[], values: T[]} {
+    	let keys = this.getKeys();
+
+    	let object =  {
+    		keys: keys,
+			values: [],
+			length: keys.length
+		};
+
+		for (let i = 0 ; i < keys.length ; i++) {
+			object.values[i] = this.get(keys[i]);
+		}
+
+		return object;
+	}
 }

@@ -1,24 +1,6 @@
 import {NameMap} from "../NameMap";
 import {ActorProfile} from "./ActorProfile";
-import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
-import {Schema} from "mongoose";
-
-export const EntitySchema = new Schema({
-	_id : String,
-	entityType: String,
-	attributes: {
-		type: Map,
-		of: Number
-	},
-	labels: {
-		type: Map,
-		of: String
-	},
-	flags: {
-		type: Map,
-		of: Boolean
-	}
-});
+import {IdentificationGenerator, ISerializableModel, SerializableModel} from "cm-domain-utilities";
 
 export interface IEntity extends ISerializableModel {
 	_id: string;
@@ -42,7 +24,7 @@ export class Entity extends SerializableModel {
 		super();
 
 		this.state = {
-			_id: "",
+			_id: IdentificationGenerator.UUID(),
 			attributes: new NameMap(),
 			flags: new NameMap(),
 			labels: new NameMap(),
@@ -50,6 +32,8 @@ export class Entity extends SerializableModel {
 		};
 
 		if (actorProfile) {
+
+			this.state.entityType = "";
 			if (actorProfile.attributes.length) {
 				for (let i = 0 ; i < actorProfile.attributes.length ; i++) {
 					this.attributes.add(actorProfile.attributes[i].key,
