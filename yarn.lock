@@ -7,10 +7,43 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.5.tgz#f8da153ebbe30babb0adc9a528b9ad32be3175a2"
   integrity sha512-YvbLiIc0DbbhiANrfVObdkLEHJksQZVq0Uvfg550SRAKVYaEJy+V70j65BVe2WNp6E3HtKsUczeijHFCjba3og==
 
+"@types/detect-indent@0.1.30":
+  version "0.1.30"
+  resolved "https://registry.yarnpkg.com/@types/detect-indent/-/detect-indent-0.1.30.tgz#dc682bb412b4e65ba098e70edad73b4833fb910d"
+  integrity sha1-3GgrtBK05lugmOcO2tc7SDP7kQ0=
+
+"@types/glob@5.0.30":
+  version "5.0.30"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-5.0.30.tgz#1026409c5625a8689074602808d082b2867b8a51"
+  integrity sha1-ECZAnFYlqGiQdGAoCNCCsoZ7ilE=
+  dependencies:
+    "@types/minimatch" "*"
+    "@types/node" "*"
+
+"@types/minimatch@*":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
+  integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
+
+"@types/mkdirp@0.3.29":
+  version "0.3.29"
+  resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.3.29.tgz#7f2ad7ec55f914482fc9b1ec4bb1ae6028d46066"
+  integrity sha1-fyrX7FX5FEgvybHsS7GuYCjUYGY=
+
 "@types/mocha@^5.2.7":
   version "5.2.7"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.7.tgz#315d570ccb56c53452ff8638738df60726d5b6ea"
   integrity sha512-NYrtPht0wGzhwe9+/idPaBB+TqkY9AhTvOLMkThm0IoEfLaiVQZwBwyJ5puCkO3AUCWrmcoePjp2mbFocKy4SQ==
+
+"@types/node@*":
+  version "14.0.23"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.23.tgz#676fa0883450ed9da0bb24156213636290892806"
+  integrity sha512-Z4U8yDAl5TFkmYsZdFPdjeMa57NOvnaf1tljHzhouaPEp7LCj2JKkejpI1ODviIAQuW4CcQmxkQ77rnLsOOoKw==
+
+"@types/node@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.0.tgz#acaa89247afddc7967e9902fd11761dadea1a555"
+  integrity sha512-j2tekvJCO7j22cs+LO6i0kRPhmQ9MXaPZ55TzOc1lzkN5b6BWqq4AFjl04s1oRRQ1v5rSe+KEvnLUSTonuls/A==
 
 "@types/node@^12.12.14":
   version "12.12.14"
@@ -340,10 +373,26 @@ cliui@^5.0.0:
     wrap-ansi "^5.1.0"
 
 "cm-check@file:lib/cm-check":
-  version "0.0.0"
+  version "1.0.0"
+  dependencies:
+    "@types/chai" "^4.2.5"
+    "@types/mocha" "^5.2.7"
+    "@types/node" "^12.12.14"
+    chai "^4.2.0"
+    dice-bag "0.1.2"
+    events "^3.0.0"
+    mocha "^6.2.2"
 
 "cm-maze@file:lib/cm-maze":
-  version "0.0.0"
+  version "0.2.2"
+  dependencies:
+    "@types/chai" "^4.2.5"
+    "@types/mocha" "^5.2.7"
+    "@types/node" "^12.12.14"
+    chai "^4.2.0"
+    dice-bag "0.1.2"
+    dts-bundle "^0.7.3"
+    mocha "^6.2.2"
 
 code-point-at@^1.0.0:
   version "1.1.0"
@@ -374,6 +423,11 @@ commander@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.6.0.tgz#9df7e52fb2a0cb0fb89058ee80c3104225f37e1d"
   integrity sha1-nfflL7Kgyw+4kFjugMMQQiXzfh0=
+
+commander@^2.9.0:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 component-emitter@^1.2.1:
   version "1.3.0"
@@ -522,6 +576,14 @@ delegates@^1.0.0:
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
   integrity sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
 
+detect-indent@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-0.2.0.tgz#042914498979ac2d9f3c73e4ff3e6877d3bc92b6"
+  integrity sha1-BCkUSYl5rC2fPHPk/z5od9O8krY=
+  dependencies:
+    get-stdin "^0.1.0"
+    minimist "^0.1.0"
+
 detect-libc@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
@@ -543,6 +605,20 @@ dot-prop@^4.1.0:
   integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
   dependencies:
     is-obj "^1.0.0"
+
+dts-bundle@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/dts-bundle/-/dts-bundle-0.7.3.tgz#372b7bb69c820782e6382f400739a69dced3d59a"
+  integrity sha1-Nyt7tpyCB4LmOC9ABzmmnc7T1Zo=
+  dependencies:
+    "@types/detect-indent" "0.1.30"
+    "@types/glob" "5.0.30"
+    "@types/mkdirp" "0.3.29"
+    "@types/node" "8.0.0"
+    commander "^2.9.0"
+    detect-indent "^0.2.0"
+    glob "^6.0.4"
+    mkdirp "^0.5.0"
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -734,6 +810,11 @@ get-func-name@^2.0.0:
   resolved "https://registry.yarnpkg.com/get-func-name/-/get-func-name-2.0.0.tgz#ead774abee72e20409433a066366023dd6887a41"
   integrity sha1-6td0q+5y4gQJQzoGY2YCPdaIekE=
 
+get-stdin@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-0.1.0.tgz#5998af24aafc802d15c82c685657eeb8b10d4a91"
+  integrity sha1-WZivJKr8gC0VyCxoVlfuuLENSpE=
+
 get-stream@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
@@ -761,6 +842,17 @@ glob@7.1.3:
     inflight "^1.0.4"
     inherits "2"
     minimatch "^3.0.4"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
+glob@^6.0.4:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-6.0.4.tgz#0f08860f6a155127b2fadd4f9ce24b1aab6e4d22"
+  integrity sha1-DwiGD2oVUSey+t1PnOJLGqtuTSI=
+  dependencies:
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "2 || 3"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
@@ -1200,9 +1292,9 @@ locate-path@^3.0.0:
     path-exists "^3.0.0"
 
 lodash@^4.17.15, lodash@^4.5.1:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@2.2.0:
   version "2.2.0"
@@ -1267,7 +1359,7 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-minimatch@3.0.4, minimatch@^3.0.4:
+"minimatch@2 || 3", minimatch@3.0.4, minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
@@ -1278,6 +1370,11 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
   integrity sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
+
+minimist@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.1.0.tgz#99df657a52574c21c9057497df742790b2b4c0de"
+  integrity sha1-md9lelJXTCHJBXSX33QnkLK0wN4=
 
 minimist@^1.2.0:
   version "1.2.0"
