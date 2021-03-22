@@ -1,6 +1,6 @@
 import {Interaction} from "../../Control/Interaction";
 import {Actor} from "../Actor";
-import {Modifier} from "cm-check/lib/Check/Modifier/Modifier";
+import {Modifier} from "../../../../cm-check/"
 import {PrioritizedNameMap} from "../PrioritizedNameMap";
 
 export abstract class Ability {
