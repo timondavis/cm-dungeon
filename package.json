@@ -26,8 +26,7 @@
     "mocha": "^6.2.2",
     "nodemon": "1.14.11",
     "ts-node": "4.1.0",
-    "typescript": "^3.7.2",
-    "@types/node": "^14.14.34"
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "start": "concurrently \"npm run build:live\" \"npm run build:disk\"",
