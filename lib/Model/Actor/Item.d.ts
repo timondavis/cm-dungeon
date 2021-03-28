@@ -6,5 +6,6 @@ export interface IItem extends IActor {
 export declare class Item extends Actor {
     protected state: IItem;
     constructor();
-    owner: Character;
+    get owner(): Character;
+    set owner(value: Character | null);
 }

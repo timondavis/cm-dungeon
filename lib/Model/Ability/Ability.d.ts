@@ -1,5 +1,5 @@
 import { Actor } from "../Actor";
-import { Modifier } from "cm-check/lib/Check/Modifier/Modifier";
+import { Modifier } from "../../../../cm-check/";
 import { PrioritizedNameMap } from "../PrioritizedNameMap";
 export declare abstract class Ability {
     disabled: boolean;

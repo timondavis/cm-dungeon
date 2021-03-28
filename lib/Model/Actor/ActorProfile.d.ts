@@ -17,19 +17,19 @@ export interface IActorProfile extends ISerializableModel {
 }
 export declare class ActorProfile extends SerializableModel {
     protected state: IActorProfile;
-    readonly name: string;
-    readonly attributes: {
+    get name(): string;
+    get attributes(): {
         key: string;
         default?: number;
     }[];
-    readonly flags: {
+    get flags(): {
         key: string;
         default?: boolean;
     }[];
-    readonly labels: {
+    get labels(): {
         key: string;
         default?: string;
     }[];
-    readonly actionPointsAttribute: string;
+    get actionPointsAttribute(): string;
     constructor(configs: any);
 }

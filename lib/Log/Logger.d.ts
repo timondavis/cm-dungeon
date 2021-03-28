@@ -8,7 +8,7 @@ import { LogType } from "./LogType";
  */
 export declare class Logger {
     private _logs;
-    private readonly logs;
+    private get logs();
     private static _instance;
     private constructor();
     static getInstance(): Logger;

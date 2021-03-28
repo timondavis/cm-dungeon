@@ -7,8 +7,8 @@ export interface IPrioritizedNameMap<T> extends ISerializableModel {
 }
 export declare class PrioritizedNameMap<T> extends SerializableModel {
     protected state: IPrioritizedNameMap<T>;
-    private readonly prioritizedNames;
-    private readonly namePriorityIndex;
+    private get prioritizedNames();
+    private get namePriorityIndex();
     private static DEFAULT_PRIORITY;
     constructor();
     /**
@@ -103,7 +103,7 @@ export declare class PrioritizedNameMap<T> extends SerializableModel {
      * Get the number of items in the map.
      * @returns {number}
      */
-    readonly length: number;
+    get length(): number;
     /**
      * Get the priority for the item with the given key
      *

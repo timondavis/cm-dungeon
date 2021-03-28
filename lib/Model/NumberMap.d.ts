@@ -74,5 +74,5 @@ export declare class NumberMap<T> extends SerializableModel {
      * Get the number of items in the map.
      * @returns {number}
      */
-    readonly length: number;
+    get length(): number;
 }

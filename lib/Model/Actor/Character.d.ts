@@ -7,7 +7,7 @@ export interface ICharacter extends IActor {
 }
 export declare class Character extends Actor {
     protected state: ICharacter;
-    readonly inventory: NameMap<Item>;
-    readonly equipped: NameMap<Item>;
+    get inventory(): NameMap<Item>;
+    get equipped(): NameMap<Item>;
     constructor();
 }

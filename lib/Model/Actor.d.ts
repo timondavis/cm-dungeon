@@ -17,15 +17,19 @@ export interface IActor extends ISerializableModel {
 }
 export declare class Actor extends SerializableModel {
     protected state: IActor;
-    id: string;
-    faction: string;
-    readonly attributes: NameMap<number>;
-    readonly abilities: NameMap<Ability>;
-    readonly labels: NameMap<string>;
-    readonly flags: NameMap<boolean>;
-    readonly statuses: PrioritizedNameMap<Status>;
-    actionPointsAttribute: string;
-    actionPointsRemaining: number;
+    get id(): string;
+    set id(id: string);
+    get faction(): string;
+    set faction(faction: string);
+    get attributes(): NameMap<number>;
+    get abilities(): NameMap<Ability>;
+    get labels(): NameMap<string>;
+    get flags(): NameMap<boolean>;
+    get statuses(): PrioritizedNameMap<Status>;
+    get actionPointsAttribute(): string;
+    set actionPointsAttribute(attr: string);
+    get actionPointsRemaining(): number;
+    set actionPointsRemaining(pointsRemaining: number);
     constructor(actorProfile?: ActorProfile);
     /**
      * Execute an ability belonging to the actor
