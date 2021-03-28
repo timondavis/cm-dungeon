@@ -1,7 +1,6 @@
 import {Actor} from "../Model/Actor";
-import {Check} from "cm-check/lib/Check/Check";
+import {Check, CheckExecutor} from "cm-check"
 import {Effect} from "../Model/Effect";
-import {CheckExecutor} from "cm-check/lib/Check/CheckExecutor";
 import {EffectRenderer} from "./EffectRenderer";
 import {List} from "../Model/List";
 import {Logger} from "../Log/Logger";
