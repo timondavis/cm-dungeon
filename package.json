@@ -11,8 +11,8 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.14",
     "chai": "^4.2.0",
-    "cm-check": "file:..//cm-check",
-    "cm-domain-utilities": "file:../cm-domain-utilities",
+    "cm-check": "git://github.com/timondavis/cm-check.git",
+    "cm-domain-utilities": "git://github.com/timondavis/cm-domain-utilities.git",
     "dice-bag": "0.1.2",
     "events": "^3.0.0",
     "typescript": "~3.5.3"
