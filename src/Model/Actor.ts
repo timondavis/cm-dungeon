@@ -4,6 +4,8 @@ import {Status} from "./Status";
 import {PrioritizedNameMap} from "./PrioritizedNameMap";
 import {ActorProfile} from "./Actor/ActorProfile";
 import {ISerializableModel, SerializableModel} from "cm-domain-utilities";
+import {DieBag} from "cm-check/lib/Die/DieBag";
+import {Check} from "cm-check/lib/Check/Check";
 
 export interface IActor extends ISerializableModel {
 
@@ -12,6 +14,7 @@ export interface IActor extends ISerializableModel {
 	actionPointsAttribute: string;
 	actionPointsRemaining: number;
 	attributes: NameMap<number>;
+	rolledValues: NameMap<Check>;
 	abilities: NameMap<Ability>;
 	labels: NameMap<string>;
 	flags: NameMap<boolean>;
@@ -44,6 +47,7 @@ export class Actor extends SerializableModel {
 			actionPointsAttribute: "",
 			actionPointsRemaining: 0,
 			attributes: new NameMap(),
+            rolledValues: new NameMap(),
 			faction: "",
 			flags: new NameMap(),
 			id: "",

@@ -4,19 +4,19 @@ import { Effect } from "../Model/Effect";
 import { List } from "../Model/List";
 export declare class Interaction {
     private _source;
-    get source(): Actor;
+    readonly source: Actor;
     private _target;
-    get target(): Actor;
+    readonly target: Actor;
     private _resistanceCheck;
-    get resistanceCheck(): any;
+    readonly resistanceCheck: Check;
     private _effects;
-    get effects(): List<Effect>;
+    readonly effects: List<Effect>;
     private _type;
-    get type(): string;
+    readonly type: string;
     private _preCheckCallbacks;
-    get preCheckCallbacks(): List<(source: Actor, target: Actor, check: any) => void>;
+    readonly preCheckCallbacks: List<(source: Actor, target: Actor, check: Check) => void>;
     private _postCheckCallbacks;
-    get postCheckCallbacks(): List<(source: Actor, target: Actor, check: any) => void>;
+    readonly postCheckCallbacks: List<(source: Actor, target: Actor, check: Check) => void>;
     constructor(source: Actor, target: Actor, check: Check);
     /**
      * Returns TRUE if interaction is successful.  Failure is not an indication of error - randomization is

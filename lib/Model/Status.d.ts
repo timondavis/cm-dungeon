@@ -12,12 +12,12 @@ export interface IStatus extends ISerializableModel {
 }
 export declare class Status extends SerializableModel {
     protected state: IStatus;
-    get owner(): Actor;
-    get attributeAssignmentFilters(): PrioritizedNameMap<(newValue: number, originalValue: number) => number>;
-    get labelAssignmentFilters(): PrioritizedNameMap<(newValue: string, originalValue: string) => string>;
-    get flagAssignmentFilters(): PrioritizedNameMap<(newValue: boolean, originalValue: boolean) => boolean>;
-    get statusRemovalFilters(): PrioritizedNameMap<(newValue: boolean, status: Status) => boolean | Status>;
-    get statusAssignmentFilters(): PrioritizedNameMap<(newValue: boolean, status: Status) => boolean | Status>;
+    readonly owner: Actor;
+    readonly attributeAssignmentFilters: PrioritizedNameMap<(newValue: number, originalValue: number) => number>;
+    readonly labelAssignmentFilters: PrioritizedNameMap<(newValue: string, originalValue: string) => string>;
+    readonly flagAssignmentFilters: PrioritizedNameMap<(newValue: boolean, originalValue: boolean) => boolean>;
+    readonly statusRemovalFilters: PrioritizedNameMap<(newValue: boolean, status: Status) => boolean | Status>;
+    readonly statusAssignmentFilters: PrioritizedNameMap<(newValue: boolean, status: Status) => boolean | Status>;
     setOwner(owner: Actor): void;
     clone(): Status;
     constructor();

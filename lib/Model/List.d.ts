@@ -4,12 +4,12 @@ export interface IList<T> extends ISerializableModel {
 }
 export declare class List<T> extends SerializableModel {
     protected state: IList<T>;
-    protected get collection(): T[];
+    protected readonly collection: T[];
     constructor();
     add(item: T): void;
     remove(index: number): void;
     clear(): void;
     get(index: number): T;
-    get length(): number;
+    readonly length: number;
     forEachItem(callback: (item: T, index: number) => void): void;
 }

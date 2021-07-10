@@ -14,22 +14,24 @@ export interface IActorProfile extends ISerializableModel {
         default?: string;
     }[];
     actionPointsAttribute: string;
+    faction: string;
 }
 export declare class ActorProfile extends SerializableModel {
     protected state: IActorProfile;
-    get name(): string;
-    get attributes(): {
+    readonly name: string;
+    readonly attributes: {
         key: string;
         default?: number;
     }[];
-    get flags(): {
+    readonly flags: {
         key: string;
         default?: boolean;
     }[];
-    get labels(): {
+    readonly labels: {
         key: string;
         default?: string;
     }[];
-    get actionPointsAttribute(): string;
+    readonly actionPointsAttribute: string;
+    readonly faction: string;
     constructor(configs: any);
 }

@@ -6,6 +6,7 @@ export interface IActorProfile extends ISerializableModel {
 	flags: {key: string, default?: boolean}[];
 	labels: {key: string, default?: string}[];
 	actionPointsAttribute: string;
+	faction: string;
 }
 
 export class ActorProfile extends SerializableModel {
@@ -16,6 +17,7 @@ export class ActorProfile extends SerializableModel {
 	public get flags(): {key: string, default?: boolean}[] { return this.state.flags; }
 	public get labels(): {key: string, default?: string}[] { return this.state.labels; }
 	public get actionPointsAttribute(): string { return this.state.actionPointsAttribute; }
+    public get faction(): string { return this.state.faction; }
 
 	constructor(configs: any) {
 		super();
@@ -24,7 +26,8 @@ export class ActorProfile extends SerializableModel {
 			attributes: [],
 			flags: [],
 			labels: [],
-			name: configs.hasOwnProperty('name') ? configs.name : ""
+			name: configs.hasOwnProperty('name') ? configs.name : '',
+            faction: configs.hasOwnProperty('faction') ? configs.faction : ''
 		};
 
 		if (configs.hasOwnProperty('attributes')) {

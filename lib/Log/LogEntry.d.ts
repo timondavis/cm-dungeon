@@ -5,8 +5,8 @@
  */
 export declare class LogEntry {
     private _message;
-    get message(): string;
+    readonly message: string;
     private _time;
-    get time(): Date;
+    readonly time: Date;
     constructor(message: string);
 }

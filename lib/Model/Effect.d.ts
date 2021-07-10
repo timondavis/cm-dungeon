@@ -12,10 +12,10 @@ export interface IEffect extends ISerializableModel {
 }
 export declare class Effect extends SerializableModel {
     protected state: IEffect;
-    get attributeAssignments(): NameMap<(value: number, data?: any) => number>;
-    get labelAssignments(): NameMap<(value: string, data?: any) => string>;
-    get flagAssignments(): NameMap<(value: boolean, data?: any) => boolean>;
-    get statusRemovals(): List<string>;
-    get statusAssignments(): NameMap<Status>;
+    readonly attributeAssignments: NameMap<(value: number, data?: any) => number>;
+    readonly labelAssignments: NameMap<(value: string, data?: any) => string>;
+    readonly flagAssignments: NameMap<(value: boolean, data?: any) => boolean>;
+    readonly statusRemovals: List<string>;
+    readonly statusAssignments: NameMap<Status>;
     constructor();
 }

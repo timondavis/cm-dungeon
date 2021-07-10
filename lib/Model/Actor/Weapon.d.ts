@@ -8,7 +8,7 @@ export interface IWeapon extends IItem {
 }
 export declare class Weapon extends Item {
     protected state: IWeapon;
-    get damageRoll(): any;
+    readonly damageRoll: Check;
     checkModifiers(): List<ResultModifier>;
     constructor();
 }

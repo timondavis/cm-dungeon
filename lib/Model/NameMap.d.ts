@@ -74,6 +74,6 @@ export declare class NameMap<T> extends SerializableModel {
      * Get the number of items in the map.
      * @returns {number}
      */
-    get length(): number;
+    readonly length: number;
     toArray(): T[];
 }

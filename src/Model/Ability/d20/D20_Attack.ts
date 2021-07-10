@@ -29,7 +29,6 @@ export class D20_Attack extends Ability {
 
         let strengthModifier = CE.generateModifier( 'result' );
         strengthModifier.setValue( 2 );
-
         const AC = target.attributes.get( 'AC' );
 
         let check = CE.generateCheck( 'd20-attribute' );

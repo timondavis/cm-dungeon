@@ -8,10 +8,9 @@ import { Queue } from "../Model/Queue";
  */
 export declare class Log extends Queue<LogEntry> {
     private _type;
-    get type(): LogType;
+    readonly type: LogType;
     private _capacity;
-    get capacity(): number;
-    set capacity(value: number);
+    capacity: number;
     constructor(type: LogType, capacity?: number);
     /**
      * Write a message to the log.
